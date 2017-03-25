@@ -2,12 +2,12 @@
 import Vue from 'vue';
 
 import router from './router';
-
-// todo: real auth
-import isAuthenticated from './lib/is_authenticated';
+import store from './store';
 
 // pre-route auth checking
 router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.getters.isAuthenticated;
+
   // check if any of the matched routes require authentication
   if (to.matched.some(record => record.meta.requiresAuthentication)) {
     if (isAuthenticated) return next();
