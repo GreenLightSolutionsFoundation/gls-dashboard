@@ -11,7 +11,7 @@
   export default {
     name: 'login-page',
     created() {
-      const isAuthenticated = store.getters.isAuthenticated;
+      const isAuthenticated = store.getters['authentication/isAuthenticated'];
       const getRedirect = (query) => {
         const { prev, redirect } = query;
         if (redirect !== undefined) return { name: redirect };
