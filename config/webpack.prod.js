@@ -101,4 +101,7 @@ module.exports = merge(baseConfig, {
       chunks: ['vendor'],
     }),
   ],
+  performance: {
+    hints: 'warning',
+  },
 });
