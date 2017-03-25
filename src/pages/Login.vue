@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Login page</h1>
-    <form @submit.prevent="login">
+    <form @submit.prevent="doLogin">
       <div>
         <label>email</label>
         <input type="email" v-model="email">
@@ -14,11 +14,13 @@
         <button type="submit">Login</button>
       </div>
     </form>
+    <p v-if="pending">Working...</p>
+    <p v-if="errorMessage">Error: {{ errorMessage }}</p>
   </div>
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
+  import { mapActions, mapState } from 'vuex';
   import store from '../store';
 
   export default {
@@ -47,7 +49,14 @@
       this.sendTo = sendTo;
       return null;
     },
+    computed: {
+      ...mapState('authentication', ['pending', 'errorMessage']),
+    },
     methods: {
+      doLogin() {
+        const { email, password } = this;
+        this.login({ email, password });
+      },
       ...mapActions('authentication', ['login']),
     },
   };
