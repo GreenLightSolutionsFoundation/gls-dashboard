@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
 const app = new Vue({
   router,
   render: h => h('router-view'),
-  // Other constructor code here
+  // Backand init
   beforeMount: () => {
     backand.init && backand.init({
       appName: 'GreenLight',
