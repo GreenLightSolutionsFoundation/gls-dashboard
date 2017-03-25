@@ -1,7 +1,8 @@
 /* global backand */
 import Vue from 'vue';
-
 import router from './router';
+import VueMaterial from '../node_modules/vue-material';
+import '../node_modules/vue-material/dist/vue-material.css';
 
 // todo: real auth
 import isAuthenticated from './lib/is_authenticated';
@@ -37,5 +38,5 @@ const app = new Vue({
     }
   },
 });
-
+Vue.use(VueMaterial);
 app.$mount('#root');

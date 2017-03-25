@@ -31,6 +31,10 @@ module.exports = {
           name: 'fonts/[name].[ext]?[hash]',
         },
       },
+      {
+        test: /\.css$/,
+        use: ['css-loader'],
+      },
     ],
   },
   resolve: {
