@@ -23,6 +23,14 @@ router.beforeEach((to, from, next) => {
 const app = new Vue({
   router,
   render: h => h('router-view'),
+  // Other constructor code here
+  beforeMount: () => {
+    backand.init && backand.init({
+      appName: '',
+      signUpToken: '',
+      anonymousToken: ''
+    });
+  },
 });
 
 app.$mount('#root');
