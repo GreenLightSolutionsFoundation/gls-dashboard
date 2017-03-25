@@ -30,7 +30,7 @@ const app = new Vue({
       backand.init({
         appName: 'greenlight',
         signUpToken: 'f23b604e-524f-447d-af47-008f757a0a58',
-        anonymousToken: 'b48541ec-4682-4f51-b9af-8d96d6c5abf4'
+        anonymousToken: 'b48541ec-4682-4f51-b9af-8d96d6c5abf4',
       });
     } else {
       throw new Error('backand client not found');
