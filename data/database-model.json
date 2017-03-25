@@ -1,0 +1,162 @@
+[
+    {
+        "name": "users",
+        "fields": {
+            "email": {
+                "type": "string",
+                "required": true,
+                "unique": true
+            },
+            "firstName": {
+                "type": "string",
+                "required": true
+            },
+            "lastName": {
+                "type": "string",
+                "required": true
+            },
+            "chapter": {
+                "type": "string"
+            },
+            "semesterJoined": {
+                "type": "string"
+            },
+            "phoneNumber": {
+                "type": "string"
+            },
+            "createdDate": {
+                "type": "datetime"
+            },
+            "sunDevilConnection": {
+                "type": "boolean"
+            },
+            "currentlyActive": {
+                "type": "boolean"
+            },
+            "ndaSigned": {
+                "type": "boolean"
+            },
+            "solutioneer101Passed": {
+                "type": "boolean"
+            }
+        }
+    },
+    {
+        "name": "projects",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            },
+            "projectName": {
+                "type": "string"
+            },
+            "projectDescription": {
+                "type": "text"
+            },
+            "projectStartDate": {
+                "type": "datetime"
+            },
+            "projectEndDate": {
+                "type": "datetime"
+            },
+            "projectManagerUserId": {
+                "type": "point"
+            },
+            "projectStatus": {
+                "type": "boolean"
+            },
+            "projectLinks": {
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "usersProjects",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            }
+        }
+    },
+    {
+        "name": "chapters",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            },
+            "chapterName": {
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "organizations",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            },
+            "orgName": {
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "projecFolderLink",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            }
+        }
+    },
+    {
+        "name": "projectApplications",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            }
+        }
+    },
+    {
+        "name": "positions",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            },
+            "positionName": {
+                "type": "string"
+            }
+        }
+    },
+    {
+        "name": "leadershipTeam",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            }
+        }
+    }
+]
