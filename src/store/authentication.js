@@ -50,9 +50,7 @@ export default {
         });
       });
     },
-    login({ commit }, user = {}) {
-      const { email, password } = user;
-
+    login({ commit }, { email, password } = {}) {
       // set error message without credentials
       if (!email || !password) return commit('setErrorMessage', 'Please enter your credentials');
 
@@ -67,7 +65,8 @@ export default {
         commit('togglePending');
 
         // successful login
-        console.log('login', {res});
+        // TODO: blacklist bearer token
+        commit('setUser', res.data);
       })
       .catch((err) => {
         const defaultMsg = 'Login failed';
@@ -82,6 +81,21 @@ export default {
           default:
             return commit('setErrorMessage', defaultMsg);
         }
+      });
+    },
+    signup({ commit }, { email, password, passwordConfirm, firstName, lastName } = {}) {
+      if (!passwordConfirm !== !password) return commit('setErrorMessage', 'Passwords to not match');
+      if (!firstName || !lastName) return commit('setErrorMessage', 'Please enter your first and last name');
+
+      // clear error and set pending state
+      commit('setErrorMessage', '');
+      commit('togglePending');
+
+      return backand.signup(firstName, lastName, email, password, passwordConfirm)
+      .then((res) => {
+        console.log({res})
+        const { username, message, currentStatus } = res.data;
+        return { username, message, currentStatus };
       });
     },
     logout({ commit }) {
