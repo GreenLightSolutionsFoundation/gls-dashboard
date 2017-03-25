@@ -98,10 +98,15 @@
       },
       doLogin() {
         const { email, password } = this;
-        this.login({ email, password });
+
+        this.login({ email, password })
+        .then(() => {
+          this.$router.push({ name: 'home' });
+        });
       },
       doSignup() {
         const { email, password, passwordConfirm, firstName, lastName } = this;
+
         this.signup({ email, password, passwordConfirm, firstName, lastName })
         .then(res => console.log(res))
       },

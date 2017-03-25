@@ -40,6 +40,7 @@ export default {
 
         return backand.user.getUserDetails()
         .then((res) => {
+          console.log('getdetails', {res})
           commit('togglePending');
           commit('setUser', res.data);
           resolve(res.data);
@@ -61,6 +62,7 @@ export default {
       // use backand to authenticate user
       return backand.signin(email, password)
       .then((res) => {
+        console.log('login', {res})
         // toggle pending state
         commit('togglePending');
 
@@ -96,17 +98,49 @@ export default {
         console.log({res})
         const { username, message, currentStatus } = res.data;
         return { username, message, currentStatus };
+      })
+      .catch((err) => {
+        console.log({err})
+        const defaultMsg = 'Signup failed, please try again';
+
+        if (!err.status) return commit('setErrorMessage', defaultMsg);
+
+        switch (err.status) {
+          case 406:
+            return commit('setErrorMessage', 'User signups are currently disabled');
+          default:
+            return commit('setErrorMessage', defaultMsg);
+        }
       });
     },
     logout({ commit }) {
-      // commit('resetUser');
-      console.log('store logout')
+      return backand.signout()
+      .then(() => {
+        commit('resetUser');
+      });
     },
   },
   getters: {
     isAuthenticated(state) {
       // TODO: real user data checking via the server
       return state.user !== null;
+    },
+    username(state) {
+      if (state.user === null) {
+        return {
+          firstName: null,
+          lastName: null,
+          fullName: null,
+        };
+      }
+
+      const { firstName, lastName } = state.user;
+
+      return {
+        firstName,
+        lastName,
+        fullName: `${firstName} ${lastName}`,
+      };
     },
   },
 };
