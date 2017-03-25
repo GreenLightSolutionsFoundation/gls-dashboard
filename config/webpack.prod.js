@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
@@ -8,7 +9,7 @@ const baseConfig = require('./webpack.base');
 const ROOT = path.resolve(__dirname, '..');
 const srcPath = 'src';
 const distPath = 'dist';
-const basepath = 'whatever';
+// const basepath = 'whatever';
 
 module.exports = merge(baseConfig, {
   output: {
