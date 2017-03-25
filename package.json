@@ -12,13 +12,9 @@
   },
   "dependencies": {
     "vue": "^2.2.1",
-<<<<<<< HEAD
     "vue-material": "^0.7.1",
-    "vue-router": "^2.3.0"
-=======
     "vue-router": "^2.3.0",
     "vuex": "^2.2.1"
->>>>>>> 8b8b3f9942a124c987d065601fadfc3136703d00
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
