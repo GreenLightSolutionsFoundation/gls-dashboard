@@ -36,29 +36,14 @@ export default {
         .catch(handleFailure);
       });
     },
-    userLogin({ commit }, user = {}) {
+    login({ commit }, user = {}) {
       const { email, password } = user;
 
-      // TODO: login via the server
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (!email || !password) {
-            commit('resetUser');
-            reject();
-          } else {
-            commit('setUser', email);
-            resolve();
-          }
-        }, 300);
-      });
+      console.log('store login', {email, password})
     },
-    userLogout({ commit }) {
-      // TODO: logout via the server
-      return new Promise((resolve) => {
-        // TODO: reset user state on logout
-        commit('resetUser');
-        resolve();
-      });
+    logout({ commit }) {
+      // commit('resetUser');
+      console.log('store logout')
     },
   },
   getters: {
