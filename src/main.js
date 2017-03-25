@@ -26,9 +26,9 @@ const app = new Vue({
   // Other constructor code here
   beforeMount: () => {
     backand.init && backand.init({
-      appName: '',
-      signUpToken: '',
-      anonymousToken: ''
+      appName: 'GreenLight',
+      signUpToken: 'f23b604e-524f-447d-af47-008f757a0a58',
+      anonymousToken: 'b48541ec-4682-4f51-b9af-8d96d6c5abf4'
     });
   },
 });
