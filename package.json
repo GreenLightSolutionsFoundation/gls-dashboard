@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot --config config/webpack.dev.js",
-    "build": "rm -rf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
-    "test": "eslint ."
+    "build": "npm run test && rm -rf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
+    "test": "eslint ./src ./config"
   },
   "dependencies": {
     "vue": "^2.2.1",
