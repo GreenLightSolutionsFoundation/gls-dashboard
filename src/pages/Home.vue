@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <img src="./assets/logo.png">
+    <img src="../assets/logo.png">
     <h1></h1>
     <h2>Essential Links</h2>
     <ul>
