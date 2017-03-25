@@ -24,10 +24,13 @@
             "phoneNumber": {
                 "type": "string"
             },
-            "createdDate": {
+            "createdAt": {
                 "type": "datetime"
             },
-            "sunDevilConnection": {
+            "updatedAt": {
+                "type": "datetime"
+            },
+            "sundevilConnection": {
                 "type": "boolean"
             },
             "currentlyActive": {
