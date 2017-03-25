@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config config/webpack.dev.js",
-    "build": "npm run test && rm -rf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
+    "build": "npm run test && rimraf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
     "test": "eslint ./src ./config",
     "prepush": "npm test"
   },
@@ -34,6 +34,7 @@
     "html-webpack-plugin": "^2.28.0",
     "husky": "^0.13.3",
     "node-sass": "^4.5.0",
+    "rimraf": "^2.6.1",
     "sass-loader": "^5.0.1",
     "vue-loader": "^11.1.4",
     "vue-template-compiler": "^2.2.1",
