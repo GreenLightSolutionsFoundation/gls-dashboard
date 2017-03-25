@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot --config config/webpack.dev.js",
     "build": "npm run test && rm -rf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
-    "test": "eslint ./src ./config"
+    "test": "eslint ./src ./config",
+    "prepush": "npm test"
   },
   "dependencies": {
     "vue": "^2.2.1",
@@ -30,6 +31,7 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.28.0",
+    "husky": "^0.13.3",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",
     "vue-loader": "^11.1.4",
