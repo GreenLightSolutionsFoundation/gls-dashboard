@@ -11,6 +11,7 @@ const store = new Vuex.Store({
   modules: {
     authentication,
   },
+  strict: process.env.NODE_ENV === 'development',
 });
 
 export default store;
