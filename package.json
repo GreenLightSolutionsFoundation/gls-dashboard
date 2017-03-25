@@ -5,15 +5,20 @@
   "author": "Greenlight Solutions <greenlightsolutionsfoundation@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot --config config/webpack.dev.js",
-    "build": "npm run test && rm -rf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config config/webpack.dev.js",
+    "build": "npm run test && rimraf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
     "test": "eslint ./src ./config",
     "prepush": "npm test"
   },
   "dependencies": {
     "vue": "^2.2.1",
+<<<<<<< HEAD
     "vue-material": "^0.7.1",
     "vue-router": "^2.3.0"
+=======
+    "vue-router": "^2.3.0",
+    "vuex": "^2.2.1"
+>>>>>>> 8b8b3f9942a124c987d065601fadfc3136703d00
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -34,6 +39,7 @@
     "html-webpack-plugin": "^2.28.0",
     "husky": "^0.13.3",
     "node-sass": "^4.5.0",
+    "rimraf": "^2.6.1",
     "sass-loader": "^5.0.1",
     "vue-loader": "^11.1.4",
     "vue-template-compiler": "^2.2.1",

@@ -1,14 +1,16 @@
 /* global backand */
 import Vue from 'vue';
+import VueMaterial from 'vue-material';
+import 'vue-material/dist/vue-material.css';
 import router from './router';
-import VueMaterial from '../node_modules/vue-material';
-import '../node_modules/vue-material/dist/vue-material.css';
+import store from './store';
 
-// todo: real auth
-import isAuthenticated from './lib/is_authenticated';
+Vue.use(VueMaterial);
 
 // pre-route auth checking
 router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.getters['authentication/isAuthenticated'];
+
   // check if any of the matched routes require authentication
   if (to.matched.some(record => record.meta.requiresAuthentication)) {
     if (isAuthenticated) return next();
@@ -22,21 +24,20 @@ router.beforeEach((to, from, next) => {
   return next();
 });
 
-const app = new Vue({
-  router,
-  render: h => h('router-view'),
-  // Backand init
-  beforeMount: () => {
-    if (backand.init) {
-      backand.init({
-        appName: 'greenlight',
-        signUpToken: 'f23b604e-524f-447d-af47-008f757a0a58',
-        anonymousToken: 'b48541ec-4682-4f51-b9af-8d96d6c5abf4',
-      });
-    } else {
-      throw new Error('backand client not found');
-    }
-  },
+// initialize the application store
+store.dispatch('authentication/initialize')
+.then(() => {
+  const app = new Vue({
+    router,
+    render: h => h('router-view'),
+  });
+
+  app.$mount('#root');
+})
+.catch((err) => {
+  // TODO: render error page, or othewise handle intiailization failure
+  // eslint-disable-next-line no-console
+  console.error('failed to load application', err);
+  // eslint-disable-next-line no-alert
+  window.alert('Application did not load :(');
 });
-Vue.use(VueMaterial);
-app.$mount('#root');

@@ -10,7 +10,7 @@ const srcPath = 'src';
 const distPath = 'dist';
 
 module.exports = merge(baseConfig, {
-  devtool: '#eval-source-map',
+  devtool: '#source-map',
   module: {
     rules: [
       {
