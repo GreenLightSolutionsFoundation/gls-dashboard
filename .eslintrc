@@ -1,4 +1,4 @@
 {
-  extends: ["vue", "airbnb"],
-  plugins: ["vue"]
+  "extends": ["vue", "airbnb"],
+  "plugins": ["vue"]
 }
