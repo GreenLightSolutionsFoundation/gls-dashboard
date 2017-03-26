@@ -16,7 +16,7 @@
                 "required": true
             },
             "chapter": {
-                "type": "string"
+                "object": "chapters"
             },
             "semesterJoined": {
                 "type": "string"
@@ -147,6 +147,10 @@
             },
             "facultyAdvisor": {
                 "object": "users"
+            },
+            "users": {
+                "collection": "users",
+                "via": "chapter"
             },
             "projects": {
                 "collection": "chapterProjects",
