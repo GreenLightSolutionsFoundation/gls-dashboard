@@ -27,6 +27,9 @@
             "position": {
                 "type": "string"
             },
+            "userType": {
+                "type": "string"
+            },
             "createdAt": {
                 "type": "datetime"
             },
@@ -79,6 +82,9 @@
             "projectStatus": {
                 "type": "boolean"
             },
+            "partnerOrganizations": {
+                "object": "partnerOrganizations"
+            },
             "users": {
                 "collection": "usersProjects",
                 "via": "project"
@@ -104,6 +110,9 @@
             },
             "rank": {
                 "type": "float"
+            },
+            "assigned": {
+                "type": "boolean"
             }
         }
     },
@@ -166,7 +175,7 @@
         }
     },
     {
-        "name": "organizations",
+        "name": "partnerOrganizations",
         "fields": {
             "createdAt": {
                 "type": "datetime"
@@ -174,19 +183,12 @@
             "updatedAt": {
                 "type": "datetime"
             },
-            "orgName": {
+            "partnerName": {
                 "type": "string"
-            }
-        }
-    },
-    {
-        "name": "projectApplications",
-        "fields": {
-            "createdAt": {
-                "type": "datetime"
             },
-            "updatedAt": {
-                "type": "datetime"
+            "projects": {
+                "collection": "projects",
+                "via": "partnerOrganizations"
             }
         }
     },
@@ -201,17 +203,6 @@
             },
             "positionName": {
                 "type": "string"
-            }
-        }
-    },
-    {
-        "name": "leadershipTeam",
-        "fields": {
-            "createdAt": {
-                "type": "datetime"
-            },
-            "updatedAt": {
-                "type": "datetime"
             }
         }
     },
