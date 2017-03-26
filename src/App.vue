@@ -7,8 +7,8 @@
         <md-toolbar>
         <bulb class="navbar-bulb"></bulb>
         <brand class="navbar-brand"></brand>
-          <md-button>Dashboard</md-button>
-          <md-button @click.native="cohort">Cohorts</md-button>
+          <md-button @click.native.prevent="navigateTo('dashboard')">Dashboard</md-button>
+          <md-button @click.native.prevent="navigateTo('cohort')">Cohort</md-button>
           <md-button @click.native.prevent="doLogout">Logout</md-button>
         </md-toolbar>
       </md-whiteframe>
@@ -18,6 +18,23 @@
     <div class="page-content">
       <router-view></router-view>
     </div>
+
+    <!-- Welcome Dialog -->
+    <md-dialog ref="welcomeDialog" id="welcome-dialog">
+      <md-dialog-title>Welcome!</md-dialog-title>
+      <md-dialog-content>
+        <p>We're glad you're here.  Here's what's next:</p>
+        <ol>
+          <li>Read and sign the confidentiality agreement.</li>
+          <li>Read and sign the commitment agreement.</li>
+          <li>Complete the Solutioneering 101 module.</li>
+          <li>Review the available projects and submit your top 3 picks for projects that you'd like to be involved in.</li>
+        </ol>
+      </md-dialog-content>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click.native="doGetStarted()">Get Started</md-button>
+      </md-dialog-actions>
+    </md-dialog>
 
   </div>
 </template>
@@ -31,22 +48,44 @@ export default {
   name: 'app',
   components: {
     Bulb,
-    Brand
+    Brand,
   },
   computed: {
     ...mapGetters('authentication', ['username']),
   },
   methods: {
-    cohort(){
-      console.log('clicked cohort');
-      this.$router.push({ name: 'cohort' });
+    navigateTo(routeName) {
+      this.$router.push({ name: routeName });
     },
     doLogout() {
       this.logout().then(() => {
         this.$router.push({ name: 'login' });
       });
     },
+    checkIfSolutioneering101IsComplete() {
+      // TODO: check if user has completed Solutioneering 101.  If not, show the welcome dialog
+      // and skip loading of the actual dashboard, else load their dashboard.
+      this.$nextTick(function () {
+        this.$refs['welcomeDialog'].open();
+      });
+    },
+    doGetStarted() {
+      this.$refs['welcomeDialog'].close();
+      this.$router.push({ name: 'confidentiality-agreement' });
+    },
     ...mapActions('authentication', ['logout']),
+  },
+  mounted: function() {
+    if (this.$router.currentRoute.name === 'dashboard') {
+      this.checkIfSolutioneering101IsComplete();
+    }
+  },
+  watch: {
+    '$route': function(newRoute, oldRoute) {
+      if (newRoute.name === 'dashboard') {
+        this.checkIfSolutioneering101IsComplete();
+      }
+    },
   },
 };
 </script>
@@ -54,19 +93,13 @@ export default {
 <style lang="scss">
   @import './styles/main.scss';
 
+  .navbar-bulb {
+    width: 50px;
+  }
 
-.page-content {
-  max-width: 750px;
-}
-
-.navbar-bulb {
-  width: 50px;
-}
-
-.navbar-brand {
-  width: 110px;
-}
-
+  .navbar-brand {
+    width: 110px;
+  }
 
   .page-content {
     max-width: 800px;
@@ -76,5 +109,13 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
+  }
+
+  #welcome-dialog .md-dialog {
+    max-width: 500px;
+
+    ol:not(.md-list)>li+li {
+      margin-top: 8px;
+    }
   }
 </style>

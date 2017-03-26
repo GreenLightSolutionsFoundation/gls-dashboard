@@ -2,7 +2,7 @@ import createRoute from '../lib/create_route';
 
 import login from './login';
 import approvalPending from './approval-pending';
-import demo from './demo';
+import dashboard from './dashboard';
 import app from './app';
 import cohort from './cohort';
 import confidentialityAgreement from './confidentiality-agreement';
@@ -18,7 +18,7 @@ const routes = [
       requiresAuthentication: false,
     },
     children: [
-      createRoute('', demo),
+      createRoute('', dashboard),
       createRoute('/cohort', cohort),
       createRoute('/confidentiality-agreement', confidentialityAgreement),
       createRoute('/commitment-agreement', commitmentAgreement),
