@@ -35,27 +35,27 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: "style-loader"
+            loader: 'style-loader',
           },
           {
-            loader: "css-loader"
-          }
-        ]
+            loader: 'css-loader',
+          },
+        ],
       },
       {
         test: /\.(scss|sass)$/,
         use: [
           {
-            loader: "style-loader"
+            loader: 'style-loader',
           },
           {
-            loader: "css-loader"
+            loader: 'ss-loader',
           },
           {
-            loader: "sass-loader"
-          }
-        ]
-      }
+            loader: 'sass-loader',
+          },
+        ],
+      },
     ],
   },
   resolve: {
