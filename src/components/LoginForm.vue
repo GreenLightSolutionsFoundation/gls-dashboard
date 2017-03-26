@@ -20,10 +20,11 @@
           Forgot Password
         </a> -->
 
-        <md-button class="md-raised md-primary" type="submit">
-          Submit
+        <md-button class="md-raised md-primary" :disabled="isLoading" type="submit">
+          {{ isLoading ? "Working..." : "Login" }}
         </md-button>
       </div>
+      <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
     </form>
   </div>
 
@@ -31,15 +32,19 @@
 
 <script>
   import LogoBrand from '../components/LogoBrand.vue';
+  import FormError from '../components/FormError.vue';
 
   export default {
     name: 'login-form',
 
     components: {
       LogoBrand,
+      FormError,
     },
 
     props: {
+      isLoading: Boolean,
+      errorMessage: String,
       onSubmit: Function,
     },
 
