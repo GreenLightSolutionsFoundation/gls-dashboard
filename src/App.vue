@@ -44,6 +44,12 @@ export default {
   @import './styles/main.scss';
 
   .page-content {
-    max-width: 750px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
   }
 </style>
