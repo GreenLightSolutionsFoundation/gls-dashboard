@@ -16,7 +16,7 @@
                 "required": true
             },
             "chapter": {
-                "type": "string"
+                "object": "chapters"
             },
             "semesterJoined": {
                 "type": "string"
@@ -43,6 +43,9 @@
                 "type": "boolean"
             },
             "ndaSigned": {
+                "type": "boolean"
+            },
+            "commitmentAgreementSigned": {
                 "type": "boolean"
             },
             "solutioneer101Passed": {
@@ -80,6 +83,9 @@
                 "type": "datetime"
             },
             "projectStatus": {
+                "type": "boolean"
+            },
+            "toatlPositions": {
                 "type": "boolean"
             },
             "partnerOrganizations": {
@@ -142,6 +148,10 @@
             "facultyAdvisor": {
                 "object": "users"
             },
+            "users": {
+                "collection": "users",
+                "via": "chapter"
+            },
             "projects": {
                 "collection": "chapterProjects",
                 "via": "chapter"
@@ -186,6 +196,9 @@
             "partnerName": {
                 "type": "string"
             },
+            "logoUrl": {
+                "type": "string"
+            },
             "projects": {
                 "collection": "projects",
                 "via": "partnerOrganizations"
@@ -203,6 +216,9 @@
             },
             "positionName": {
                 "type": "string"
+            },
+            "leadershipPosition": {
+                "type": "boolean"
             }
         }
     },

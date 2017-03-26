@@ -40,8 +40,6 @@
     </ol>
     <p>I acknowledge and agree that I will not disclose any Confidential Information, in whatever form to unauthorized parties. I agree that at the end of my relationship with the Corporation, I will destroy or return to the Corporation all Records containing Confidential Information in my possession or control regardless of how stored or maintained, including all originals, copies and compilations and all information stored or maintained on computer, tapes, discs, E-mail or any other form of technology.</p>
     <agreement-signature-form :name="confidentialityAgreement.name" :date="confidentialityAgreement.date" :onSubmit="doContinue"></agreement-signature-form>
-    
-    {{ confidentialityAgreement }}
   </div>
 </template>
 
