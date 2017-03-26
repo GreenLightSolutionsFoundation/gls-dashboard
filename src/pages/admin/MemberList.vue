@@ -63,7 +63,7 @@ export default {
   name: 'admin-member-list-page',
   data() {
     return {
-      perPage: 2,
+      perPage: 20,
       currentPage: 1,
     };
   },
