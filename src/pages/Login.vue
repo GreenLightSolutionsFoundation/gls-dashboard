@@ -1,32 +1,87 @@
 <template>
   <div>
-    <h1>Login page</h1>
-    <p>users will login here</p>
+    <login-form v-if="formMode('login')" :onSubmit="doLogin"></login-form>
+
+    <signup-form v-if="formMode('signup')" :onSubmit="doSignup"></signup-form>
+
+    <div v-if="formMode('login')">
+      New here? <a href="#" @click.prevent="setMode('signup')">Create an account</a>
+    </div>
+    <div v-if="formMode('signup')">
+      Have an account? <a href="#" @click.prevent="setMode('login')">Login here</a>.
+    </div>
+
+
+    <p v-if="pending">Working...</p>
+    <p v-if="errorMessage">Error: {{ errorMessage }}</p>
   </div>
 </template>
 
 <script>
-  import store from '../store';
+  import { mapActions, mapState, mapGetters } from 'vuex';
+  import LoginForm from '../components/LoginForm.vue';
+  import SignupForm from '../components/SignupForm.vue';
 
   export default {
     name: 'login-page',
+    components: {
+      LoginForm,
+      SignupForm,
+    },
+    data() {
+      return {
+        mode: 'login',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        firstName: '',
+        lastName: '',
+      };
+    },
     created() {
-      const isAuthenticated = store.getters['authentication/isAuthenticated'];
+      // pre-mounting lifecycle check for user authentication
       const getRedirect = (query) => {
         const { prev, redirect } = query;
         if (redirect !== undefined) return { name: redirect };
         if (prev !== undefined) return { path: prev };
-        return { name: 'app' };
+        return { name: 'home' };
       };
 
       const sendTo = getRedirect(this.$route.query);
 
       // if authenticated, set to correct spot in the app
-      if (isAuthenticated) return this.$router.replace(sendTo);
+      if (this.isAuthenticated) return this.$router.replace(sendTo);
 
       // if not authenticated, save redirect info for post-authentication redirect
       this.sendTo = sendTo;
       return null;
+    },
+    computed: {
+      ...mapState('authentication', ['pending', 'errorMessage']),
+      ...mapGetters('authentication', ['isAuthenticated']),
+    },
+    methods: {
+      setMode(mode) {
+        this.mode = mode;
+      },
+      formMode(mode) {
+        return this.mode === mode;
+      },
+      updateField(field, value) {
+        this[field] = value;
+      },
+      doLogin(fields) {
+        this.login(fields).then((user) => {
+          if (user === null) return this.$router.push({ name: 'approval-pending' });
+          return this.$router.push(this.sendTo);
+        });
+      },
+      doSignup(fields) {
+        this.signup(fields).then((user) => {
+          if (user === null) this.$router.push({ name: 'approval-pending' });
+        });
+      },
+      ...mapActions('authentication', ['login', 'signup']),
     },
   };
 </script>

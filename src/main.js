@@ -29,6 +29,7 @@ store.dispatch('authentication/initialize')
 .then(() => {
   const app = new Vue({
     router,
+    store,
     render: h => h('router-view'),
   });
 
