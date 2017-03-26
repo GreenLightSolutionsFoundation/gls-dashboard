@@ -9,7 +9,19 @@
         <brand class="navbar-brand"></brand>
           <md-button>Dashboard</md-button>
           <md-button @click.native="cohort">Cohorts</md-button>
-          <md-button @click.native.prevent="doLogout">Logout</md-button>
+          <md-menu md-align-trigger class="goto-right">
+            <md-button md-menu-trigger>
+              <span>Abbey Christansen</span>
+              <md-avatar>
+                <img src="https://placeimg.com/40/40/people/5" alt="People">
+              </md-avatar>
+            </md-button>
+            <md-menu-content class="solid-background">
+              <md-list-item>
+                <md-button @click.native.prevent="doLogout">Logout</md-button>
+              </md-list-item>
+            </md-menu-content>
+          </md-menu>
         </md-toolbar>
       </md-whiteframe>
     </md-theme>
@@ -55,19 +67,21 @@ export default {
   @import './styles/main.scss';
 
 
-.page-content {
-  max-width: 750px;
-}
+  .page-content {
+    max-width: 750px;
+  }
 
-.navbar-bulb {
-  width: 50px;
-}
+  .navbar-bulb {
+    width: 50px;
+  }
 
-.navbar-brand {
-  width: 110px;
-}
+  .navbar-brand {
+    width: 110px;
+  }
 
-
+  .solid-background {
+    background-color: #FDFDFD;
+  }
   .page-content {
     max-width: 800px;
     margin-left: auto;
@@ -76,5 +90,9 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
+  }
+
+  .goto-right {
+    margin-left: auto;
   }
 </style>
