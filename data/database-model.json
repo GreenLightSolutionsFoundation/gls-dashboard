@@ -192,6 +192,9 @@
             "partnerName": {
                 "type": "string"
             },
+            "logoUrl": {
+                "type": "string"
+            },
             "projects": {
                 "collection": "projects",
                 "via": "partnerOrganizations"
