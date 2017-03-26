@@ -8,6 +8,7 @@ import cohort from './cohort';
 import confidentialityAgreement from './confidentiality-agreement';
 import commitmentAgreement from './commitment-agreement';
 import solutioneering101 from './solutioneering-101';
+import solutioneering101Quiz from './solutioneering-101-quiz';
 
 import adminMembers from './admin-members';
 
@@ -25,6 +26,7 @@ const routes = [
       createRoute('/confidentiality-agreement', confidentialityAgreement),
       createRoute('/commitment-agreement', commitmentAgreement),
       createRoute('/solutioneering-101', solutioneering101),
+      createRoute('/solutioneering-101-quiz', solutioneering101Quiz),
     ],
   }),
   createRoute('/admin', app, {

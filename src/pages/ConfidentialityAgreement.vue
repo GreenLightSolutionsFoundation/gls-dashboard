@@ -30,7 +30,7 @@
     <p><strong>G. No Disclosures to Third Parties.</strong> The Corporation shall not release to third parties or allow third parties to copy, inspect, or otherwise use Corporation records or other information pertaining to the identification of a donor or donor’s gifts. No disclosures to third parties of such information, including addresses and demographic information, shall be made without the donor’s consent.</p>
     <p><strong>H. Public Disclosure.</strong> The Corporation will comply with both the letter and spirit of all public disclosure requirements, including the open availability of its Form 990 tax returns. This policy shall not be construed in any manner so as to prevent the Corporation from disclosing information to taxing authorities or other governmental agencies or courts having regulatory control or jurisdiction over the Corporation. However, all staff, volunteers, and consultants must hold strictly confidential all issues of a private nature, including, but not limited to, all issues explicitly discussed in this policy.</p>
     <p><strong>I. Consequences of Policy Violation.</strong> Violations of the Policy are considered very serious, and may result in disciplinary action up to and including dismissal for employees or consultants or removal from the Board or any committee for volunteers.</p>
-    
+
     <h1 class="md-title">Confidentiality Agreement</h1>
     <p>By signing below, I acknowledge that:</p>
     <ol>
@@ -39,28 +39,51 @@
       <li>I agree to abide by this Policy to the best of my ability in my role as a director, officer, volunteer, consultant or employee.</li>
     </ol>
     <p>I acknowledge and agree that I will not disclose any Confidential Information, in whatever form to unauthorized parties. I agree that at the end of my relationship with the Corporation, I will destroy or return to the Corporation all Records containing Confidential Information in my possession or control regardless of how stored or maintained, including all originals, copies and compilations and all information stored or maintained on computer, tapes, discs, E-mail or any other form of technology.</p>
-    <agreement-signature-form :name="confidentialityAgreement.name" :date="confidentialityAgreement.date" :onSubmit="doContinue"></agreement-signature-form>
+
+    <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
+    <agreement-signature-form
+      :name="confidentialityAgreement.name"
+      :date="confidentialityAgreement.date"
+      :onSubmit="doContinue"
+      :errorMessage="errorMessage"
+      >
+    </agreement-signature-form>
   </div>
 </template>
 
 <script>
   import { mapState, mapActions } from 'vuex';
   import AgreementSignatureForm from '../components/AgreementSignatureForm.vue';
+  import FormError from '../components/FormError.vue';
 
   export default {
     name: 'confidentiality-agreement',
+    data() {
+      return {
+        errorMessage: '',
+      };
+    },
+    components: {
+      AgreementSignatureForm,
+      FormError,
+    },
     methods: {
       doContinue(value) {
-        this.updateConfidentialityAgreement(value);
-        this.$router.push({ name: 'commitment-agreement' });
+        this.updateConfidentialityAgreement(value)
+        .then((signed) => {
+          if (signed) {
+            this.$router.push({ name: 'commitment-agreement' });
+            return;
+          }
+
+          this.errorMessage = 'Confidentiality agreement must be signed';
+        })
+        .catch((err) => { this.errorMessage = err; });
       },
       ...mapActions('onboarding', ['updateConfidentialityAgreement']),
     },
     computed: {
       ...mapState('onboarding', ['confidentialityAgreement']),
-    },
-    components: {
-      AgreementSignatureForm
     },
   };
 </script>
