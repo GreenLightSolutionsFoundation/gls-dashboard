@@ -18,17 +18,14 @@
             "semesterJoined": {
                 "type": "string"
             },
+            "semesterGraduated": {
+                "type": "string"
+            },
             "phoneNumber": {
                 "type": "string"
             },
             "userType": {
                 "type": "string"
-            },
-            "createdAt": {
-                "type": "datetime"
-            },
-            "updatedAt": {
-                "type": "datetime"
             },
             "sundevilConnection": {
                 "type": "boolean"
@@ -44,6 +41,12 @@
             },
             "solutioneer101Passed": {
                 "type": "boolean"
+            },
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
             },
             "position": {
                 "object": "positions"
