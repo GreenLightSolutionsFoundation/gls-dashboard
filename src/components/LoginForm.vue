@@ -7,24 +7,22 @@
         v-on:submit.prevent="handleSubmit">
       <div class="login-title">Dashboard Sign In</div>
       
-      <div 
-          class="input-row"
-          v-bind:class="{'input-error':emailError && (!email || !email.length)}">
-        <input
-            placeholder="email"
-            type="text"
+      <md-input-container 
+          v-bind:class="{'md-input-error':emailError && (!email || !email.length)}">
+        <label>Email</label>
+        <md-input
+            type="email"
             v-model="email"/>
-      </div>
+      </md-input-container>
       
-      <div
-          class="input-row"
-          v-bind:class="{'input-error':passwordError && (!password || !password.length)}">
-        <input
-            placeholder="Password"
+      <md-input-container
+          v-bind:class="{'md-input-error':passwordError && (!password || !password.length)}">
+        <label>Password</label>
+        <md-input
             type="password"
             v-model="password"
             v-on:keyup.enter="handleSubmit"/>
-      </div>
+      </md-input-container>
       
       <div class="input-row">
         <a
@@ -69,15 +67,9 @@
     computed: {
       emailClass() {
         this.emailError = !(this.email && this.email.length);
-        return {
-          'input-error': this.emailError
-        };
       },
       passwordClass() {
         this.passwordError = !(this.password && this.password.length);
-        return {
-          'input-error': this.passwordError
-        };
       }
     },
     
@@ -87,7 +79,7 @@
       },
       handleSubmit() {
         if(!this.email || this.email.length < 1) {
-          this.$el.querySelector('input[type=text]').focus();
+          this.$el.querySelector('input[type=email]').focus();
           return this.emailError = true;
         }
         if(!this.password || this.password.length < 1) {
@@ -119,7 +111,7 @@ body, body.md-theme-default {
   &-logo-brand {
     margin: 0 auto;
     height: 200px;
-    width: 300px;
+    width: 100%;
     max-height: 200px;
     max-width:300px;
     
@@ -132,13 +124,15 @@ body, body.md-theme-default {
     text-align: center;
     font-size: 32px;
     padding: 20px;
+    line-height: initial;
   }
   
   form {
     margin: 0 auto;
     background-color: white;
-    width:80%;
-    padding:19px;
+    width: 80%;
+    max-width: 500px;
+    padding: 19px;
     border-radius: 6px;
     border: 1px solid #cccccc;
   }
@@ -151,39 +145,16 @@ body, body.md-theme-default {
     background-color: #66a52e;
     border: none;
     border-radius: 6px;
-    color:white;
-    padding:10px 14px;
+    color: white;
+    padding: 10px 14px;
     font-size: 24px;
   }
   
   .input-row {
-    margin-top:20px;
+    margin-top: 20px;
     position: relative;
     display: flex;
     align-items: baseline;
-    
-    input {
-      width:100%;
-      line-height: 28px;
-      font-size: 24px;
-      height: 45px;
-      border: none;
-      background-color: none;
-    }
-    
-    &:not(:last-child):after {
-      position: absolute;
-      content: "";
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 1px;
-      background-color: #cccccc;
-    }
-  }
-  
-  .input-error {
-    border: 1px solid red;
   }
 }
 </style>

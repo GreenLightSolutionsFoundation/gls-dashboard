@@ -4,7 +4,9 @@
 
     <signup-form v-if="formMode('signup')" :onSubmit="doSignup"></signup-form>
 
-    <div v-if="formMode('login')">
+    <div
+        class="new-here-signup"
+        v-if="formMode('login')">
       New here? <a href="#" @click.prevent="setMode('signup')">Create an account</a>
     </div>
     <div v-if="formMode('signup')">
@@ -85,3 +87,12 @@
     },
   };
 </script>
+
+<style>
+.new-here-signup {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}  
+</style>
