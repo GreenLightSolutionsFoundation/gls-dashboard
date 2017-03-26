@@ -166,7 +166,7 @@
         }
     },
     {
-        "name": "organizations",
+        "name": "partnerOrganizations",
         "fields": {
             "createdAt": {
                 "type": "datetime"
@@ -174,7 +174,7 @@
             "updatedAt": {
                 "type": "datetime"
             },
-            "orgName": {
+            "partnerName": {
                 "type": "string"
             }
         }
