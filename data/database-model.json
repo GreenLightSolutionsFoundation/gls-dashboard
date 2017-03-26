@@ -206,6 +206,9 @@
             },
             "positionName": {
                 "type": "string"
+            },
+            "leadershipPosition": {
+                "type": "boolean"
             }
         }
     },
