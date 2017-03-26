@@ -24,6 +24,9 @@
             "phoneNumber": {
                 "type": "string"
             },
+            "position": {
+                "type": "string"
+            },
             "createdAt": {
                 "type": "datetime"
             },
@@ -41,6 +44,10 @@
             },
             "solutioneer101Passed": {
                 "type": "boolean"
+            },
+            "facultyAdvisor": {
+                "collection": "chapters",
+                "via": "facultyAdvisor"
             },
             "projects": {
                 "collection": "usersProjects",
@@ -69,17 +76,15 @@
             "projectEndDate": {
                 "type": "datetime"
             },
-            "projectManagerUserId": {
-                "type": "point"
-            },
             "projectStatus": {
                 "type": "boolean"
             },
-            "projectLinks": {
-                "type": "string"
-            },
             "users": {
                 "collection": "usersProjects",
+                "via": "project"
+            },
+            "chapters": {
+                "collection": "chapterProjects",
                 "via": "project"
             }
         }
@@ -92,6 +97,9 @@
             },
             "user": {
                 "object": "users"
+            },
+            "rank": {
+                "type": "float"
             }
         }
     },
@@ -106,6 +114,24 @@
             },
             "chapterName": {
                 "type": "string"
+            },
+            "facultyAdvisor": {
+                "object": "users"
+            },
+            "projects": {
+                "collection": "chapterProjects",
+                "via": "chapter"
+            }
+        }
+    },
+    {
+        "name": "chapterProjects",
+        "fields": {
+            "project": {
+                "object": "projects"
+            },
+            "chapter": {
+                "object": "chapters"
             }
         }
     },
@@ -120,17 +146,6 @@
             },
             "orgName": {
                 "type": "string"
-            }
-        }
-    },
-    {
-        "name": "projectFolderLink",
-        "fields": {
-            "createdAt": {
-                "type": "datetime"
-            },
-            "updatedAt": {
-                "type": "datetime"
             }
         }
     },
