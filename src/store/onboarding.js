@@ -12,37 +12,67 @@ export default {
     solutioneering101Quiz: {
       questions: [
         {
-          text: '',
+          id: 1,
+          text: '1.  Question 1.',
           correctAnswerIndex: 0,
           correctAnswerReason: '',
           answers: [
-            '',
-            '',
-            '',
+            {
+              id: 1,
+              text: 'Answer 1',
+            },
+            {
+              id: 2,
+              text: 'Answer 2',
+            },
+            {
+              id: 3,
+              text: 'Answer 3',
+            },
           ],
         },
         {
-          text: '',
+          id: 2,
+          text: '2.  Question 2.',
           correctAnswerIndex: 0,
           correctAnswerReason: '',
           answers: [
-            '',
-            '',
-            '',
+            {
+              id: 4,
+              text: 'Answer 1',
+            },
+            {
+              id: 5,
+              text: 'Answer 2',
+            },
+            {
+              id: 6,
+              text: 'Answer 3',
+            },
           ],
         },
         {
-          text: '',
+          id: 3,
+          text: '3.  Question 3.',
           correctAnswerIndex: 0,
           correctAnswerReason: '',
           answers: [
-            '',
-            '',
-            '',
+            {
+              id: 7,
+              text: 'Answer 1',
+            },
+            {
+              id: 8,
+              text: 'Answer 2',
+            },
+            {
+              id: 9,
+              text: 'Answer 3',
+            },
           ],
         },
       ],
-      userAnswers: [],
+      userAnswers: [0, 0, 0],
     },
   },
   mutations: {
