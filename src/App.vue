@@ -20,20 +20,21 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'app',
+  computed: {
+    ...mapGetters('authentication', ['username']),
+  },
   methods: {
     doLogout() {
       this.logout().then(() => {
-        this.$router.push({
-          name: 'login',
-        });
+        this.$router.push({ name: 'login' });
       });
     },
-    //...mapActions('authentication', ['logout']),
-  }
+    ...mapActions('authentication', ['logout']),
+  },
 };
 </script>
 
