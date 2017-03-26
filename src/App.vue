@@ -1,11 +1,23 @@
 <template>
   <div id="app">
-    <nav>
-      <h1>Page header...</h1>
-      <div>Hello {{ username.fullName }}</div>
-      <div><a href="#" @click.prevent="doLogout">Logout</a></div>
-    </nav>
-    <router-view></router-view>
+
+    <!-- Toolbar -->
+    <md-theme md-name="white">
+      <md-whiteframe>
+        <md-toolbar>
+          <h1 class="md-title">Toolbar</h1>
+          <md-button>Dashboard</md-button>
+          <md-button>Cohorts</md-button>
+          <md-button @click.native.prevent="doLogout">Logout</md-button>
+        </md-toolbar>
+      </md-whiteframe>
+    </md-theme>
+
+    <!-- Page content -->
+    <div class="page-content">
+      <router-view></router-view>
+    </div>
+
   </div>
 </template>
 
@@ -27,3 +39,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  @import './styles/main.scss';
+
+  .page-content {
+    max-width: 750px;
+  }
+</style>
