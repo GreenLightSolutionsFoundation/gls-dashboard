@@ -1,12 +1,46 @@
 <template>
   <div id="app">
-    <h1>Page header...</h1>
-    <router-view></router-view>
+
+    <!-- Toolbar -->
+    <md-theme md-name="white">
+      <md-whiteframe>
+        <md-toolbar>
+          <h1 class="md-title">Toolbar</h1>
+          <a href="#" @click.prevent="doLogout">Logout</a>
+        </md-toolbar>
+      </md-whiteframe>
+    </md-theme>
+
+    <!-- Page content -->
+    <div class="page-content">
+      <router-view></router-view>
+    </div>
+
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'app',
+  methods: {
+    doLogout() {
+      this.logout().then(() => {
+        this.$router.push({
+          name: 'login',
+        });
+      });
+    },
+    //...mapActions('authentication', ['logout']),
+  }
 };
 </script>
+
+<style lang="scss">
+  @import './styles/main.scss';
+
+  .page-content {
+    max-width: 750px;
+  }
+</style>
