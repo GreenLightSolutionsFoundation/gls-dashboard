@@ -45,6 +45,9 @@
             "ndaSigned": {
                 "type": "boolean"
             },
+            "commitmentAgreementSigned": {
+                "type": "boolean"
+            },
             "solutioneer101Passed": {
                 "type": "boolean"
             },
