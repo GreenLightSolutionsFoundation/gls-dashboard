@@ -6,7 +6,9 @@
       <md-whiteframe>
         <md-toolbar>
           <h1 class="md-title">Toolbar</h1>
-          <a href="#" @click.prevent="doLogout">Logout</a>
+          <md-button>Dashboard</md-button>
+          <md-button>Cohorts</md-button>
+          <md-button @click.native.prevent="doLogout">Logout</md-button>
         </md-toolbar>
       </md-whiteframe>
     </md-theme>
