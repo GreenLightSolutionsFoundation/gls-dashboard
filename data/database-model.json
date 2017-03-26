@@ -85,6 +85,9 @@
             "projectStatus": {
                 "type": "boolean"
             },
+            "toatlPositions": {
+                "type": "boolean"
+            },
             "partnerOrganizations": {
                 "object": "partnerOrganizations"
             },
