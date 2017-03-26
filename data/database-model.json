@@ -15,16 +15,10 @@
                 "type": "string",
                 "required": true
             },
-            "chapter": {
-                "object": "chapters"
-            },
             "semesterJoined": {
                 "type": "string"
             },
             "phoneNumber": {
-                "type": "string"
-            },
-            "position": {
                 "type": "string"
             },
             "userType": {
@@ -50,6 +44,12 @@
             },
             "solutioneer101Passed": {
                 "type": "boolean"
+            },
+            "position": {
+                "object": "positions"
+            },
+            "chapter": {
+                "object": "chapters"
             },
             "facultyAdvisor": {
                 "collection": "chapters",
@@ -219,6 +219,10 @@
             },
             "leadershipPosition": {
                 "type": "boolean"
+            },
+            "users": {
+                "collection": "users",
+                "via": "position"
             }
         }
     },

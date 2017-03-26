@@ -10,6 +10,8 @@ import commitmentAgreement from './commitment-agreement';
 import solutioneering101 from './solutioneering-101';
 import solutioneering101Quiz from './solutioneering-101-quiz';
 
+import adminMembers from './admin-members';
+
 const routes = [
   createRoute('/login', login),
 
@@ -25,6 +27,21 @@ const routes = [
       createRoute('/commitment-agreement', commitmentAgreement),
       createRoute('/solutioneering-101', solutioneering101),
       createRoute('/solutioneering-101-quiz', solutioneering101Quiz),
+    ],
+  }),
+  createRoute('/admin', app, {
+    name: 'admin-app',
+    meta: {
+      requiresAuthentication: false,
+      requireIsAdmin: false,
+    },
+    children: [
+      createRoute('members', adminMembers),
+      {
+        // all routes, including /, get redirected to /admin/members
+        path: '*',
+        redirect: { path: '/admin/members' },
+      },
     ],
   }),
 ];
