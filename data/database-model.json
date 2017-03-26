@@ -87,7 +87,7 @@
                 "collection": "chapterProjects",
                 "via": "project"
             },
-            "links":{
+            "links": {
                 "collection": "projectLinks",
                 "via": "project"
             }
@@ -104,6 +104,17 @@
             },
             "rank": {
                 "type": "float"
+            }
+        }
+    },
+    {
+        "name": "projectLinks",
+        "fields": {
+            "project": {
+                "object": "projects"
+            },
+            "link": {
+                "object": "links"
             }
         }
     },
@@ -125,6 +136,10 @@
             "projects": {
                 "collection": "chapterProjects",
                 "via": "chapter"
+            },
+            "links": {
+                "collection": "chapterLinks",
+                "via": "chapter"
             }
         }
     },
@@ -133,6 +148,17 @@
         "fields": {
             "project": {
                 "object": "projects"
+            },
+            "chapter": {
+                "object": "chapters"
+            }
+        }
+    },
+    {
+        "name": "chapterLinks",
+        "fields": {
+            "link": {
+                "object": "links"
             },
             "chapter": {
                 "object": "chapters"
@@ -213,17 +239,10 @@
             "projects": {
                 "collection": "projectLinks",
                 "via": "link"
-            }
-        }
-    },
-    {
-        "name": "projectLinks",
-        "fields": {
-            "project": {
-                "object": "projects"
             },
-            "link": {
-                "object": "links"
+            "chapters": {
+                "collection": "chapterLinks",
+                "via": "link"
             }
         }
     }
