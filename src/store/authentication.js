@@ -1,14 +1,16 @@
 /* global backand */
+const INVALID_GRANT = 'invalid_grant';
+
 export default {
   namespaced: true,
   state: {
     user: null,
-    ready: false,
     pending: false,
     errorMessage: '',
   },
   mutations: {
     setUser(state, user) {
+      // TODO: blacklist bearer token
       state.user = user;
     },
     resetUser(state) {
@@ -40,10 +42,17 @@ export default {
 
         return backand.user.getUserDetails()
         .then((res) => {
-          console.log('getdetails', {res})
+          const { regId } = res.data || {};
+
           commit('togglePending');
+
+          if (regId <= 0) {
+            commit('resetUser');
+            return resolve(null);
+          }
+
           commit('setUser', res.data);
-          resolve(res.data);
+          return resolve(res.data);
         })
         .catch((err) => {
           commit('togglePending');
@@ -62,12 +71,10 @@ export default {
       // use backand to authenticate user
       return backand.signin(email, password)
       .then((res) => {
-        console.log('login', {res})
         // toggle pending state
         commit('togglePending');
 
         // successful login
-        // TODO: blacklist bearer token
         commit('setUser', res.data);
       })
       .catch((err) => {
@@ -76,9 +83,11 @@ export default {
         // toggle pending state
         commit('togglePending');
         if (!err.status) return commit('setErrorMessage', defaultMsg);
+        const { error } = err.data;
 
         switch (err.status) {
           case 400:
+            if (error === INVALID_GRANT) return null;
             return commit('setErrorMessage', 'Invalid credentials, login failed');
           default:
             return commit('setErrorMessage', defaultMsg);
@@ -95,17 +104,23 @@ export default {
 
       return backand.signup(firstName, lastName, email, password, passwordConfirm)
       .then((res) => {
-        console.log({res})
+        commit('togglePending');
         const { username, message, currentStatus } = res.data;
         return { username, message, currentStatus };
       })
       .catch((err) => {
-        console.log({err})
+        commit('togglePending');
         const defaultMsg = 'Signup failed, please try again';
 
         if (!err.status) return commit('setErrorMessage', defaultMsg);
 
+        const { error, error_description } = err.data;
+
         switch (err.status) {
+          case 400:
+            if (error === 'invalid_grant') return null;
+            // eslint-disable-next-line camelcase
+            return commit('setErrorMessage', `Signup failed: ${error_description}`);
           case 406:
             return commit('setErrorMessage', 'User signups are currently disabled');
           default:
@@ -114,9 +129,21 @@ export default {
       });
     },
     logout({ commit }) {
+      commit('resetUser');
+
       return backand.signout()
       .then(() => {
         commit('resetUser');
+      })
+      .catch((err) => {
+        const { status } = err;
+
+        switch (status) {
+          case 0:
+            return null;
+          default:
+            throw err;
+        }
       });
     },
   },
@@ -134,13 +161,8 @@ export default {
         };
       }
 
-      const { firstName, lastName } = state.user;
-
-      return {
-        firstName,
-        lastName,
-        fullName: `${firstName} ${lastName}`,
-      };
+      const { firstName, lastName, fullName } = state.user;
+      return { firstName, lastName, fullName };
     },
   },
 };

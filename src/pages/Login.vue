@@ -1,51 +1,16 @@
 <template>
   <div>
-    <h1>Login page</h1>
-    <form v-if="formMode('login')" id="login-form" @submit.prevent="doLogin">
-      <div>
-        <label>email</label>
-        <input type="email" v-model="email">
-      </div>
-      <div>
-        <label>password</label>
-        <input type="password" v-model="password">
-      </div>
-      <div>
-        <button type="submit">Login</button>
-        <div>
-          <a href="#" @click.prevent="setMode('signup')">Create an account</a>
-        </div>
-      </div>
-    </form>
+    <login-form v-if="formMode('login')" :onSubmit="doLogin"></login-form>
 
-    <form v-if="formMode('signup')" id="signup-form" @submit.prevent="doSignup">
-      <div>
-        <label>first name</label>
-        <input type="text" v-model="firstName">
-      </div>
-      <div>
-        <label>last name</label>
-        <input type="text" v-model="lastName">
-      </div>
-      <div>
-        <label>email</label>
-        <input type="email" v-model="email">
-      </div>
-      <div>
-        <label>password</label>
-        <input type="password" v-model="password">
-      </div>
-      <div>
-        <label>verify password</label>
-        <input type="password" v-model="passwordConfirm">
-      </div>
-      <div>
-        <button type="submit">Signup</button>
-        <div>
-          Have an account? <a href="#" @click.prevent="setMode('login')">Login instead</a>.
-        </div>
-      </div>
-    </form>
+    <signup-form v-if="formMode('signup')" :onSubmit="doSignup"></signup-form>
+
+    <div v-if="formMode('login')">
+      New here? <a href="#" @click.prevent="setMode('signup')">Create an account</a>
+    </div>
+    <div v-if="formMode('signup')">
+      Have an account? <a href="#" @click.prevent="setMode('login')">Login here</a>.
+    </div>
+
 
     <p v-if="pending">Working...</p>
     <p v-if="errorMessage">Error: {{ errorMessage }}</p>
@@ -53,11 +18,16 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex';
-  import store from '../store';
+  import { mapActions, mapState, mapGetters } from 'vuex';
+  import LoginForm from '../components/LoginForm.vue';
+  import SignupForm from '../components/SignupForm.vue';
 
   export default {
     name: 'login-page',
+    components: {
+      LoginForm,
+      SignupForm,
+    },
     data() {
       return {
         mode: 'login',
@@ -69,18 +39,18 @@
       };
     },
     created() {
-      const isAuthenticated = store.getters['authentication/isAuthenticated'];
+      // pre-mounting lifecycle check for user authentication
       const getRedirect = (query) => {
         const { prev, redirect } = query;
         if (redirect !== undefined) return { name: redirect };
         if (prev !== undefined) return { path: prev };
-        return { name: 'app' };
+        return { name: 'home' };
       };
 
       const sendTo = getRedirect(this.$route.query);
 
       // if authenticated, set to correct spot in the app
-      if (isAuthenticated) return this.$router.replace(sendTo);
+      if (this.isAuthenticated) return this.$router.replace(sendTo);
 
       // if not authenticated, save redirect info for post-authentication redirect
       this.sendTo = sendTo;
@@ -88,6 +58,7 @@
     },
     computed: {
       ...mapState('authentication', ['pending', 'errorMessage']),
+      ...mapGetters('authentication', ['isAuthenticated']),
     },
     methods: {
       setMode(mode) {
@@ -96,19 +67,19 @@
       formMode(mode) {
         return this.mode === mode;
       },
-      doLogin() {
-        const { email, password } = this;
-
-        this.login({ email, password })
-        .then(() => {
-          this.$router.push({ name: 'home' });
+      updateField(field, value) {
+        this[field] = value;
+      },
+      doLogin(fields) {
+        this.login(fields).then((user) => {
+          if (user === null) return this.$router.push({ name: 'approval-pending' });
+          return this.$router.push(this.sendTo);
         });
       },
-      doSignup() {
-        const { email, password, passwordConfirm, firstName, lastName } = this;
-
-        this.signup({ email, password, passwordConfirm, firstName, lastName })
-        .then(res => console.log(res))
+      doSignup(fields) {
+        this.signup(fields).then((user) => {
+          if (user === null) this.$router.push({ name: 'approval-pending' });
+        });
       },
       ...mapActions('authentication', ['login', 'signup']),
     },
