@@ -54,6 +54,7 @@ export default {
 <style lang="scss">
   @import './styles/main.scss';
 
+<<<<<<< HEAD
 .page-content {
   max-width: 750px;
 }
@@ -67,4 +68,15 @@ export default {
 }
 
 
+=======
+  .page-content {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+  }
+>>>>>>> 9f074d04404b489d8c4f9521e459ffb8bdfe45cd
 </style>
