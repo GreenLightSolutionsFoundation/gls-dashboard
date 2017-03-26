@@ -8,7 +8,8 @@ import cohort from './cohort';
 import confidentialityAgreement from './confidentiality-agreement';
 import commitmentAgreement from './commitment-agreement';
 import solutioneering101 from './solutioneering-101';
-import userAdmin from './user-admin';
+
+import adminMembers from './admin-members';
 
 const routes = [
   createRoute('/login', login),
@@ -24,7 +25,21 @@ const routes = [
       createRoute('/confidentiality-agreement', confidentialityAgreement),
       createRoute('/commitment-agreement', commitmentAgreement),
       createRoute('/solutioneering-101', solutioneering101),
-      createRoute('/user-admin', userAdmin),
+    ],
+  }),
+  createRoute('/admin', app, {
+    name: 'admin-app',
+    meta: {
+      requiresAuthentication: false,
+      requireIsAdmin: false,
+    },
+    children: [
+      createRoute('members', adminMembers),
+      {
+        // all routes, including /, get redirected to /admin/members
+        path: '*',
+        redirect: { path: '/admin/members' },
+      },
     ],
   }),
 ];

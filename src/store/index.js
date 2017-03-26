@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import authentication from './authentication';
 import onboarding from './onboarding';
+import admin from './admin';
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ const store = new Vuex.Store({
   modules: {
     authentication,
     onboarding,
+    admin,
   },
   strict: process.env.NODE_ENV === 'development',
 });

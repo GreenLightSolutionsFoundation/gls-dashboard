@@ -15,11 +15,7 @@ export function getAll(filters) {
     'relatedObjects',
   ]);
 
-  return backand.object_NAME.getList(OBJECT_NAME, params)
-  .then((res) => {
-    console.log('get all', { res });
-    return res.data;
-  });
+  return backand.object.getList(OBJECT_NAME, params).then(res => res.data);
 }
 
 export function getById(id, filters) {
@@ -29,10 +25,6 @@ export function getById(id, filters) {
     'level',
   ]);
 
-  return backand.object.getOne(OBJECT_NAME, id, params)
-  .then((res) => {
-    console.log('get all', { res });
-    return res.data;
-  });
+  return backand.object.getOne(OBJECT_NAME, id, params).then(res => res.data);
 }
 
