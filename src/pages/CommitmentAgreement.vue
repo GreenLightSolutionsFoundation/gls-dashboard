@@ -20,35 +20,50 @@
     </ul>
     <p>GreenLight Solutions provides a fun and unique way to grow yourself personally and professionally.  Just like with anything in life, the opportunity is what you make of it! Get involved, get activated, and do your very best to create sustainable solutions for your local community! By signing your name below, you are committing to the agreements herein and agree to join our movement of advancing sustainable business model evolution.</p>
 
-    <form novalidate @submit.stop.prevent="submit">
-      <md-layout md-gutter="40">
-        <md-layout md-flex="60" md-flex-xsmall="100">
-          <md-input-container>
-            <label>Full Name</label>
-            <md-input></md-input>
-          </md-input-container>
-        </md-layout>
-        <md-layout>
-          <md-input-container>
-            <label>Date</label>
-            <md-input type="date"></md-input>
-          </md-input-container>
-        </md-layout>
-      </md-layout>
-      <md-layout md-align="end">
-        <md-button class="md-raised md-primary" @click.native.prevent="doContinue">Continue</md-button>
-      </md-layout>
-    </form>
+    <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
+    <agreement-signature-form
+      :name="commitmentAgreement.name"
+      :date="commitmentAgreement.date"
+      :onSubmit="doContinue"
+      :errorMessage="errorMessage"
+      >
+    </agreement-signature-form>
   </div>
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex';
+  import AgreementSignatureForm from '../components/AgreementSignatureForm.vue';
+  import FormError from '../components/FormError.vue';
+
   export default {
     name: 'confidentiality-agreement',
+    components: {
+      AgreementSignatureForm,
+      FormError,
+    },
+    data() {
+      return {
+        errorMessage: '',
+      };
+    },
     methods: {
-      doContinue() {
-        this.$router.push({ name: 'solutioneering-101' });
+      doContinue(value) {
+        this.updateCommitmentAgreement(value)
+        .then((signed) => {
+          if (signed) {
+            this.$router.push({ name: 'solutioneering-101' });
+            return;
+          }
+
+          this.errorMessage = 'Commitment agreement must be signed';
+        })
+        .catch((err) => { this.errorMessage = err; });
       },
+      ...mapActions('onboarding', ['updateCommitmentAgreement']),
+    },
+    computed: {
+      ...mapState('onboarding', ['commitmentAgreement']),
     },
   };
 </script>

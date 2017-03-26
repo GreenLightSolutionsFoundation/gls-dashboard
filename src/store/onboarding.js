@@ -1,15 +1,27 @@
+/* global backand */
+import { pick } from 'lodash';
+
+const USERS_OBJECT = 'users';
+
+function getUserId() {
+  return backand.user.getUserDetails().then(res => res.data.userId);
+}
+
 export default {
   namespaced: true,
   state: {
     confidentialityAgreement: {
-      name: 'Test',
-      date: '12/12/1970',
+      signed: false,
+      name: '',
+      date: '',
     },
     commitmentAgreement: {
+      signed: false,
       name: '',
       date: '',
     },
     solutioneering101Quiz: {
+      completed: false,
       questions: [
         {
           id: 1,
@@ -76,17 +88,54 @@ export default {
     },
   },
   mutations: {
-    setConfidentialityAgreement(state, { name, date }) {
-      Object.assign(state.confidentialityAgreement, { name, date });
+    setConfidentialityAgreement(state, { name, date, signed }) {
+      if (signed) Object.assign(state.confidentialityAgreement, { signed });
+      else Object.assign(state.confidentialityAgreement, { name, date });
+    },
+    setCommitmentAgreement(state, { name, date, signed }) {
+      if (signed) Object.assign(state.commitmentAgreement, { signed });
+      else Object.assign(state.commitmentAgreement, { name, date });
     },
   },
   actions: {
-    updateConfidentialityAgreement({ commit }, value) {
-      return new Promise((resolve) => {
-        // TODO: call service
-        commit('setConfidentialityAgreement', value);
-        resolve(value);
+    updateConfidentialityAgreement({ commit, dispatch, state }, value) {
+      const data = pick(value, ['name', 'date']);
+
+      // TODO: better input validation
+      if (!data.name || !data.date) {
+        return Promise.reject('Name and date are required');
+      }
+
+      commit('setConfidentialityAgreement', data);
+      return Promise.resolve(state.confidentialityAgreement);
+    },
+    signConfidentialityAgreement({ commit }, signed = true) {
+      const data = { ndaSigned: signed };
+
+      return getUserId()
+      .then(userId => backand.object.update(USERS_OBJECT, userId, data))
+      .then((res) => {
+        const { ndaSigned } = res.data;
+        commit('setConfidentialityAgreement', { signed: ndaSigned });
       });
+    },
+    updateCommitmentAgreement({ commit, dispatch, state }, value) {
+      const data = pick(value, ['name', 'date']);
+
+      // TODO: better input validation
+      if (!data.name || !data.date) {
+        return Promise.reject('Name and date are required');
+      }
+
+      commit('setCommitmentAgreement', data);
+      return Promise.resolve(state.confidentialityAgreement);
+    },
+    signCommitmentAgreement({ commit }, signed = true) {
+      const data = { commitmentAgreementSigned: signed };
+
+      return getUserId()
+      .then(userId => backand.object.update(USERS_OBJECT, userId, data))
+      .then(() => true);
     },
   },
 };
