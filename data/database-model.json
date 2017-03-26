@@ -86,6 +86,10 @@
             "chapters": {
                 "collection": "chapterProjects",
                 "via": "project"
+            },
+            "links":{
+                "collection": "projectLinks",
+                "via": "project"
             }
         }
     },
@@ -182,6 +186,44 @@
             },
             "updatedAt": {
                 "type": "datetime"
+            }
+        }
+    },
+    {
+        "name": "links",
+        "fields": {
+            "createdAt": {
+                "type": "datetime"
+            },
+            "updatedAt": {
+                "type": "datetime"
+            },
+            "name": {
+                "type": "string"
+            },
+            "url": {
+                "type": "string"
+            },
+            "embed": {
+                "type": "text"
+            },
+            "linkType": {
+                "type": "string"
+            },
+            "projects": {
+                "collection": "projectLinks",
+                "via": "link"
+            }
+        }
+    },
+    {
+        "name": "projectLinks",
+        "fields": {
+            "project": {
+                "object": "projects"
+            },
+            "link": {
+                "object": "links"
             }
         }
     }
