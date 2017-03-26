@@ -13,6 +13,7 @@ const distPath = 'dist';
 
 module.exports = merge(baseConfig, {
   output: {
+    publicPath: '/greenlight',
     filename: path.join('js', '[name].[chunkhash].js'),
   },
   module: {
