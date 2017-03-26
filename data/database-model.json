@@ -24,6 +24,9 @@
             "phoneNumber": {
                 "type": "string"
             },
+            "position": {
+                "type": "string"
+            },
             "createdAt": {
                 "type": "datetime"
             },
@@ -73,20 +76,14 @@
             "projectEndDate": {
                 "type": "datetime"
             },
-            "projectManagerUserId": {
-                "type": "point"
-            },
             "projectStatus": {
                 "type": "boolean"
-            },
-            "projectLinks": {
-                "type": "string"
             },
             "users": {
                 "collection": "usersProjects",
                 "via": "project"
             },
-            "chapters" : {
+            "chapters": {
                 "collection": "chapterProjects",
                 "via": "project"
             }
@@ -100,6 +97,9 @@
             },
             "user": {
                 "object": "users"
+            },
+            "rank": {
+                "type": "float"
             }
         }
     },
@@ -126,7 +126,7 @@
     },
     {
         "name": "chapterProjects",
-        "fields":{
+        "fields": {
             "project": {
                 "object": "projects"
             },
@@ -148,10 +148,6 @@
                 "type": "string"
             }
         }
-    },
-    {
-        "name": "projectFolderLink",
-        "fields": {}
     },
     {
         "name": "projectApplications",
