@@ -1,21 +1,27 @@
 <template>
   <div>
-    <login-form v-if="formMode('login')" :onSubmit="doLogin"></login-form>
+    <login-form
+      v-if="formMode('login')"
+      :isLoading="pending"
+      :errorMessage="errorMessage"
+      :onSubmit="doLogin"
+      >
+    </login-form>
 
-    <signup-form v-if="formMode('signup')" :onSubmit="doSignup"></signup-form>
+    <signup-form
+      v-if="formMode('signup')"
+      :isLoading="pending"
+      :errorMessage="errorMessage"
+      :onSubmit="doSignup"
+      >
+    </signup-form>
 
-    <div
-        class="new-here-signup"
-        v-if="formMode('login')">
+    <!-- <div class="new-here-signup" v-if="formMode('login')">
       New here? <a href="#" @click.prevent="setMode('signup')">Create an account</a>
-    </div>
+    </div> -->
     <div v-if="formMode('signup')">
       Have an account? <a href="#" @click.prevent="setMode('login')">Login here</a>.
     </div>
-
-
-    <p v-if="pending">Working...</p>
-    <p v-if="errorMessage">Error: {{ errorMessage }}</p>
   </div>
 </template>
 
@@ -94,5 +100,5 @@
   width: 80%;
   max-width: 500px;
   text-align: center;
-}  
+}
 </style>

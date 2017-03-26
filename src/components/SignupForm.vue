@@ -23,8 +23,11 @@
         <input type="password" v-model="passwordConfirm">
       </div>
       <div>
-        <button type="submit">Signup</button>
+        <md-button class="md-raised md-primary" :disabled="isLoading" type="submit">
+          {{ isLoading ? "Working..." : "Signup" }}
+        </md-button>
       </div>
+      <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
     </form>
   </div>
 </template>
@@ -42,6 +45,8 @@
       };
     },
     props: {
+      isLoading: Boolean,
+      errorMessage: String,
       onSubmit: Function,
     },
     methods: {
