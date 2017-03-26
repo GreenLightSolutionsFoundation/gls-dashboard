@@ -1,6 +1,6 @@
 import Demo from '../pages/Demo.vue';
 
 export default {
-  name: 'demo',
+  name: 'home',
   component: Demo,
 };
