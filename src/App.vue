@@ -7,8 +7,6 @@
         <md-toolbar>
         <bulb class="navbar-bulb"></bulb>
         <brand class="navbar-brand"></brand>
-        <md-button>Dashboard</md-button>
-        <md-button @click.native="cohort">Cohorts</md-button>
         <md-button @click.native.prevent="navigateTo('dashboard')">Dashboard</md-button>
         <md-button @click.native.prevent="navigateTo('cohort')">Cohort</md-button>
         <md-menu md-align-trigger class="goto-right">
