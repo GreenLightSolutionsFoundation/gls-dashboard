@@ -42,6 +42,10 @@
             "solutioneer101Passed": {
                 "type": "boolean"
             },
+            "facultyAdvisor": {
+                "collection": "chapters",
+                "via": "facultyAdvisor"
+            },
             "projects": {
                 "collection": "usersProjects",
                 "via": "user"
@@ -81,6 +85,10 @@
             "users": {
                 "collection": "usersProjects",
                 "via": "project"
+            },
+            "chapters" : {
+                "collection": "chapterProjects",
+                "via": "project"
             }
         }
     },
@@ -106,6 +114,24 @@
             },
             "chapterName": {
                 "type": "string"
+            },
+            "facultyAdvisor": {
+                "object": "users"
+            },
+            "projects": {
+                "collection": "chapterProjects",
+                "via": "chapter"
+            }
+        }
+    },
+    {
+        "name": "chapterProjects",
+        "fields":{
+            "project": {
+                "object": "projects"
+            },
+            "chapter": {
+                "object": "chapters"
             }
         }
     },
@@ -125,14 +151,7 @@
     },
     {
         "name": "projectFolderLink",
-        "fields": {
-            "createdAt": {
-                "type": "datetime"
-            },
-            "updatedAt": {
-                "type": "datetime"
-            }
-        }
+        "fields": {}
     },
     {
         "name": "projectApplications",
