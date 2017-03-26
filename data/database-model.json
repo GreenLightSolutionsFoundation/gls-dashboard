@@ -110,6 +110,9 @@
             },
             "rank": {
                 "type": "float"
+            },
+            "assigned": {
+                "type": "boolean"
             }
         }
     },
@@ -183,7 +186,7 @@
             "partnerName": {
                 "type": "string"
             },
-            "projects":{
+            "projects": {
                 "collection": "projects",
                 "via": "partnerOrganizations"
             }
