@@ -45,6 +45,9 @@
             "ndaSigned": {
                 "type": "boolean"
             },
+            "commitmentAgreementSigned": {
+                "type": "boolean"
+            },
             "solutioneer101Passed": {
                 "type": "boolean"
             },
@@ -80,6 +83,9 @@
                 "type": "datetime"
             },
             "projectStatus": {
+                "type": "boolean"
+            },
+            "toatlPositions": {
                 "type": "boolean"
             },
             "partnerOrganizations": {
@@ -203,6 +209,9 @@
             },
             "positionName": {
                 "type": "string"
+            },
+            "leadershipPosition": {
+                "type": "boolean"
             }
         }
     },
