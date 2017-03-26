@@ -1,5 +1,4 @@
 /* global backand */
-const INVALID_GRANT = 'invalid_grant';
 
 export default {
   namespaced: true,
@@ -83,11 +82,9 @@ export default {
         // toggle pending state
         commit('togglePending');
         if (!err.status) return commit('setErrorMessage', defaultMsg);
-        const { error } = err.data;
 
         switch (err.status) {
           case 400:
-            if (error === INVALID_GRANT) return null;
             return commit('setErrorMessage', 'Invalid credentials, login failed');
           default:
             return commit('setErrorMessage', defaultMsg);
