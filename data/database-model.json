@@ -193,17 +193,6 @@
         }
     },
     {
-        "name": "projectApplications",
-        "fields": {
-            "createdAt": {
-                "type": "datetime"
-            },
-            "updatedAt": {
-                "type": "datetime"
-            }
-        }
-    },
-    {
         "name": "positions",
         "fields": {
             "createdAt": {
