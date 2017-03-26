@@ -8,7 +8,7 @@
         <bulb class="navbar-bulb"></bulb>
         <brand class="navbar-brand"></brand>
           <md-button>Dashboard</md-button>
-          <md-button>Cohorts</md-button>
+          <md-button @click.native="cohort">Cohorts</md-button>
           <md-button @click.native.prevent="doLogout">Logout</md-button>
         </md-toolbar>
       </md-whiteframe>
@@ -37,6 +37,10 @@ export default {
     ...mapGetters('authentication', ['username']),
   },
   methods: {
+    cohort(){
+      console.log('clicked cohort');
+      this.$router.push({ name: 'cohort' });
+    },
     doLogout() {
       this.logout().then(() => {
         this.$router.push({ name: 'login' });
