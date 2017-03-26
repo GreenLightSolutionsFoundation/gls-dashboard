@@ -39,36 +39,30 @@
       <li>I agree to abide by this Policy to the best of my ability in my role as a director, officer, volunteer, consultant or employee.</li>
     </ol>
     <p>I acknowledge and agree that I will not disclose any Confidential Information, in whatever form to unauthorized parties. I agree that at the end of my relationship with the Corporation, I will destroy or return to the Corporation all Records containing Confidential Information in my possession or control regardless of how stored or maintained, including all originals, copies and compilations and all information stored or maintained on computer, tapes, discs, E-mail or any other form of technology.</p>
-
-    <form novalidate @submit.stop.prevent="submit">
-      <md-layout md-gutter="40">
-        <md-layout md-flex="60" md-flex-xsmall="100">
-          <md-input-container>
-            <label>Full Name</label>
-            <md-input></md-input>
-          </md-input-container>
-        </md-layout>
-        <md-layout>
-          <md-input-container>
-            <label>Date</label>
-            <md-input type="date"></md-input>
-          </md-input-container>
-        </md-layout>
-      </md-layout>
-      <md-layout md-align="end">
-        <md-button class="md-raised md-primary" @click.native.prevent="doContinue">Continue</md-button>
-      </md-layout>
-    </form>
+    <agreement-signature-form :name="confidentialityAgreement.name" :date="confidentialityAgreement.date" :onSubmit="doContinue"></agreement-signature-form>
+    
+    {{ confidentialityAgreement }}
   </div>
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex';
+  import AgreementSignatureForm from '../components/AgreementSignatureForm.vue';
+
   export default {
     name: 'confidentiality-agreement',
     methods: {
-      doContinue() {
+      doContinue(value) {
+        this.updateConfidentialityAgreement(value);
         this.$router.push({ name: 'commitment-agreement' });
       },
+      ...mapActions('onboarding', ['updateConfidentialityAgreement']),
+    },
+    computed: {
+      ...mapState('onboarding', ['confidentialityAgreement']),
+    },
+    components: {
+      AgreementSignatureForm
     },
   };
 </script>
