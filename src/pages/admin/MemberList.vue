@@ -10,16 +10,20 @@
       </md-input-container>
     </md-toolbar>
 
-    <md-table md-sort="calories" @sort="onSort">
+    <!-- TODO: add sorting -->
+    <!-- <md-table md-sort="name" @sort="onSort"> -->
+    <md-table>
       <md-table-header>
         <md-table-row>
-          <md-table-head md-sort-by="active">Active</md-table-head>
-          <md-table-head md-sort-by="name">Name</md-table-head>
-          <md-table-head md-sort-by="email">Email</md-table-head>
-          <md-table-head md-sort-by="position">Role</md-table-head>
-          <md-table-head md-sort-by="chapter">Chapter</md-table-head>
-          <md-table-head md-sort-by="semesterStarted">Started</md-table-head>
-          <md-table-head md-sort-by="onboarded">Onboarded??</md-table-head>
+        <!-- TODO: add sorting -->
+          <!-- <md-table-head md-sort-by="active">Active</md-table-head> -->
+          <md-table-head>Active</md-table-head>
+          <md-table-head>Name</md-table-head>
+          <md-table-head>Email</md-table-head>
+          <md-table-head>Role</md-table-head>
+          <md-table-head>Chapter</md-table-head>
+          <md-table-head>Started</md-table-head>
+          <md-table-head>Onboarded??</md-table-head>
         </md-table-row>
       </md-table-header>
       <md-table-body>
