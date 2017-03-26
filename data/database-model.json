@@ -41,6 +41,10 @@
             },
             "solutioneer101Passed": {
                 "type": "boolean"
+            },
+            "projects": {
+                "collection": "usersProjects",
+                "via": "user"
             }
         }
     },
@@ -73,17 +77,21 @@
             },
             "projectLinks": {
                 "type": "string"
+            },
+            "users": {
+                "collection": "usersProjects",
+                "via": "project"
             }
         }
     },
     {
         "name": "usersProjects",
         "fields": {
-            "createdAt": {
-                "type": "datetime"
+            "project": {
+                "object": "projects"
             },
-            "updatedAt": {
-                "type": "datetime"
+            "user": {
+                "object": "users"
             }
         }
     },
