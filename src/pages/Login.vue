@@ -52,7 +52,7 @@
         const { prev, redirect } = query;
         if (redirect !== undefined) return { name: redirect };
         if (prev !== undefined) return { path: prev };
-        return { name: 'home' };
+        return { name: 'dashboard' };
       };
 
       const sendTo = getRedirect(this.$route.query);
