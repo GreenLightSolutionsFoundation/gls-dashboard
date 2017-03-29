@@ -10,7 +10,7 @@ import commitmentAgreement from './commitment-agreement';
 import solutioneering101 from './solutioneering-101';
 import solutioneering101Quiz from './solutioneering-101-quiz';
 
-import adminMembers from './admin-members';
+import adminMembers from './admin/members';
 
 const routes = [
   createRoute('/login', login),
