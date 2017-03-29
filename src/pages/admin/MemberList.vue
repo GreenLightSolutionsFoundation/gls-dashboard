@@ -18,23 +18,29 @@
         <!-- TODO: add sorting -->
           <!-- <md-table-head md-sort-by="active">Active</md-table-head> -->
           <md-table-head>Active</md-table-head>
-          <md-table-head>Name</md-table-head>
-          <md-table-head>Email</md-table-head>
-          <md-table-head>Role</md-table-head>
+          <md-table-head>Contact</md-table-head>
           <md-table-head>Chapter</md-table-head>
+          <md-table-head>Role</md-table-head>
           <md-table-head>Started</md-table-head>
           <md-table-head>Onboarded??</md-table-head>
         </md-table-row>
       </md-table-header>
+
       <md-table-body>
         <md-table-row v-for="member in pageMembers" :key="member.id">
-          <md-table-cell>{{ member.currentlyActive }}</md-table-cell>
-          <md-table-cell>{{ member.fullName }}</md-table-cell>
-          <md-table-cell>{{ member.email }}</md-table-cell>
+          <md-table-cell>
+            <md-icon v-if="member.currentlyActive">check</md-icon>
+          </md-table-cell>
+          <md-table-cell>
+            <div>{{ member.fullName }}</div>
+            <div>{{ member.email }}</div>
+          </md-table-cell>
           <md-table-cell>{{ member.position }}</md-table-cell>
           <md-table-cell>{{ member.chapter }}</md-table-cell>
           <md-table-cell>{{ member.semesterStarted }}</md-table-cell>
-          <md-table-cell>{{ member.onboarded }}</md-table-cell>
+          <md-table-cell>
+            <md-icon v-if="member.onboarded">check</md-icon>
+          </md-table-cell>
         </md-table-row>
         <md-table-row v-if="pageMembers.length < perPage" v-for="num in (perPage - pageMembers.length)" :key="'_empty'+num">
           <md-table-cell></md-table-cell>
@@ -52,7 +58,7 @@
       <md-button class="md-icon-button md-raised" @click.native="prevPage">
         <md-icon>arrow_back</md-icon>
       </md-button>
-      <div>Page {{ currentPage}} of {{ totalPages }}</div>
+      <div>Page {{ currentPage}} of {{ totalPages }} ({{ totalMembers }} members)</div>
       <md-button class="md-icon-button md-raised" @click.native="nextPage">
         <md-icon>arrow_forward</md-icon>
       </md-button>
@@ -79,7 +85,7 @@ export default {
       return Math.ceil(this.members.length / this.perPage);
     },
     totalMembers() {
-      return this.members.length
+      return this.members.length;
     },
     pageMembers() {
       // make sure we never go beyond the last page
