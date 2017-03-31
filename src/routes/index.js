@@ -16,6 +16,18 @@ const routes = [
   createRoute('/login', login),
 
   createRoute('/pending', approvalPending),
+  createRoute('/admin', app, {
+    name: 'admin',
+    meta: {
+      requiresAuthentication: true,
+      requireIsAdmin: true,
+    },
+    children: [
+      createRoute('', { redirect: { name: 'admin-members' } }),
+      createRoute('members', adminMembers),
+      // all routes, including /, get redirected to /admin/members
+    ],
+  }),
   createRoute('/', app, {
     meta: {
       requiresAuthentication: false,
@@ -29,21 +41,8 @@ const routes = [
       createRoute('/solutioneering-101-quiz', solutioneering101Quiz),
     ],
   }),
-  createRoute('/admin', app, {
-    name: 'admin-app',
-    meta: {
-      requiresAuthentication: false,
-      requireIsAdmin: false,
-    },
-    children: [
-      createRoute('members', adminMembers),
-      {
-        // all routes, including /, get redirected to /admin/members
-        path: '*',
-        redirect: { path: '/admin/members' },
-      },
-    ],
-  }),
+  // all other non-matching routes get redirected here
+  { path: '*', redirect: { name: 'dashboard' } },
 ];
 
 export default routes;
