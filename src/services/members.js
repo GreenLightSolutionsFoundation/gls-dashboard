@@ -1,5 +1,5 @@
 /* global backand */
-import { pick } from 'lodash';
+import { pick } from '../lib/utils';
 
 const OBJECT_NAME = 'users';
 
