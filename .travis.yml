@@ -4,10 +4,13 @@ node_js:
     - "stable"
     - "6"
 
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
 notifications:
     email: false
-
-before_script: yarn
 
 branches:
   only:
