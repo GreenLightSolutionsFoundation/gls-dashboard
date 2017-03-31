@@ -1,5 +1,7 @@
 # gls-dashboard
 
+[![Build Status](https://travis-ci.org/GreenLightSolutionsFoundation/gls-dashboard.svg?branch=master)](https://travis-ci.org/GreenLightSolutionsFoundation/gls-dashboard)
+
 > greenlight solutions dashboard
 
 ## Build Setup
