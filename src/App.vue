@@ -77,23 +77,23 @@ export default {
     checkIfSolutioneering101IsComplete() {
       // TODO: check if user has completed Solutioneering 101.  If not, show the welcome dialog
       // and skip loading of the actual dashboard, else load their dashboard.
-      this.$nextTick(function () {
-        this.$refs['welcomeDialog'].open();
+      this.$nextTick(() => {
+        this.$refs.welcomeDialog.open();
       });
     },
     doGetStarted() {
-      this.$refs['welcomeDialog'].close();
+      this.$refs.welcomeDialog.close();
       this.$router.push({ name: 'confidentiality-agreement' });
     },
     ...mapActions('authentication', ['logout']),
   },
-  mounted: function() {
+  mounted() {
     if (this.$router.currentRoute.name === 'dashboard') {
       this.checkIfSolutioneering101IsComplete();
     }
   },
   watch: {
-    '$route': function(newRoute, oldRoute) {
+    $route(newRoute) {
       if (newRoute.name === 'dashboard') {
         this.checkIfSolutioneering101IsComplete();
       }
