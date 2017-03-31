@@ -1,9 +1,9 @@
 /* global backand */
-import { pick } from '../lib/utils';
+import { pick, isPlainObject } from '../lib/utils';
 
 const OBJECT_NAME = 'users';
 
-export function getAll(filters) {
+export function getAll(filters = {}) {
   const defaults = {
     sort: backand.helpers.sort.create('lastName', 'asc'),
   };
@@ -19,7 +19,7 @@ export function getAll(filters) {
   ]);
 
   // force sort to be an object
-  if (typeof params.sort === 'object' && params.sort.name) {
+  if (isPlainObject(params.sort) && params.sort.name) {
     params.sort = backand.helpers.sort.create(params.sort.name, params.sort.order || 'asc');
   } else {
     delete params.sort;
