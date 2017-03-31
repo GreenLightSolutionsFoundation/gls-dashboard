@@ -9,6 +9,7 @@
         <brand class="navbar-brand"></brand>
         <md-button @click.native.prevent="navigateTo('dashboard')">Dashboard</md-button>
         <md-button @click.native.prevent="navigateTo('cohort')">Cohort</md-button>
+        <md-button v-if="isAdmin" @click.native.prevent="navigateTo('admin')">Admin</md-button>
         <md-menu md-align-trigger class="goto-right">
           <md-button md-menu-trigger>
             <span>Abbey Christansen</span>
@@ -63,7 +64,7 @@ export default {
     Brand,
   },
   computed: {
-    ...mapGetters('authentication', ['username']),
+    ...mapGetters('authentication', ['username', 'isAdmin']),
   },
   methods: {
     navigateTo(routeName) {
