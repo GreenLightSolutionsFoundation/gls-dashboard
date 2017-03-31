@@ -17,7 +17,6 @@ const routes = [
 
   createRoute('/pending', approvalPending),
   createRoute('/admin', app, {
-    name: 'admin',
     meta: {
       requiresAuthentication: true,
       requireIsAdmin: true,
