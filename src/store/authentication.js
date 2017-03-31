@@ -1,4 +1,5 @@
 /* global backand */
+import { omit } from '../lib/utils';
 
 export default {
   namespaced: true,
@@ -10,7 +11,7 @@ export default {
   mutations: {
     setUser(state, user) {
       // TODO: blacklist bearer token
-      state.user = user;
+      state.user = omit(user, ['access_token', 'token_type']);
     },
     resetUser(state) {
       state.user = null;
@@ -148,6 +149,9 @@ export default {
     isAuthenticated(state) {
       // TODO: real user data checking via the server
       return state.user !== null;
+    },
+    isAdmin(state) {
+      return state.user.role === 'Admin';
     },
     username(state) {
       if (state.user === null) {

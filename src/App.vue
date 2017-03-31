@@ -9,6 +9,7 @@
         <brand class="navbar-brand"></brand>
         <md-button @click.native.prevent="navigateTo('dashboard')">Dashboard</md-button>
         <md-button @click.native.prevent="navigateTo('cohort')">Cohort</md-button>
+        <md-button v-if="isAdmin" @click.native.prevent="navigateTo('admin-members')">Admin</md-button>
         <md-menu md-align-trigger class="goto-right">
           <md-button md-menu-trigger>
             <span>Abbey Christansen</span>
@@ -63,7 +64,7 @@ export default {
     Brand,
   },
   computed: {
-    ...mapGetters('authentication', ['username']),
+    ...mapGetters('authentication', ['username', 'isAdmin']),
   },
   methods: {
     navigateTo(routeName) {
@@ -77,23 +78,23 @@ export default {
     checkIfSolutioneering101IsComplete() {
       // TODO: check if user has completed Solutioneering 101.  If not, show the welcome dialog
       // and skip loading of the actual dashboard, else load their dashboard.
-      this.$nextTick(function () {
-        this.$refs['welcomeDialog'].open();
+      this.$nextTick(() => {
+        this.$refs.welcomeDialog.open();
       });
     },
     doGetStarted() {
-      this.$refs['welcomeDialog'].close();
+      this.$refs.welcomeDialog.close();
       this.$router.push({ name: 'confidentiality-agreement' });
     },
     ...mapActions('authentication', ['logout']),
   },
-  mounted: function() {
+  mounted() {
     if (this.$router.currentRoute.name === 'dashboard') {
       this.checkIfSolutioneering101IsComplete();
     }
   },
   watch: {
-    '$route': function(newRoute, oldRoute) {
+    $route(newRoute) {
       if (newRoute.name === 'dashboard') {
         this.checkIfSolutioneering101IsComplete();
       }
@@ -116,7 +117,8 @@ export default {
   .solid-background {
     background-color: #FDFDFD;
   }
-  .page-content {
+
+  .max-width {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
