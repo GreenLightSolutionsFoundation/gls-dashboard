@@ -61,6 +61,11 @@ describe('utils', () => {
       };
       expect(pick(obj, ['one', 'two', 'eight'])).toEqual(comp);
     });
+
+    test('throws when given a non-object', () => {
+      const check = () => pick(null, ['one']);
+      expect(check).toThrow();
+    });
   });
 
   describe('omit', () => {
@@ -77,6 +82,11 @@ describe('utils', () => {
       delete comp.seven;
       delete comp.eight;
       expect(omit(obj, ['seven', 'eight'])).toEqual(comp);
+    });
+
+    test('throws when given a non-object', () => {
+      const check = () => omit(null, ['one']);
+      expect(check).toThrow();
     });
   });
 });

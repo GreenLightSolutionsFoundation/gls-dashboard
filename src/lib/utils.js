@@ -11,7 +11,7 @@ export function isPlainObject(obj) {
 }
 
 export function pick(obj, fields) {
-  if (!isPlainObject(obj)) return obj;
+  if (!isPlainObject(obj)) throw new Error('pick function expects an object');
   const fieldList = getFieldlist(fields);
   return Object.keys(obj).reduce((acc, key) => {
     // filter out non-matching fields
@@ -24,7 +24,7 @@ export function pick(obj, fields) {
 }
 
 export function omit(obj, fields) {
-  if (!isPlainObject(obj)) return obj;
+  if (!isPlainObject(obj)) throw new Error('omit function expects an object');
   const fieldList = getFieldlist(fields);
   return Object.keys(obj).reduce((acc, key) => {
     // filter out matching fields
