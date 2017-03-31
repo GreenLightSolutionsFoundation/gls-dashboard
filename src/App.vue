@@ -116,7 +116,8 @@ export default {
   .solid-background {
     background-color: #FDFDFD;
   }
-  .page-content {
+
+  .max-width {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
