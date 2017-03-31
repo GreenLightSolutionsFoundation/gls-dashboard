@@ -16,7 +16,7 @@
   };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   .project-ranking-forms {
     text-align: center;
   }

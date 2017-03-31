@@ -3,7 +3,7 @@ import { pick } from '../lib/utils';
 
 const OBJECT_NAME = 'projects';
 
-export default function getAll(filters) {
+export default function getAll(filters = {}) {
   const defaults = {
     sort: backand.helpers.sort.create('projectStartDate', 'asc'),
   };
