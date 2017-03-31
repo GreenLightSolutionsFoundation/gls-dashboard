@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="md-title">Pick your Project!</h1>
-    <div class="project-ranking-forms">
+    <div class="project-ranking-forms" v-if="Array.isArray(projects)">
       <project-card
         v-for="p in projects"
         project-name="p.projectName" 
@@ -14,6 +14,16 @@
         project-end-date="p.projectEndDate">
       </project-card>
     </div>
+    <md-card v-else class="md-warn">
+      <md-card-header>
+        <div class="md-title">Status : {{projects.status}}</div>
+        <div class="md-subhead">Status Text : "{{projects.statusText}}"</div>
+      </md-card-header>
+
+      <md-card-content>
+        {{projects.data}}
+      </md-card-content>
+    </md-card>
   </div>
 </template>
 
@@ -34,7 +44,11 @@
     
     created() {
       getAll().then(data => {
-        this.data.projects = data;
+        console.log('projects', data);
+        this.projects = data;
+      }).catch((error) => {
+        console.error(error);
+        this.projects = error;
       });
     }
   };
