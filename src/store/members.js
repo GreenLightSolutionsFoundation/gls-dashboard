@@ -1,11 +1,11 @@
-import { getAll } from '../../services/members';
+import { getAll, update } from '../services/members';
 
 export default {
   namespaced: true,
   state: {
     members: [],
     sort: {
-      name: '',
+      name: 'lastName',
       order: 'asc',
     },
   },
@@ -37,13 +37,40 @@ export default {
       // });
       // state.members = members;
     },
+    updateMember(state, { id, data }) {
+      state.members = state.members.map((member) => {
+        if (member.id === id) Object.assign(member, data);
+        return member;
+      });
+    },
   },
   actions: {
     getMembers({ commit, state }) {
-      return getAll().then((members) => {
+      const options = { sort: state.sort };
+      return getAll(options).then((members) => {
         commit('setMembers', members);
         commit('setSort', state.sort.name);
         return members;
+      });
+    },
+    activate({ commit, state }, id) {
+      const data = { currentlyActive: true };
+      // optimitic update
+      commit('updateMember', { id, data });
+
+      return update(id, data).catch(() => {
+        // if the request fails, set the user back
+        commit('updateMember', { id, data: { currentlyActive: false } });
+      });
+    },
+    deactivate({ commit, state }, id) {
+      const data = { currentlyActive: false };
+      // optimitic update
+      commit('updateMember', { id, data });
+
+      return update(id, data).catch(() => {
+        // if the request fails, set the user back
+        commit('updateMember', { id, data: { currentlyActive: true } });
       });
     },
   },
