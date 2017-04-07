@@ -113,7 +113,7 @@ export default {
     onSort({ name, type }) {
       console.log({ name, type });
     },
-    ...mapActions('admin/members', ['getMembers']),
+    ...mapActions('admin/members', ['getMembers', 'activate', 'deactivate']),
   },
 };
 </script>
