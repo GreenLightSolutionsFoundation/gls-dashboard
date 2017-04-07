@@ -38,9 +38,15 @@
 </template>
 
 <script>
+  const renderPositionsStatusMessage = ({openPositions, totalPositions}) =>
+    (totalPositions !== openPositions) ?
+        `${openPositions} of ${totalPositions} positions open!`
+      : `All ${totalPositions} positions filled!`;
+  
   export default {
     name:'project-card',
     props: {
+      project: Object,
       projectName: String, 
       partnerName: String, 
       logo: String, 
@@ -48,22 +54,21 @@
       openPositions: Number, 
       totalPositions: Number,
       projectStartDate: Date,
-      projectEndDate: Date
+      projectEndDate: Date,
     },
     data() {
-      return {
-        rank: this.rank || 0
-      };
+      let rank = this.rank || 0;
+      let project = this.project || {};
+      return {rank, ...project,};
     },
     computed: {
       positionsStatusMessage() {
-        const {openPositions, totalPositions} = this;
-        return (totalPositions - openPositions > 0) ? `${openPositions} of ${totalPositions} spots open!` : `All ${totalPositions} spots open!`;
+        return renderPositionsStatusMessage(this);
       }
     },
     methods: {
       handleSelect(ev) {
-        this.rank = parseInt(ev.target.value);
+        this.rank = ev.target.value || this.rank;
       }
     }
   };

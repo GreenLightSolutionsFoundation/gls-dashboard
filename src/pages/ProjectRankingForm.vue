@@ -1,23 +1,17 @@
 <template>
   <div>
     <h1 class="md-title">Pick your Project!</h1>
-    <div class="project-ranking-forms" v-if="Array.isArray(projects)">
+    <div class="project-ranking-forms" v-if="projects">
       <project-card
-        v-for="p in projects"
-        project-name="p.projectName" 
-        partner-name="p.partnerName" 
-        logo="p.logo" 
-        project-description="p.projectDescription"
-        open-positions="p.openPositions" 
-        total-positions="p.totalPositions"
-        project-start-date="p.projectStartDate"
-        project-end-date="p.projectEndDate">
+        v-for="project in projects"
+        :key="project.projectId"
+        :project="project">
       </project-card>
     </div>
     <md-card v-else class="md-warn">
       <md-card-header>
-        <div class="md-title">Status : {{projects.status}}</div>
-        <div class="md-subhead">Status Text : "{{projects.statusText}}"</div>
+        <div class="md-title">Status : {{error.status}}</div>
+        <div class="md-subhead">Status Text : "{{error.statusText}}"</div>
       </md-card-header>
 
       <md-card-content>
@@ -38,18 +32,31 @@
     
     data() {
       return {
-        projects: []
+        projects: [{
+          projectName: 'Project Name',
+          partnerName: 'Partner Name',
+          logo: 'logo.png',
+          projectDescription: 'description',
+          openPositions: 10, 
+          totalPositions: 15,
+          projectStartDate: new Date,
+          projectEndDate: new Date,
+        }]
       }
     },
     
     created() {
-      getAll().then(data => {
-        console.log('projects', data);
-        this.projects = data;
-      }).catch((error) => {
-        console.error(error);
-        this.projects = error;
-      });
+      this.error = null;
+      getAll().then(
+        data => {
+          this.projects = data;
+        }
+      ).catch(
+        error => {
+          this.error = error;
+          // this.projects = null;
+        }
+      );
     }
   };
 </script>
