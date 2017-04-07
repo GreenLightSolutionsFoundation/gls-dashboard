@@ -4,7 +4,6 @@
       <md-card-header-text>
         <div class="md-title">Commitment Agreement</div>
       </md-card-header-text>
-
     </md-card-header>
 
     <md-card-content>

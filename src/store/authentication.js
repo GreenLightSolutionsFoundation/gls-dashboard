@@ -11,7 +11,7 @@ export default {
   mutations: {
     setUser(state, user) {
       // TODO: blacklist bearer token
-      state.user = omit(user, ['access_token', 'token_type']);
+      state.user = user ? omit(user, ['access_token', 'token_type']) : user;
     },
     resetUser(state) {
       state.user = null;
@@ -151,7 +151,7 @@ export default {
       return state.user !== null;
     },
     isAdmin(state) {
-      return state.user.role === 'Admin';
+      return state.user && state.user.role === 'Admin';
     },
     username(state) {
       if (state.user === null) {

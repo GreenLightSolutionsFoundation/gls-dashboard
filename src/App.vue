@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import Bulb from './components/navbarbrand/Bulb.vue';
 import Brand from './components/navbarbrand/Brand.vue';
 
@@ -65,6 +65,7 @@ export default {
   },
   computed: {
     ...mapGetters('authentication', ['username', 'isAdmin']),
+    ...mapState('onboarding', ['solutioneering101Quiz']),
   },
   methods: {
     navigateTo(routeName) {
@@ -76,11 +77,13 @@ export default {
       });
     },
     checkIfSolutioneering101IsComplete() {
-      // TODO: check if user has completed Solutioneering 101.  If not, show the welcome dialog
-      // and skip loading of the actual dashboard, else load their dashboard.
-      this.$nextTick(() => {
-        this.$refs.welcomeDialog.open();
-      });
+      if (!this.solutioneering101Quiz.completed === true) {
+        this.$nextTick(() => {
+          this.$refs.welcomeDialog.open();
+        });
+      } else {
+        // TODO: load projects dashboard
+      }
     },
     doGetStarted() {
       this.$refs.welcomeDialog.close();
@@ -123,6 +126,7 @@ export default {
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
+    margin-bottom: 40px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
