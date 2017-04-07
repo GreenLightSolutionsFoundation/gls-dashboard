@@ -39,3 +39,13 @@ export function getById(id, filters = {}) {
   return backand.object.getOne(OBJECT_NAME, id, params).then(res => res.data);
 }
 
+export function update(id, data, filters = {}) {
+  if (!isPlainObject(data)) return Promise.reject('data must be an object');
+
+  const params = pick(filters, [
+    'returnObject',
+    'deep',
+  ]);
+
+  return backand.object.update(OBJECT_NAME, id, data, params).then(res => res.data);
+}
