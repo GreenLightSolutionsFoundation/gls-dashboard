@@ -39,14 +39,20 @@
 
 <script>
   const renderPositionsStatusMessage = ({openPositions, totalPositions}) =>
+<<<<<<< HEAD
     (totalPositions !== openPositions) ?
         `${openPositions} of ${totalPositions} positions open!`
+=======
+    (totalPositions !== openPositions)
+      ? `${openPositions} of ${totalPositions} positions open!`
+>>>>>>> test-proj
       : `All ${totalPositions} positions filled!`;
   
   export default {
     name:'project-card',
     props: {
       project: Object,
+<<<<<<< HEAD
       projectName: String, 
       partnerName: String, 
       logo: String, 
@@ -55,6 +61,8 @@
       totalPositions: Number,
       projectStartDate: Date,
       projectEndDate: Date,
+=======
+>>>>>>> test-proj
     },
     data() {
       let rank = this.rank || 0;
