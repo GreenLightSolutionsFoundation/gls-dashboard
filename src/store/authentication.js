@@ -10,7 +10,6 @@ export default {
   },
   mutations: {
     setUser(state, user) {
-      // TODO: blacklist bearer token
       state.user = user ? omit(user, ['access_token', 'token_type']) : user;
     },
     resetUser(state) {

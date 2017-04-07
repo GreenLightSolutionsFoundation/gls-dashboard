@@ -1,4 +1,4 @@
-import { getAll } from '../../services/members';
+import { getAll } from '../services/members';
 
 export default {
   namespaced: true,
