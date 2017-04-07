@@ -5,7 +5,7 @@ const OBJECT_NAME = 'users';
 
 export function getAll(filters = {}) {
   const defaults = {
-    sort: backand.helpers.sort.create('lastName', 'asc'),
+    sort: { name: 'lastName', order: 'asc' },
   };
   const params = pick(filters, [
     'pageSize',
@@ -25,10 +25,11 @@ export function getAll(filters = {}) {
     delete params.sort;
   }
 
-  return backand.object.getList(OBJECT_NAME, Object.assign(defaults, params)).then(res => res.data);
+  const options = Object.assign(defaults, params);
+  return backand.object.getList(OBJECT_NAME, options).then(res => res.data);
 }
 
-export function getById(id, filters) {
+export function getById(id, filters = {}) {
   const params = pick(filters, [
     'deep',
     'exclude',
@@ -38,3 +39,13 @@ export function getById(id, filters) {
   return backand.object.getOne(OBJECT_NAME, id, params).then(res => res.data);
 }
 
+export function update(id, data, filters = {}) {
+  if (!isPlainObject(data)) return Promise.reject('data must be an object');
+
+  const params = pick(filters, [
+    'returnObject',
+    'deep',
+  ]);
+
+  return backand.object.update(OBJECT_NAME, id, data, params).then(res => res.data);
+}

@@ -11,12 +11,13 @@ import projectRankingForm from './project-ranking-form';
 import solutioneering101 from './solutioneering-101';
 import solutioneering101Quiz from './solutioneering-101-quiz';
 
-import adminMembers from './admin/members';
+import members from './members';
 
 const routes = [
   createRoute('/login', login),
 
   createRoute('/pending', approvalPending),
+
   createRoute('/admin', app, {
     meta: {
       requiresAuthentication: true,
@@ -24,13 +25,14 @@ const routes = [
     },
     children: [
       createRoute('', { redirect: { name: 'admin-members' } }),
-      createRoute('members', adminMembers),
+      createRoute('members', members),
       // all routes, including /, get redirected to /admin/members
     ],
   }),
+
   createRoute('/', app, {
     meta: {
-      requiresAuthentication: false,
+      requiresAuthentication: true,
     },
     children: [
       createRoute('', dashboard),
