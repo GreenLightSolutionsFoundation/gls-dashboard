@@ -15,6 +15,10 @@
         <input type="email" v-model="email">
       </div>
       <div>
+        <label>username</label>
+        <input type="text" v-model="username">
+      </div>
+      <div>
         <label>password</label>
         <input type="password" v-model="password">
       </div>
@@ -37,6 +41,7 @@
     name: 'signup-form',
     data() {
       return {
+        username: '',
         email: '',
         password: '',
         passwordConfirm: '',
@@ -51,8 +56,8 @@
     },
     methods: {
       doSubmit() {
-        const { email, password, passwordConfirm, firstName, lastName, onSubmit } = this;
-        this.onSubmit({ email, password, passwordConfirm, firstName, lastName, onSubmit });
+        const { username, email, password, passwordConfirm, firstName, lastName, onSubmit } = this;
+        this.onSubmit({ username, email, password, passwordConfirm, firstName, lastName, onSubmit });
       },
     },
   };

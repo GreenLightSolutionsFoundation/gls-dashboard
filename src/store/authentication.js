@@ -1,5 +1,5 @@
-/* global backand */
 import { omit } from '../lib/utils';
+import parse from '../lib/parse';
 
 export default {
   namespaced: true,
@@ -25,73 +25,56 @@ export default {
   actions: {
     initialize({ commit }) {
       return new Promise((resolve, reject) => {
-        function handleFailure(err) {
-          reject(err || 'backand client not found');
+        if (!parse) {
+          reject('parse client not found');
+          return;
         }
 
-        if (typeof backand === 'undefined') return handleFailure();
+        const user = parse.User.current();
 
-        backand.init({
-          appName: 'greenlight',
-          signUpToken: 'f23b604e-524f-447d-af47-008f757a0a58',
-          anonymousToken: 'b48541ec-4682-4f51-b9af-8d96d6c5abf4',
-        });
-
-        commit('togglePending');
-
-        return backand.user.getUserDetails()
-        .then((res) => {
-          const { regId } = res.data || {};
-
-          commit('togglePending');
-
-          if (regId <= 0) {
-            commit('resetUser');
-            return resolve(null);
-          }
-
-          commit('setUser', res.data);
-          return resolve(res.data);
-        })
-        .catch((err) => {
-          commit('togglePending');
-          handleFailure(err);
-        });
+        if (!user) {
+          commit('resetUser');
+          resolve(null);
+        } else {
+          commit('setUser', user);
+          resolve(user);
+        }
       });
     },
-    login({ commit }, { email, password } = {}) {
+    login({ commit }, { username, password } = {}) {
       // set error message without credentials
-      if (!email || !password) return commit('setErrorMessage', 'Please enter your credentials');
+      if (!username || !password) return commit('setErrorMessage', 'Please enter your credentials');
 
       // clear error and set pending state
       commit('setErrorMessage', '');
       commit('togglePending');
 
       // use backand to authenticate user
-      return backand.signin(email, password)
-      .then((res) => {
+      return parse.User.logIn(username, password)
+      .then((user) => {
         // toggle pending state
         commit('togglePending');
 
         // successful login
-        commit('setUser', res.data);
+        commit('setUser', user);
       })
       .catch((err) => {
         const defaultMsg = 'Login failed';
+        const { code, message } = err;
 
         // toggle pending state
         commit('togglePending');
-        if (!err.status) return commit('setErrorMessage', defaultMsg);
+        if (!message) return commit('setErrorMessage', defaultMsg);
 
-        switch (err.status) {
-          case 400:
+        switch (code) {
+          case 101:
             return commit('setErrorMessage', 'Invalid credentials, login failed');
           default:
             return commit('setErrorMessage', defaultMsg);
         }
       });
     },
-    signup({ commit }, { email, password, passwordConfirm, firstName, lastName } = {}) {
+    signup({ commit }, { username, email, password, passwordConfirm, firstName, lastName } = {}) {
       if (!passwordConfirm !== !password) return commit('setErrorMessage', 'Passwords to not match');
       if (!firstName || !lastName) return commit('setErrorMessage', 'Please enter your first and last name');
 
@@ -99,27 +82,28 @@ export default {
       commit('setErrorMessage', '');
       commit('togglePending');
 
-      return backand.signup(firstName, lastName, email, password, passwordConfirm)
-      .then((res) => {
+      const user = new parse.User();
+
+      user.set('username', username);
+      user.set('password', password);
+      user.set('email', email);
+      user.set('firstName', firstName);
+      user.set('lastName', lastName);
+
+      // return backand.signup(firstName, lastName, email, password, passwordConfirm)
+      return parse.User.signUp(null)
+      .then((pUser) => {
         commit('togglePending');
-        const { username, message, currentStatus } = res.data;
-        return { username, message, currentStatus };
+        return { username, id: pUser.id, user: null };
       })
       .catch((err) => {
         commit('togglePending');
         const defaultMsg = 'Signup failed, please try again';
+        const { code, message } = err;
 
-        if (!err.status) return commit('setErrorMessage', defaultMsg);
+        if (!message) return commit('setErrorMessage', defaultMsg);
 
-        const { error, error_description } = err.data;
-
-        switch (err.status) {
-          case 400:
-            if (error === 'invalid_grant') return null;
-            // eslint-disable-next-line camelcase
-            return commit('setErrorMessage', `Signup failed: ${error_description}`);
-          case 406:
-            return commit('setErrorMessage', 'User signups are currently disabled');
+        switch (code) {
           default:
             return commit('setErrorMessage', defaultMsg);
         }
@@ -128,7 +112,7 @@ export default {
     logout({ commit }) {
       commit('resetUser');
 
-      return backand.signout()
+      return parse.User.logOut()
       .then(() => {
         commit('resetUser');
       })

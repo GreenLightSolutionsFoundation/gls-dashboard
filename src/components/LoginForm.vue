@@ -5,9 +5,9 @@
     <form id="login-form"v-on:submit.prevent="handleSubmit">
       <h2>Dashboard Sign In</h2>
 
-      <md-input-container :class="{ 'md-input-invalid': emailError }">
-        <label>Email</label>
-        <md-input type="email" v-model="email"></md-input>
+      <md-input-container :class="{ 'md-input-invalid': usernameError }">
+        <label>Username</label>
+        <md-input type="text" v-model="username"></md-input>
       </md-input-container>
 
       <md-input-container :class="{'md-input-invalid': passwordError }">
@@ -50,24 +50,24 @@
 
     data() {
       return {
-        email: '',
+        username: '',
         password: '',
-        emailError: false,
+        usernameError: false,
         passwordError: false,
       };
     },
 
     methods: {
       resetErrors() {
-        this.emailError = false;
+        this.usernameError = false;
         this.passwordError = false;
       },
       handleSubmit() {
         let hasErrors = false;
         this.resetErrors();
 
-        if (!this.email || this.email.length < 1) {
-          this.emailError = true;
+        if (!this.username || this.username.length < 1) {
+          this.usernameError = true;
           hasErrors = true;
         }
 
@@ -78,8 +78,8 @@
 
         if (hasErrors) return;
 
-        const { email, password } = this;
-        this.onSubmit({ email, password });
+        const { username, password } = this;
+        this.onSubmit({ username, password });
       },
     },
   };
