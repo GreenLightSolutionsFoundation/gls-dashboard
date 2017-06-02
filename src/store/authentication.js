@@ -66,6 +66,7 @@ export default {
         commit('togglePending');
         if (!message) return commit('setErrorMessage', defaultMsg);
 
+        // codes: http://docs.parseplatform.org/js/guide/#error-codes
         switch (code) {
           case 101:
             return commit('setErrorMessage', 'Invalid credentials, login failed');
@@ -103,6 +104,7 @@ export default {
 
         if (!message) return commit('setErrorMessage', defaultMsg);
 
+        // codes: http://docs.parseplatform.org/js/guide/#error-codes
         switch (code) {
           default:
             return commit('setErrorMessage', defaultMsg);
@@ -119,6 +121,7 @@ export default {
       .catch((err) => {
         const { status } = err;
 
+        // codes: http://docs.parseplatform.org/js/guide/#error-codes
         switch (status) {
           case 0:
             return null;
