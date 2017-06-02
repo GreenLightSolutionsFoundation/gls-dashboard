@@ -1,5 +1,5 @@
 import { omit } from '../lib/utils';
-import parse from '../lib/parse';
+import { getCurrent, login, logout, create } from '../services/user';
 
 export default {
   namespaced: true,
@@ -24,21 +24,11 @@ export default {
   },
   actions: {
     initialize({ commit }) {
-      return new Promise((resolve, reject) => {
-        if (!parse) {
-          reject('parse client not found');
-          return;
-        }
-
-        const user = parse.User.current();
-
-        if (!user) {
-          commit('resetUser');
-          resolve(null);
-        } else {
-          commit('setUser', user);
-          resolve(user);
-        }
+      return getCurrent()
+      .then((user) => {
+        if (!user) commit('resetUser');
+        else commit('setUser', user);
+        return user;
       });
     },
     login({ commit }, { username, password } = {}) {
@@ -49,13 +39,9 @@ export default {
       commit('setErrorMessage', '');
       commit('togglePending');
 
-      // use backand to authenticate user
-      return parse.User.logIn(username, password)
+      return login(username, password)
       .then((user) => {
-        // toggle pending state
         commit('togglePending');
-
-        // successful login
         commit('setUser', user);
       })
       .catch((err) => {
@@ -75,27 +61,17 @@ export default {
         }
       });
     },
-    signup({ commit }, { username, email, password, passwordConfirm, firstName, lastName } = {}) {
-      if (!passwordConfirm !== !password) return commit('setErrorMessage', 'Passwords to not match');
-      if (!firstName || !lastName) return commit('setErrorMessage', 'Please enter your first and last name');
-
+    signup({ commit }, userDetails) {
       // clear error and set pending state
       commit('setErrorMessage', '');
       commit('togglePending');
 
-      const user = new parse.User();
-
-      user.set('username', username);
-      user.set('password', password);
-      user.set('email', email);
-      user.set('firstName', firstName);
-      user.set('lastName', lastName);
-
-      // return backand.signup(firstName, lastName, email, password, passwordConfirm)
-      return parse.User.signUp(null)
-      .then((pUser) => {
+      return create(userDetails)
+      .then((user) => {
         commit('togglePending');
-        return { username, id: pUser.id, user: null };
+        return {
+          username: userDetails.username,
+        };
       })
       .catch((err) => {
         commit('togglePending');
@@ -114,10 +90,8 @@ export default {
     logout({ commit }) {
       commit('resetUser');
 
-      return parse.User.logOut()
-      .then(() => {
-        commit('resetUser');
-      })
+      return logout()
+      .then(() => commit('resetUser'))
       .catch((err) => {
         const { status } = err;
 
