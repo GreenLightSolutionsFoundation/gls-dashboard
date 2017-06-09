@@ -69,6 +69,7 @@
       ...mapGetters('authentication', ['isAuthenticated']),
     },
     methods: {
+      ...mapActions('authentication', ['login', 'signup']),
       setMode(mode) {
         this.mode = mode;
       },
@@ -89,7 +90,6 @@
           if (user === null) this.$router.push({ name: 'approval-pending' });
         });
       },
-      ...mapActions('authentication', ['login', 'signup']),
     },
   };
 </script>

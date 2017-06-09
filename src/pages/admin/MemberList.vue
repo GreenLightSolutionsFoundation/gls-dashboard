@@ -1,5 +1,5 @@
 <template>
-  <md-table-card>
+  <md-table>
     <md-toolbar class="md-transparent">
       <md-input-container>
         <h2 class="md-title" style="flex: 1">Members</h2>
@@ -26,7 +26,13 @@
         </md-table-row>
       </md-table-header>
 
-      <md-table-body>
+      <md-table-body v-if="!totalMembers">
+        <md-table-row>
+          <td class="md-table-cell" colspan="7">No Members to found</td>
+        </md-table-row>
+      </md-table-body>
+
+      <md-table-body v-if="totalMembers > 0">
         <md-table-row v-for="member in pageMembers" :key="member.id">
           <md-table-cell>
             <md-icon v-if="member.currentlyActive" @click.native="deactivate(member.id)">check_box</md-icon>
@@ -35,6 +41,7 @@
           <md-table-cell>
             <div>{{ member.fullName }}</div>
             <div>{{ member.email }}</div>
+            <div>{{ member.username }}</div>
           </md-table-cell>
           <md-table-cell>
             <md-icon v-if="member.onboarded">star</md-icon>
@@ -64,7 +71,7 @@
         <md-icon>arrow_forward</md-icon>
       </md-button>
     </div>
-  </md-table-card>
+  </md-table>
 </template>
 
 <script>
@@ -79,11 +86,13 @@ export default {
     };
   },
   created() {
+    // fetch member lost on creation
     this.getMembers();
   },
   computed: {
+    ...mapState('admin/members', ['members']),
     totalPages() {
-      return Math.ceil(this.members.length / this.perPage);
+      return Math.max(1, Math.ceil(this.members.length / this.perPage));
     },
     totalMembers() {
       return this.members.length;
@@ -97,9 +106,9 @@ export default {
 
       return this.members.slice(start, end);
     },
-    ...mapState('admin/members', ['members']),
   },
   methods: {
+    ...mapActions('admin/members', ['getMembers', 'activate', 'deactivate']),
     nextPage() {
       this.currentPage = Math.min(this.totalPages, this.currentPage + 1);
     },
@@ -113,12 +122,11 @@ export default {
     onSort({ name, type }) {
       console.log({ name, type });
     },
-    ...mapActions('admin/members', ['getMembers', 'activate', 'deactivate']),
   },
 };
 </script>
 
-<style>
+<style scoped>
   .pagination {
     display: flex;
     padding: 6px;

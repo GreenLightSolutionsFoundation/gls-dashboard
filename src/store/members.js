@@ -4,10 +4,10 @@ export default {
   namespaced: true,
   state: {
     members: [],
-    sort: {
-      name: 'lastName',
-      order: 'asc',
-    },
+    // sort: {
+    //   name: 'lastName',
+    //   order: 'asc',
+    // },
   },
   mutations: {
     setMembers(state, members) {
@@ -25,18 +25,11 @@ export default {
         };
       });
     },
-    setSort(state, name, order) {
-      // set the sort info in the state
-      const sortOrder = order || state.order;
-      Object.assign(state.sort, { name, order: sortOrder });
-
-      // sort the member list, update the state array
-      // TODO: re-sort the user list
-      // const members = [...state.members];
-      // members.sort((prev, next) => {
-      // });
-      // state.members = members;
-    },
+    // TODO: re-sort the user list
+    // setSort(state, name, order) {
+    //   // set the sort info in the state
+    //   Object.assign(state.sort, { name, order: sortOrder });
+    // },
     updateMember(state, { id, data }) {
       state.members = state.members.map((member) => {
         if (member.id === id) Object.assign(member, data);
@@ -49,13 +42,13 @@ export default {
       const options = { sort: state.sort };
       return getAll(options).then((members) => {
         commit('setMembers', members);
-        commit('setSort', state.sort.name);
+        // commit('setSort', state.sort.name);
         return members;
       });
     },
     activate({ commit, state }, id) {
       const data = { currentlyActive: true };
-      // optimitic update
+      // optimistic update
       commit('updateMember', { id, data });
 
       return update(id, data).catch(() => {
