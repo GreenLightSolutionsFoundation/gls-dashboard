@@ -67,7 +67,7 @@ export default {
       commit('togglePending');
 
       return create(userDetails)
-      .then((user) => {
+      .then(() => {
         commit('togglePending');
         return {
           username: userDetails.username,
