@@ -1,51 +1,52 @@
-/* global backand */
-import { pick, isPlainObject } from '../lib/utils';
+import { isPlainObject } from '../lib/utils';
+import parse from '../lib/parse';
 
-const OBJECT_NAME = 'users';
+function formatUser(user) {
+  const { id, attributes } = user;
+  return { id, ...attributes };
+}
+
+function formatUsers(users) {
+  if (Array.isArray(users)) return users.map(formatUser);
+  return formatUser(users);
+}
 
 export function getAll(filters = {}) {
-  const defaults = {
-    sort: { name: 'lastName', order: 'asc' },
-  };
-  const params = pick(filters, [
-    'pageSize',
-    'pageNumber',
-    'filter',
-    'sort',
-    'search',
-    'exclude',
-    'deep',
-    'relatedObjects',
-  ]);
+  const query = new parse.Query(parse.User);
+  const options = Object.assign({
+    pageSize: 30,
+    pageNumber: 1,
+    sort: {
+      name: 'lastName',
+      order: 'asc',
+    },
+    search: null,
+  }, filters);
 
-  // force sort to be an object
-  if (isPlainObject(params.sort) && params.sort.name) {
-    params.sort = backand.helpers.sort.create(params.sort.name, params.sort.order || 'asc');
-  } else {
-    delete params.sort;
+  query.limit(options.pageSize);
+  query.skip((options.pageNumber - 1) * options.pageSize);
+
+  if (isPlainObject(options.sort) && options.sort.name && options.sort.order) {
+    if (options.sort.order === 'desc') query.descending(options.sort.name);
+    else query.ascending(options.sort.name);
   }
 
-  const options = Object.assign(defaults, params);
-  return backand.object.getList(OBJECT_NAME, options).then(res => res.data);
+  if (isPlainObject(options.search) && options.search.name && options.search.value) {
+    query.equalTo(options.search.name, options.search.value);
+  }
+
+  return query.find().then(formatUsers);
 }
 
-export function getById(id, filters = {}) {
-  const params = pick(filters, [
-    'deep',
-    'exclude',
-    'level',
-  ]);
-
-  return backand.object.getOne(OBJECT_NAME, id, params).then(res => res.data);
+export function getById(id) {
+  const query = new parse.Query(parse.User);
+  return query.get(id).then(formatUser);
 }
 
-export function update(id, data, filters = {}) {
+export function update(id, data) {
   if (!isPlainObject(data)) return Promise.reject('data must be an object');
 
-  const params = pick(filters, [
-    'returnObject',
-    'deep',
-  ]);
-
-  return backand.object.update(OBJECT_NAME, id, data, params).then(res => res.data);
+  const member = getById(id);
+  Object.keys(data).forEach(prop => member.set(prop, data[prop]));
+  return member.save().then(formatUser);
 }
