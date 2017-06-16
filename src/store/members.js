@@ -1,4 +1,4 @@
-import { getAll, update } from '../services/members';
+import { getAll, setActive } from '../services/members';
 
 export default {
   namespaced: true,
@@ -11,19 +11,7 @@ export default {
   },
   mutations: {
     setMembers(state, members) {
-      state.members = members.map((member) => {
-        const {
-          solutioneer101Passed,
-          ndaSigned,
-          commitmentAgreementSigned,
-        } = member;
-
-        return {
-          ...member,
-          fullName: `${member.firstName} ${member.lastName}`,
-          onboarded: (solutioneer101Passed && ndaSigned && commitmentAgreementSigned),
-        };
-      });
+      state.members = members;
     },
     // TODO: re-sort the user list
     // setSort(state, name, order) {
@@ -32,7 +20,7 @@ export default {
     // },
     updateMember(state, { id, data }) {
       state.members = state.members.map((member) => {
-        if (member.id === id) Object.assign(member, data);
+        if (member.id === id) Object.keys(data).forEach(key => (member[key] = data[key]));
         return member;
       });
     },
@@ -42,28 +30,17 @@ export default {
       const options = { sort: state.sort };
       return getAll(options).then((members) => {
         commit('setMembers', members);
-        // commit('setSort', state.sort.name);
         return members;
       });
     },
-    activate({ commit, state }, id) {
-      const data = { currentlyActive: true };
+    setActive({ commit, state }, { member, active }) {
       // optimistic update
-      commit('updateMember', { id, data });
+      const data = { currentlyActive: Boolean(active) };
+      commit('updateMember', { id: member.id, data });
 
-      return update(id, data).catch(() => {
+      return setActive(member, data.currentlyActive).catch(() => {
         // if the request fails, set the user back
-        commit('updateMember', { id, data: { currentlyActive: false } });
-      });
-    },
-    deactivate({ commit, state }, id) {
-      const data = { currentlyActive: false };
-      // optimitic update
-      commit('updateMember', { id, data });
-
-      return update(id, data).catch(() => {
-        // if the request fails, set the user back
-        commit('updateMember', { id, data: { currentlyActive: true } });
+        commit('updateMember', { id: member.id, data: { currentlyActive: !data.currentlyActive } });
       });
     },
   },
