@@ -1,11 +1,13 @@
-/* global backand */
-import { pick } from '../lib/utils';
+import moment from 'moment';
+import { getCurrent } from '../services/user';
 
-const USERS_OBJECT = 'users';
-
-function getUserId() {
-  return backand.user.getUserDetails().then(res => res.data.userId);
+function isSignedName(nameToCheck, user) {
+  if (nameToCheck.trim().toLowerCase().replace(' ', '') !== user.fullName().trim().toLowerCase().replace(' ', '')) {
+    return false;
+  }
+  return true;
 }
+
 
 export default {
   namespaced: true,
@@ -112,8 +114,7 @@ export default {
   },
   mutations: {
     setConfidentialityAgreement(state, { name, date, signed }) {
-      if (signed) Object.assign(state.confidentialityAgreement, { signed });
-      else Object.assign(state.confidentialityAgreement, { name, date });
+      Object.assign(state.confidentialityAgreement, { name, date, signed });
     },
     setCommitmentAgreement(state, { name, date, signed }) {
       if (signed) Object.assign(state.commitmentAgreement, { signed });
@@ -127,44 +128,47 @@ export default {
     },
   },
   actions: {
-    updateConfidentialityAgreement({ commit, dispatch, state }, value) {
-      const data = pick(value, ['name', 'date']);
-
-      // TODO: better input validation
-      if (!data.name || !data.date) {
-        return Promise.reject('Name and date are required');
-      }
-
-      commit('setConfidentialityAgreement', data);
-      return Promise.resolve(state.confidentialityAgreement);
+    signConfidentialityAgreement({ commit, state }, { name, date }) {
+      const user = getCurrent();
+      return new Promise((resolve, reject) => {
+        if (user) {
+          resolve(user);
+        }
+        reject('no user found');
+      })
+        .then((res) => {
+          if (isSignedName(name, res)) {
+            return Promise.reject('signed name does not match the user name');
+          }
+          state.confidentialityAgreement.signed = true;
+          res.set('ndaSigned', true);
+          res.set('ndaSignedDate', moment(date).format('L'));
+          return res.save();
+        })
+        .then((res) => {
+          commit('setConfidentialityAgreement', res);
+        });
     },
-    signConfidentialityAgreement({ commit }, signed = true) {
-      const data = { ndaSigned: signed };
-
-      return getUserId()
-      .then(userId => backand.object.update(USERS_OBJECT, userId, data))
-      .then((res) => {
-        const { ndaSigned } = res.data;
-        commit('setConfidentialityAgreement', { signed: ndaSigned });
-      });
-    },
-    updateCommitmentAgreement({ commit, dispatch, state }, value) {
-      const data = pick(value, ['name', 'date']);
-
-      // TODO: better input validation
-      if (!data.name || !data.date) {
-        return Promise.reject('Name and date are required');
-      }
-
-      commit('setCommitmentAgreement', data);
-      return Promise.resolve(state.confidentialityAgreement);
-    },
-    signCommitmentAgreement({ commit }, signed = true) {
-      const data = { commitmentAgreementSigned: signed };
-
-      return getUserId()
-      .then(userId => backand.object.update(USERS_OBJECT, userId, data))
-      .then(() => true);
+    signCommitmentAgreement({ commit, state }, { name, date }) {
+      const user = getCurrent();
+      return new Promise((resolve, reject) => {
+        if (user) {
+          resolve(user);
+        }
+        reject('no user found');
+      })
+        .then((res) => {
+          if (isSignedName(name, res)) {
+            return Promise.reject('signed name does not match the current user name');
+          }
+          state.commitmentAgreement.signed = true;
+          res.set('commitmentAgreementSigned', true);
+          res.set('commitmentAgreementSignedDate', moment(date).format('L'));
+          return res.save();
+        })
+        .then((res) => {
+          commit('setCommitmentAgreement', res);
+        });
     },
     updateSolutioneering101QuizQuestionIsCorrectState({ commit }, value) {
       commit('setSolutioneering101QuestionIsCorrectState', value);
