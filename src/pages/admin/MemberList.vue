@@ -35,8 +35,8 @@
       <md-table-body v-if="totalMembers > 0">
         <md-table-row v-for="member in pageMembers" :key="member.id">
           <md-table-cell>
-            <md-icon v-if="member.currentlyActive" @click.native="deactivate(member.id)">check_box</md-icon>
-            <md-icon v-if="!member.currentlyActive" @click.native="activate(member.id)">check_box_outline_blank</md-icon>
+            <md-icon v-if="member.currentlyActive" @click.native="deactivate(member)">check_box</md-icon>
+            <md-icon v-if="!member.currentlyActive" @click.native="activate(member)">check_box_outline_blank</md-icon>
           </md-table-cell>
           <md-table-cell>
             <div>{{ member.fullName }}</div>
@@ -44,7 +44,7 @@
             <div>{{ member.username }}</div>
           </md-table-cell>
           <md-table-cell>
-            <md-icon v-if="member.onboarded">star</md-icon>
+            <md-icon v-if="member.isOnboarded">star</md-icon>
           </md-table-cell>
           <md-table-cell>{{ member.chapter }}</md-table-cell>
           <md-table-cell>{{ member.position }}</md-table-cell>
@@ -108,7 +108,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions('admin/members', ['getMembers', 'activate', 'deactivate']),
+    ...mapActions('admin/members', ['getMembers', 'setActive']),
+    activate(member) {
+      this.setActive({ member, active: true });
+    },
+    deactivate(member) {
+      this.setActive({ member, active: false });
+    },
     nextPage() {
       this.currentPage = Math.min(this.totalPages, this.currentPage + 1);
     },
