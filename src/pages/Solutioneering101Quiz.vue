@@ -53,7 +53,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions('onboarding', ['setSolutioneering101QuizQuestionIsCorrectState', 'updateSolutioneering101QuizCompletedStatus']),
+    ...mapActions('onboarding', ['setSolutioneering101QuizQuestionIsCorrectState', 'setSolutioneering101QuizCompletedStatus']),
     doContinue() {
       // Mark the form as isSubmitted
       this.isSubmitted = true;
@@ -74,8 +74,12 @@ export default {
       }
 
       if (allQuestionsCorrect) {
-        this.setSolutioneering101QuizCompletedStatus(true);
-        this.$router.push({ name: 'dashboard' });
+        this.setSolutioneering101QuizCompletedStatus(true)
+          .then((result) => {
+            if (result) {
+              this.$router.push({ name: 'dashboard' });
+            }
+        })
       } else {
         this.errorMessage = 'Please correct your answers and select Continue';
       }

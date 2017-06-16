@@ -123,7 +123,7 @@ export default {
       Object.assign(state.solutioneering101Quiz.questions[questionIndex].isCorrect = isCorrect);
     },
     setSolutioneering101QuizCompletedStatus(state, value) {
-      Object.assign(state.solutioneer101Passed, { completed: value });
+      Object.assign(state.solutioneering101Quiz.completed, { completed: value });
     },
   },
   actions: {
@@ -140,7 +140,7 @@ export default {
             return Promise.reject('signed name does not match the user name');
           }
           res.ndaSigned = true;
-          res.ndaSignedDate = moment(date).toISOString();
+          res.ndaSignedDate = moment(date).toDate();
           return res.save();
         })
         .then((res) => {
@@ -162,7 +162,7 @@ export default {
             return Promise.reject('signed name does not match the current user name');
           }
           res.commitmentAgreementSigned = true;
-          res.commitmentAgreementSignedDate = moment(date).toISOString();
+          res.commitmentAgreementSignedDate = moment(date).toDate();
           return res.save();
         })
         .then((res) => {
@@ -175,7 +175,7 @@ export default {
       commit('setSolutioneering101QuestionIsCorrectState', value);
       return Promise.resolve(value);
     },
-    setSolutioneering101QuizCompletedStatus({ commit }) {
+    setSolutioneering101QuizCompletedStatus({ commit }, value) {
       const user = getCurrent();
       return new Promise((resolve, reject) => {
         if (user) {
@@ -184,7 +184,7 @@ export default {
         reject('no user found');
       })
         .then((res) => {
-          res.solutioneer101Passed = true;
+          res.solutioneer101Passed = value;
           return res.save();
         })
         .then((res) => {
