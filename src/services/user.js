@@ -1,11 +1,12 @@
 import parse from '../lib/parse';
+import User, { wrapUser } from '../models/user';
 
 export function login(username, password) {
   return parse.User.logIn(username, password);
 }
 
 export function create(details = {}) {
-  const user = new parse.User();
+  const user = new User();
 
   const {
     username,
@@ -19,13 +20,8 @@ export function create(details = {}) {
   if (!passwordConfirm !== !password) return Promise.reject('Passwords to not match');
   if (!firstName || !lastName) return Promise.reject('Please enter your first and last name');
 
-  user.set('username', username);
-  user.set('password', password);
-  user.set('email', email);
-  user.set('firstName', firstName);
-  user.set('lastName', lastName);
-
-  return user.signUp(null);
+  Object.assign(user, { username, password, email, firstName, lastName });
+  return user.create();
 }
 
 export function logout() {
@@ -33,13 +29,16 @@ export function logout() {
 }
 
 export function getCurrent() {
-  const currentUser = parse.User.current();
+  const currentUser = wrapUser(parse.User.current());
 
   if (currentUser) return Promise.resolve(currentUser);
   return Promise.resolve(null);
 }
 
+export function getUser(user) {
+  return user ? Promise.resolve(user) : getCurrent();
+}
+
 export function isAuthenticated(user) {
-  if (!user) return Promise.resolve(user.authenticated());
-  return getCurrent().then(cUser => cUser.authenticated());
+  return getUser(user).then(cUser => cUser.authenticated());
 }
