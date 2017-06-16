@@ -2,7 +2,7 @@ import moment from 'moment';
 import { getCurrent } from '../services/user';
 
 function isSignedName(nameToCheck, user) {
-  if (nameToCheck.trim().toLowerCase().replace(' ', '') !== user.fullName().trim().toLowerCase().replace(' ', '')) {
+  if (nameToCheck.trim().toLowerCase().replace(' ', '') !== user.fullName.trim().toLowerCase().replace(' ', '')) {
     return false;
   }
   return true;
@@ -120,14 +120,14 @@ export default {
       Object.assign(state.commitmentAgreement, { name, date: moment(date).format('L'), signed });
     },
     setSolutioneering101QuestionIsCorrectState(state, { questionIndex, isCorrect }) {
-      state.solutioneering101Quiz.questions[questionIndex].isCorrect = isCorrect;
+      Object.assign(state.solutioneering101Quiz.questions[questionIndex].isCorrect = isCorrect);
     },
     setSolutioneering101QuizCompletedStatus(state, value) {
-      state.solutioneering101Quiz.completed = value;
+      Object.assign(state.solutioneer101Passed, { completed: value });
     },
   },
   actions: {
-    signConfidentialityAgreement({ commit }, { name, date }) {
+    signConfidentialityAgreement({ commit, state }, { name, date }) {
       const user = getCurrent();
       return new Promise((resolve, reject) => {
         if (user) {
@@ -139,16 +139,17 @@ export default {
           if (!isSignedName(name, res)) {
             return Promise.reject('signed name does not match the user name');
           }
-          commit('setConfidentialityAgreement', name, date, true);
-          res.set('ndaSigned', true);
-          res.set('ndaSignedDate', moment(date));
+          res.ndaSigned = true;
+          res.ndaSignedDate = moment(date).toISOString();
           return res.save();
         })
         .then((res) => {
-          commit('setConfidentialityAgreement', res);
+          const ndaSigned = res.attributes.ndaSigned;
+          commit('setConfidentialityAgreement', { name, date, signed: ndaSigned });
+          return Promise.resolve({ name, date, signed: ndaSigned });
         });
     },
-    signCommitmentAgreement({ commit }, { name, date }) {
+    signCommitmentAgreement({ commit, state }, { name, date }) {
       const user = getCurrent();
       return new Promise((resolve, reject) => {
         if (user) {
@@ -160,17 +161,19 @@ export default {
           if (!isSignedName(name, res)) {
             return Promise.reject('signed name does not match the current user name');
           }
-          commit('setCommitmentAgreement', name, date, true);
-          res.set('commitmentAgreementSigned', true);
-          res.set('commitmentAgreementSignedDate', moment(date));
+          res.commitmentAgreementSigned = true;
+          res.commitmentAgreementSignedDate = moment(date).toISOString();
           return res.save();
         })
         .then((res) => {
-          commit('setCommitmentAgreement', res);
+          const commitmentAgreementSigned = res.attributes.commitmentAgreementSigned;
+          commit('setCommitmentAgreement', { name, date, signed: commitmentAgreementSigned });
+          return Promise.resolve({ name, date, signed: commitmentAgreementSigned });
         });
     },
-    updateSolutioneering101QuizQuestionIsCorrectState({ commit }, value) {
+    setSolutioneering101QuizQuestionIsCorrectState({ commit }, value) {
       commit('setSolutioneering101QuestionIsCorrectState', value);
+      return Promise.resolve(value);
     },
     setSolutioneering101QuizCompletedStatus({ commit }) {
       const user = getCurrent();
@@ -181,12 +184,13 @@ export default {
         reject('no user found');
       })
         .then((res) => {
-          commit('setSolutioneering101QuizCompletedStatus', true);
-          res.set('solutioneer101Passed', true);
+          res.solutioneer101Passed = true;
           return res.save();
         })
         .then((res) => {
-          commit('setSolutioneering101QuizCompletedStatus', res);
+          const completed = res.attributes.solutioneer101Passed;
+          commit('setSolutioneering101QuizCompletedStatus', { value: completed });
+          return Promise.resolve(completed);
         });
     },
   },

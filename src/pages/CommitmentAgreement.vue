@@ -55,12 +55,11 @@ export default {
     ...mapActions('onboarding', ['signCommitmentAgreement']),
     doContinue(value) {
       this.signCommitmentAgreement(value)
-        .then((signed) => {
-          if (signed) {
+        .then((res) => {
+          if (res.signed) {
             this.$router.push({ name: 'solutioneering-101' });
             return;
           }
-
           this.errorMessage = 'Commitment agreement must be signed';
         })
         .catch((err) => { this.errorMessage = err; });
