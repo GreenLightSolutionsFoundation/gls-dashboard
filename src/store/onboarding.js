@@ -127,7 +127,7 @@ export default {
     },
   },
   actions: {
-    signConfidentialityAgreement({ commit, state }, { name, date }) {
+    signConfidentialityAgreement({ commit }, { name, date }) {
       const user = getCurrent();
       return new Promise((resolve, reject) => {
         if (user) {
@@ -138,7 +138,7 @@ export default {
         .then((res) => {
           if (!isSignedName(name, res)) {
             return Promise.reject('signed name does not match the user name');
-          } 
+          }
           commit('setConfidentialityAgreement', name, date, true);
           res.set('ndaSigned', true);
           res.set('ndaSignedDate', moment(date));
@@ -148,7 +148,7 @@ export default {
           commit('setConfidentialityAgreement', res);
         });
     },
-    signCommitmentAgreement({ commit, state }, { name, date }) {
+    signCommitmentAgreement({ commit }, { name, date }) {
       const user = getCurrent();
       return new Promise((resolve, reject) => {
         if (user) {
@@ -172,9 +172,7 @@ export default {
     updateSolutioneering101QuizQuestionIsCorrectState({ commit }, value) {
       commit('setSolutioneering101QuestionIsCorrectState', value);
     },
-    setSolutioneering101QuizCompletedStatus({ commit, state }, value) {
-      // TODO: Call in to backand to update Solutionering 101 quiz status
-      debugger;
+    setSolutioneering101QuizCompletedStatus({ commit }) {
       const user = getCurrent();
       return new Promise((resolve, reject) => {
         if (user) {
