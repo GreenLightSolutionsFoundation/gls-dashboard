@@ -10,7 +10,7 @@ export default class User {
   get updatedAt() { return this.user.updatedAt; }
   get username() { return this.user.get('username'); }
   get email() { return this.user.get('email'); }
-  get fullName() { return `${this.firstName} x ${this.lastName}`; }
+  get fullName() { return `${this.firstName} ${this.lastName}`; }
   get isOnboarded() {
     return this.solutioneer101Passed && this.ndaSigned && this.commitmentAgreementSigned;
   }
