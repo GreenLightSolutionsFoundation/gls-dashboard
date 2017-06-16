@@ -114,11 +114,10 @@ export default {
   },
   mutations: {
     setConfidentialityAgreement(state, { name, date, signed }) {
-      Object.assign(state.confidentialityAgreement, { name, date, signed });
+      Object.assign(state.confidentialityAgreement, { name, date: moment(date).format('L'), signed });
     },
     setCommitmentAgreement(state, { name, date, signed }) {
-      if (signed) Object.assign(state.commitmentAgreement, { signed });
-      else Object.assign(state.commitmentAgreement, { name, date });
+      Object.assign(state.commitmentAgreement, { name, date: moment(date).format('L'), signed });
     },
     setSolutioneering101QuestionIsCorrectState(state, { questionIndex, isCorrect }) {
       state.solutioneering101Quiz.questions[questionIndex].isCorrect = isCorrect;
@@ -137,12 +136,12 @@ export default {
         reject('no user found');
       })
         .then((res) => {
-          if (isSignedName(name, res)) {
+          if (!isSignedName(name, res)) {
             return Promise.reject('signed name does not match the user name');
-          }
-          state.confidentialityAgreement.signed = true;
+          } 
+          commit('setConfidentialityAgreement', name, date, true);
           res.set('ndaSigned', true);
-          res.set('ndaSignedDate', moment(date).format('L'));
+          res.set('ndaSignedDate', moment(date));
           return res.save();
         })
         .then((res) => {
@@ -158,12 +157,12 @@ export default {
         reject('no user found');
       })
         .then((res) => {
-          if (isSignedName(name, res)) {
+          if (!isSignedName(name, res)) {
             return Promise.reject('signed name does not match the current user name');
           }
-          state.commitmentAgreement.signed = true;
+          commit('setCommitmentAgreement', name, date, true);
           res.set('commitmentAgreementSigned', true);
-          res.set('commitmentAgreementSignedDate', moment(date).format('L'));
+          res.set('commitmentAgreementSignedDate', moment(date));
           return res.save();
         })
         .then((res) => {
@@ -173,9 +172,24 @@ export default {
     updateSolutioneering101QuizQuestionIsCorrectState({ commit }, value) {
       commit('setSolutioneering101QuestionIsCorrectState', value);
     },
-    updateSolutioneering101QuizCompletedStatus({ commit }, value) {
+    setSolutioneering101QuizCompletedStatus({ commit, state }, value) {
       // TODO: Call in to backand to update Solutionering 101 quiz status
-      commit('setSolutioneering101QuizCompletedStatus', value);
+      debugger;
+      const user = getCurrent();
+      return new Promise((resolve, reject) => {
+        if (user) {
+          resolve(user);
+        }
+        reject('no user found');
+      })
+        .then((res) => {
+          commit('setSolutioneering101QuizCompletedStatus', true);
+          res.set('solutioneer101Passed', true);
+          return res.save();
+        })
+        .then((res) => {
+          commit('setSolutioneering101QuizCompletedStatus', res);
+        });
     },
   },
 };
