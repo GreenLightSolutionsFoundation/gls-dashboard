@@ -114,7 +114,7 @@ export default {
   },
   mutations: {
     setConfidentialityAgreement(state, { name, date, signed }) {
-      Object.assign(state.confidentialityAgreement, { name, date, signed });
+      Object.assign(state.confidentialityAgreement, { name, date: moment(date).format('L'), signed });
     },
     setCommitmentAgreement(state, { name, date, signed }) {
       Object.assign(state.commitmentAgreement, { name, date: moment(date).format('L'), signed });
