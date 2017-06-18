@@ -1,4 +1,6 @@
+import moment from 'moment';
 import parse from '../lib/parse';
+
 
 export default class User {
   constructor(user) {
@@ -36,11 +38,17 @@ export default class User {
   get commitmentAgreementSigned() { return this.user.get('commitmentAgreementSigned'); }
   set commitmentAgreementSigned(val) { return this.user.set('commitmentAgreementSigned', Boolean(val)); }
 
+  get commitmentAgreementSignedDate() { return this.user.get('commitmentAgreementSignedDate'); }
+  set commitmentAgreementSignedDate(val) { return this.user.set('commitmentAgreementSignedDate', moment(val).utc().toDate()); }
+
   get solutioneer101Passed() { return this.user.get('solutioneer101Passed'); }
   set solutioneer101Passed(val) { return this.user.set('solutioneer101Passed', Boolean(val)); }
 
   get ndaSigned() { return this.user.get('ndaSigned'); }
   set ndaSigned(val) { return this.user.set('ndaSigned', Boolean(val)); }
+
+  get ndaSignedDate() { return this.user.get('ndaSignedDate'); }
+  set ndaSignedDate(val) { return this.user.set('ndaSignedDate', moment(val).utc().toDate()); }
 
   save() { return this.user.save(); }
   create() { return this.user.signUp(null); }
