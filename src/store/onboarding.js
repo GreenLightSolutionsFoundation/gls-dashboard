@@ -140,7 +140,7 @@ export default {
             return Promise.reject('signed name does not match the user name');
           }
           res.ndaSigned = true;
-          res.ndaSignedDate = moment(date).toDate();
+          res.ndaSignedDate = date;
           return res.save();
         })
         .then((res) => {
@@ -162,7 +162,7 @@ export default {
             return Promise.reject('signed name does not match the current user name');
           }
           res.commitmentAgreementSigned = true;
-          res.commitmentAgreementSignedDate = moment(date).toDate();
+          res.commitmentAgreementSignedDate = date;
           return res.save();
         })
         .then((res) => {
