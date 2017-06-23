@@ -4,20 +4,11 @@ export default {
   namespaced: true,
   state: {
     members: [],
-    // sort: {
-    //   name: 'lastName',
-    //   order: 'asc',
-    // },
   },
   mutations: {
     setMembers(state, members) {
       state.members = members;
     },
-    // TODO: re-sort the user list
-    // setSort(state, name, order) {
-    //   // set the sort info in the state
-    //   Object.assign(state.sort, { name, order: sortOrder });
-    // },
     updateMember(state, { id, data }) {
       state.members = state.members.map((member) => {
         if (member.id === id) Object.keys(data).forEach(key => (member[key] = data[key]));
