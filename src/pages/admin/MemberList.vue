@@ -12,17 +12,17 @@
 
     <!-- TODO: add sorting -->
     <!-- <md-table md-sort="name" @sort="onSort"> -->
-    <md-table>
+    <md-table :md-sort="sortField" :md-sort-type="sortOrder" @sort="onSort">
       <md-table-header>
         <md-table-row>
         <!-- TODO: add sorting -->
           <!-- <md-table-head md-sort-by="active">Active</md-table-head> -->
-          <md-table-head>Active</md-table-head>
-          <md-table-head>Contact</md-table-head>
-          <md-table-head>Onboarded</md-table-head>
-          <md-table-head>Chapter</md-table-head>
+          <md-table-head md-sort-by="currentlyActive">Active</md-table-head>
+          <md-table-head md-sort-by="lastName">Contact</md-table-head>
+          <md-table-head md-sort-by="isOnboarded">Onboarded</md-table-head>
+          <md-table-head md-sort-by="chapter">Chapter</md-table-head>
           <md-table-head>Role</md-table-head>
-          <md-table-head>Started</md-table-head>
+          <md-table-head md-sort-by="createdAt">Started</md-table-head>
         </md-table-row>
       </md-table-header>
 
@@ -76,6 +76,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import sortArray from 'sort-array';
 
 export default {
   name: 'admin-member-list-page',
@@ -83,6 +84,8 @@ export default {
     return {
       perPage: 20,
       currentPage: 1,
+      sortField: 'lastName',
+      sortOrder: 'asc',
     };
   },
   created() {
@@ -90,7 +93,12 @@ export default {
     this.getMembers();
   },
   computed: {
-    ...mapState('admin/members', ['members']),
+    ...mapState('admin/members', {
+      members(state) {
+        const sortedMembers = sortArray([...state.members], this.sortField);
+        return (this.sortOrder === 'asc') ? sortedMembers : sortedMembers.reverse();
+      },
+    }),
     totalPages() {
       return Math.max(1, Math.ceil(this.members.length / this.perPage));
     },
@@ -126,7 +134,8 @@ export default {
       this.currentPage = page;
     },
     onSort({ name, type }) {
-      console.log({ name, type });
+      this.sortField = name;
+      this.sortOrder = type;
     },
   },
 };
