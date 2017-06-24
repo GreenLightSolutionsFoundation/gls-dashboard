@@ -4,13 +4,12 @@ import login from './login';
 import approvalPending from './approval-pending';
 import dashboard from './dashboard';
 import app from './app';
-import cohort from './cohort';
 import confidentialityAgreement from './confidentiality-agreement';
 import commitmentAgreement from './commitment-agreement';
 import projectRankingForm from './project-ranking-form';
 import solutioneering101 from './solutioneering-101';
 import solutioneering101Quiz from './solutioneering-101-quiz';
-
+import admin from './admin';
 import members from './members';
 
 const routes = [
@@ -18,15 +17,13 @@ const routes = [
 
   createRoute('/pending', approvalPending),
 
-  createRoute('/admin', app, {
+  createRoute('/admin', admin, {
     meta: {
       requiresAuthentication: true,
       requireIsAdmin: true,
     },
     children: [
-      createRoute('', { redirect: { name: 'admin-members' } }),
       createRoute('members', members),
-      // all routes, including /, get redirected to /admin/members
     ],
   }),
 
@@ -36,7 +33,6 @@ const routes = [
     },
     children: [
       createRoute('', dashboard),
-      createRoute('/cohort', cohort),
       createRoute('/project-ranking-form', projectRankingForm),
       createRoute('/confidentiality-agreement', confidentialityAgreement),
       createRoute('/commitment-agreement', commitmentAgreement),
