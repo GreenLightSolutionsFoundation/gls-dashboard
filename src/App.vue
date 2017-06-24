@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import primaryNav from './components/layout/Navigation-Primary.vue';
 
 export default {
   name: 'app',
   components: {
-    primaryNav
+    primaryNav,
   },
   computed: {
     ...mapState('onboarding', ['solutioneering101Quiz']),
@@ -53,7 +53,6 @@ export default {
       this.$refs.welcomeDialog.close();
       this.$router.push({ name: 'confidentiality-agreement' });
     },
-    ...mapActions('authentication', ['logout']),
   },
   mounted() {
     if (this.$router.currentRoute.name === 'dashboard') {
@@ -72,8 +71,6 @@ export default {
 
 <style lang="scss">
   @import './styles/main.scss';
-
-
 
   .solid-background {
     background-color: #FDFDFD;

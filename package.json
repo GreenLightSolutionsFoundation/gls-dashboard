@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config config/webpack.dev.js",
     "build": "npm run test && rimraf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
-    "lint": "eslint ./src ./config",
+    "lint": "eslint \"src/**/*.{js,vue}\" \"config/**/*.js\"",
     "test": "npm run lint && npm run testOnly",
     "testOnly": "jest",
     "prepush": "npm run lint"

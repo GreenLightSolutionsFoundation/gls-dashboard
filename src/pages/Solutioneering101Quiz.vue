@@ -5,7 +5,7 @@
         <div class="md-title">Solutioneering 101 Quiz</div>
       </md-card-header-text>
     </md-card-header>
-  
+
     <md-card-content>
       <form novalidate @submit.stop.prevent="submit">
         <div v-for="(question, questionIndex) in solutioneering101Quiz.questions" class="question-container">
@@ -59,16 +59,17 @@ export default {
       this.isSubmitted = true;
 
       // Check the answers
-      var allQuestionsCorrect = true;
-      for (var questionIndex = 0; questionIndex < this.solutioneering101Quiz.questions.length; questionIndex++) {
-        var question = this.solutioneering101Quiz.questions[questionIndex];
-        var userAnswer = this.userAnswers[questionIndex];
-        var correctAnswer = question.correctAnswerIndex;
+      let allQuestionsCorrect = true;
+      const questionCount = this.solutioneering101Quiz.questions.length;
+      for (let questionIndex = 0; questionIndex < questionCount; questionIndex += 1) {
+        const question = this.solutioneering101Quiz.questions[questionIndex];
+        const userAnswer = this.userAnswers[questionIndex];
+        const correctAnswer = question.correctAnswerIndex;
 
         if (userAnswer === correctAnswer) {
-          this.setSolutioneering101QuizQuestionIsCorrectState({ questionIndex: questionIndex, isCorrect: true });
+          this.setSolutioneering101QuizQuestionIsCorrectState({ questionIndex, isCorrect: true });
         } else {
-          this.setSolutioneering101QuizQuestionIsCorrectState({ questionIndex: questionIndex, isCorrect: false });
+          this.setSolutioneering101QuizQuestionIsCorrectState({ questionIndex, isCorrect: false });
           allQuestionsCorrect = false;
         }
       }
@@ -79,7 +80,7 @@ export default {
             if (result) {
               this.$router.push({ name: 'dashboard' });
             }
-        })
+          });
       } else {
         this.errorMessage = 'Please correct your answers and select Continue';
       }
