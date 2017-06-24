@@ -5,7 +5,7 @@
         <div class="md-title">Solutioneering 101 Quiz</div>
       </md-card-header-text>
     </md-card-header>
-  
+
     <md-card-content>
       <form novalidate @submit.stop.prevent="submit">
         <div v-for="(question, questionIndex) in solutioneering101Quiz.questions" class="question-container">
@@ -60,7 +60,8 @@ export default {
 
       // Check the answers
       let allQuestionsCorrect = true;
-      for (let questionIndex = 0; questionIndex < this.solutioneering101Quiz.questions.length; questionIndex++) {
+      const questionCount = this.solutioneering101Quiz.questions.length;
+      for (let questionIndex = 0; questionIndex < questionCount; questionIndex += 1) {
         const question = this.solutioneering101Quiz.questions[questionIndex];
         const userAnswer = this.userAnswers[questionIndex];
         const correctAnswer = question.correctAnswerIndex;
