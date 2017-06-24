@@ -4,20 +4,21 @@ export default {
   namespaced: true,
   state: {
     members: [],
-    // sort: {
-    //   name: 'lastName',
-    //   order: 'asc',
-    // },
+    filters: { // see lib/query_builder for use
+      pageSize: 20,
+      pageNumber: 1,
+      sortField: 'lastName',
+      sortOrder: 'asc',
+      search: [],
+    },
   },
   mutations: {
     setMembers(state, members) {
       state.members = members;
     },
-    // TODO: re-sort the user list
-    // setSort(state, name, order) {
-    //   // set the sort info in the state
-    //   Object.assign(state.sort, { name, order: sortOrder });
-    // },
+    setFilters(state, filters = {}) {
+      Object.assign(state.filters, filters);
+    },
     updateMember(state, { id, data }) {
       state.members = state.members.map((member) => {
         if (member.id === id) Object.keys(data).forEach(key => (member[key] = data[key]));
@@ -26,9 +27,9 @@ export default {
     },
   },
   actions: {
-    getMembers({ commit, state }) {
-      const options = { sort: state.sort };
-      return getAll(options).then((members) => {
+    getMembers({ commit, state }, filters = {}) {
+      commit('setFilters', filters);
+      return getAll(state.filters).then((members) => {
         commit('setMembers', members);
         return members;
       });
