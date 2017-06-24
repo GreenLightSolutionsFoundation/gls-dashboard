@@ -38,31 +38,31 @@
 </template>
 
 <script>
-  const renderPositionsStatusMessage = ({openPositions, totalPositions}) =>
+  const renderPositionsStatusMessage = ({ openPositions, totalPositions }) =>
     (totalPositions !== openPositions)
       ? `${openPositions} of ${totalPositions} positions open!`
       : `All ${totalPositions} positions filled!`;
   
   export default {
-    name:'project-card',
+    name: 'project-card',
     props: {
       project: Object,
     },
     data() {
-      let rank = this.rank || 0;
-      let project = this.project || {};
-      return {rank, ...project,};
+      const rank = this.rank || 0;
+      const project = this.project || {};
+      return { rank, ...project };
     },
     computed: {
       positionsStatusMessage() {
         return renderPositionsStatusMessage(this);
-      }
+      },
     },
     methods: {
       handleSelect(ev) {
         this.rank = ev.target.value || this.rank;
-      }
-    }
+      },
+    },
   };
 </script>
 

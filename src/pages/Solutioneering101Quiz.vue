@@ -59,16 +59,16 @@ export default {
       this.isSubmitted = true;
 
       // Check the answers
-      var allQuestionsCorrect = true;
-      for (var questionIndex = 0; questionIndex < this.solutioneering101Quiz.questions.length; questionIndex++) {
-        var question = this.solutioneering101Quiz.questions[questionIndex];
-        var userAnswer = this.userAnswers[questionIndex];
-        var correctAnswer = question.correctAnswerIndex;
+      let allQuestionsCorrect = true;
+      for (let questionIndex = 0; questionIndex < this.solutioneering101Quiz.questions.length; questionIndex++) {
+        const question = this.solutioneering101Quiz.questions[questionIndex];
+        const userAnswer = this.userAnswers[questionIndex];
+        const correctAnswer = question.correctAnswerIndex;
 
         if (userAnswer === correctAnswer) {
-          this.setSolutioneering101QuizQuestionIsCorrectState({ questionIndex: questionIndex, isCorrect: true });
+          this.setSolutioneering101QuizQuestionIsCorrectState({ questionIndex, isCorrect: true });
         } else {
-          this.setSolutioneering101QuizQuestionIsCorrectState({ questionIndex: questionIndex, isCorrect: false });
+          this.setSolutioneering101QuizQuestionIsCorrectState({ questionIndex, isCorrect: false });
           allQuestionsCorrect = false;
         }
       }
@@ -79,7 +79,7 @@ export default {
             if (result) {
               this.$router.push({ name: 'dashboard' });
             }
-        })
+          });
       } else {
         this.errorMessage = 'Please correct your answers and select Continue';
       }

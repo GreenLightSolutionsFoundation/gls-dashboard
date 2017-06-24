@@ -27,9 +27,9 @@
   
   export default {
     name: 'project-ranking-form',
-    
-    components: {ProjectCard},
-    
+  
+    components: { ProjectCard },
+  
     data() {
       return {
         projects: [{
@@ -37,27 +37,27 @@
           partnerName: 'Partner Name',
           logo: 'logo.png',
           projectDescription: 'description',
-          openPositions: 10, 
+          openPositions: 10,
           totalPositions: 15,
-          projectStartDate: new Date,
-          projectEndDate: new Date,
-        }]
-      }
+          projectStartDate: new Date(),
+          projectEndDate: new Date(),
+        }],
+      };
     },
-    
+  
     created() {
       this.error = null;
       getAll().then(
-        data => {
+        (data) => {
           this.projects = data;
-        }
+        },
       ).catch(
-        error => {
+        (error) => {
           this.error = error;
           // this.projects = null;
-        }
+        },
       );
-    }
+    },
   };
 </script>
 
