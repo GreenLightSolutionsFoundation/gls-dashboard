@@ -19,10 +19,10 @@
           <!-- <md-table-head md-sort-by="active">Active</md-table-head> -->
           <md-table-head md-sort-by="currentlyActive">Active</md-table-head>
           <md-table-head md-sort-by="lastName">Contact</md-table-head>
-          <md-table-head md-sort-by="isOnboarded">Onboarded</md-table-head>
+          <md-table-head>Onboarded</md-table-head>
           <md-table-head md-sort-by="chapter">Chapter</md-table-head>
-          <md-table-head>Role</md-table-head>
-          <md-table-head md-sort-by="createdAt">Started</md-table-head>
+          <md-table-head md-sort-by="position">Position</md-table-head>
+          <md-table-head md-sort-by="semesterJoined">Semester</md-table-head>
         </md-table-row>
       </md-table-header>
 
@@ -35,15 +35,18 @@
       <md-table-body v-if="totalMembers > 0">
         <md-table-row v-for="member in pageMembers" :key="member.id">
           <md-table-cell>
+            <!-- active -->
             <md-icon v-if="member.currentlyActive" @click.native="deactivate(member)">check_box</md-icon>
             <md-icon v-if="!member.currentlyActive" @click.native="activate(member)">check_box_outline_blank</md-icon>
           </md-table-cell>
           <md-table-cell>
+            <!-- contact info -->
             <div>{{ member.fullName }}</div>
             <div>{{ member.email }}</div>
             <div>{{ member.username }}</div>
           </md-table-cell>
           <md-table-cell>
+            <!-- onboarded -->
             <md-icon v-if="member.isOnboarded">star</md-icon>
           </md-table-cell>
           <md-table-cell>{{ member.chapter }}</md-table-cell>
