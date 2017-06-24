@@ -1,7 +1,8 @@
+
 <template>
     <md-tabs md-centered>
         <md-tab :id="area.id" :md-label="area.label" v-for="area in areas" :key="area.id">
-            <router-link :to="area.name">{{area.label}}</router-link>
+            <router-link :to="area.route">{{area.label}}</router-link>
         </md-tab>
     </md-tabs>
 </template>
@@ -11,10 +12,10 @@ export default {
     data() {
         return {
             areas: [
-                { name: 'members', id: 'Members', label: 'Members', },
-                { name: 'projects', id: 'Projects', label: 'Projects', },
-                { name: 'chapters', id: 'Chapters', label: 'Chapters', },
-                { name: 'partnerorganizations', id: 'PartnerOrganizations', label: 'Partner Organizations', }
+                { route: 'members', id: 'Members', label: 'Members', },
+                { route: 'projects', id: 'Projects', label: 'Projects', },
+                { route: 'chapters', id: 'Chapters', label: 'Chapters', },
+                { route: 'partnerorganizations', id: 'PartnerOrganizations', label: 'Partner Organizations', }
             ]
         }
     }
