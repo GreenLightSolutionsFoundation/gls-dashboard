@@ -5,7 +5,7 @@
                 <bulb class="navbar-bulb"></bulb>
                 <brand class="navbar-brand"></brand>
                 <md-button @click.native.prevent="navigateTo('dashboard')">Dashboard</md-button>
-                <md-button v-if="isAdmin" @click.native.prevent="navigateTo('admin-members')">Admin</md-button>
+                <md-button v-if="isAdmin" @click.native.prevent="navigateTo('admin')">Admin</md-button>
                 <md-menu md-align-trigger class="goto-right">
                     <md-button md-menu-trigger>
                         <span>Abbey Christansen</span>
