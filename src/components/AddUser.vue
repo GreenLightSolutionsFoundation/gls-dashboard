@@ -4,17 +4,22 @@
       <md-dialog-title>Create new user</md-dialog-title>
 
       <md-dialog-content>
-          <p>Add user details below.</p>
+        <p>Add user details below.</p>
 
-          <md-input-container>
-            <label>Email Address</label>
-            <md-input v-model="email" type="email"></md-input>
-          </md-input-container>
+        <div class="md-input-container md-theme-default md-has-value">
+          <label>Email Address</label>
+          <input class="md-input" v-model="email" type="email" @blur="setUsername"></input>
+        </div>
 
-          <md-input-container>
-            <label>Password</label>
-            <md-input v-model="password" disabled></md-input>
-          </md-input-container>
+        <md-input-container>
+          <label>Username</label>
+          <md-input v-model="username" type="email"></md-input>
+        </md-input-container>
+
+        <md-input-container>
+          <label>Password</label>
+          <md-input v-model="password" disabled></md-input>
+        </md-input-container>
       </md-dialog-content>
 
       <md-dialog-actions>
@@ -32,6 +37,7 @@
     name: 'add-user',
     data: () => ({
       email: '',
+      username: '',
       password: '',
       createPending: false,
     }),
@@ -64,6 +70,11 @@
           this.createPending = false;
           this.$emit('close');
         }, 2000);
+      },
+      setUsername() {
+        if (!this.username.length) {
+          this.username = this.email.split('@')[0].replace(/[^a-zA-Z0-9]/, '');
+        }
       },
     },
     watch: {
