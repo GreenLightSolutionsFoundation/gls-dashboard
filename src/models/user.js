@@ -10,12 +10,20 @@ export default class User {
   get id() { return this.user.id; }
   get createdAt() { return this.user.createdAt; }
   get updatedAt() { return this.user.updatedAt; }
-  get username() { return this.user.get('username'); }
-  get email() { return this.user.get('email'); }
   get fullName() { return `${this.firstName} ${this.lastName}`; }
   get isOnboarded() {
     return this.solutioneer101Passed && this.ndaSigned && this.commitmentAgreementSigned;
   }
+
+  get email() { return this.user.get('email'); }
+  set email(val) { return this.user.set('email', val); }
+
+  get username() { return this.user.get('username'); }
+  set username(val) { return this.user.set('username', val); }
+
+  // eslint-disable-next-line class-methods-use-this
+  get password() { return null; }
+  set password(val) { return this.user.set('password', val); }
 
   get firstName() { return this.user.get('firstName'); }
   set firstName(val) { return this.user.set('firstName', val); }

@@ -71,6 +71,6 @@
 
 <script>
   export default {
-    name:'logo-brand'
-  }
+    name: 'logo-brand',
+  };
 </script>
