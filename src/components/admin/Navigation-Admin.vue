@@ -8,18 +8,18 @@
 </template>
 <script>
 export default {
-    name: 'Navigation-Admin',
-    data() {
-        return {
-            areas: [
-                { route: 'members', id: 'Members', label: 'Members', },
-                { route: 'projects', id: 'Projects', label: 'Projects', },
-                { route: 'chapters', id: 'Chapters', label: 'Chapters', },
-                { route: 'partnerorganizations', id: 'PartnerOrganizations', label: 'Partner Organizations', }
-            ]
-        }
-    }
-}
+  name: 'Navigation-Admin',
+  data() {
+    return {
+      areas: [
+                { route: 'members', id: 'Members', label: 'Members' },
+                { route: 'projects', id: 'Projects', label: 'Projects' },
+                { route: 'chapters', id: 'Chapters', label: 'Chapters' },
+                { route: 'partnerorganizations', id: 'PartnerOrganizations', label: 'Partner Organizations' },
+      ],
+    };
+  },
+};
 </script>
 
 <style lang="sass">
