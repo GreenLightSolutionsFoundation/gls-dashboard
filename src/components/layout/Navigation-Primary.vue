@@ -59,4 +59,12 @@ export default {
 .navbar-brand {
     width: 110px;
 }
+
+.goto-right {
+    margin-left: auto;
+}
+
+.solid-background {
+    background-color: #FDFDFD;
+}
 </style>
