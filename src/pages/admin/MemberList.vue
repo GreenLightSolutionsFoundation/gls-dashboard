@@ -1,14 +1,16 @@
 <template>
-  <md-table>
-    <md-toolbar class="md-transparent">
-      <md-input-container>
-        <h2 class="md-title" style="flex: 1">Members</h2>
-        <md-button class="md-icon-button">
-          <md-icon>search</md-icon>
-        </md-button>
-        <md-input placeholder="search" class></md-input>
-      </md-input-container>
-    </md-toolbar>
+  <div>
+    <form @submit.prevent="refreshMembers">
+      <md-toolbar class="md-transparent">
+        <md-input-container>
+            <h2 class="md-title" style="flex: 1">Members</h2>
+            <md-button class="md-icon-button">
+              <md-icon>search</md-icon>
+            </md-button>
+            <md-input placeholder="search" v-model="searchInput"></md-input>
+        </md-input-container>
+      </md-toolbar>
+    </form>
 
     <!-- TODO: add sorting -->
     <!-- <md-table md-sort="name" @sort="onSort"> -->
@@ -74,15 +76,18 @@
         <md-icon>arrow_forward</md-icon>
       </md-button>
     </div>
-  </md-table>
+  </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
 
+const ucFirst = str => str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+
 export default {
   name: 'admin-member-list-page',
   data: () => ({
+    searchInput: '',
     filters: {
       perPage: 20,
       currentPage: 1,
@@ -113,11 +118,24 @@ export default {
 
       return this.members.slice(start, end);
     },
+    search() {
+      const search = [];
+      const [firstName, lastName] = this.searchInput.split(' ');
+      if (firstName && firstName.length > 0) {
+        if (lastName && lastName.length > 0) {
+          search.push(['firstName', ucFirst(firstName)]);
+          search.push(['lastName', ucFirst(lastName)]);
+        } else {
+          search.push(['lastName', ucFirst(firstName)]);
+        }
+      }
+      return search;
+    },
   },
   methods: {
     ...mapActions('admin/members', ['setActive', 'getMembers']),
     refreshMembers() {
-      this.getMembers(this.filters);
+      this.getMembers({ ...this.filters, search: this.search });
     },
     activate(member) {
       this.setActive({ member, active: true });
