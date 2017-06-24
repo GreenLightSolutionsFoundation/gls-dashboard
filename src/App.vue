@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-   <primaryNav></primaryNav>
-
+    <primaryNav></primaryNav>
+  
     <!-- Page content -->
     <div class="page-content">
       <router-view></router-view>
     </div>
-
+  
     <!-- Welcome Dialog -->
     <md-dialog ref="welcomeDialog" id="welcome-dialog">
       <md-dialog-title>Welcome!</md-dialog-title>
       <md-dialog-content>
-        <p>We're glad you're here.  Here's what's next:</p>
+        <p>We're glad you're here. Here's what's next:</p>
         <ol>
           <li>Read and sign the confidentiality agreement.</li>
           <li>Read and sign the commitment agreement.</li>
@@ -23,7 +23,7 @@
         <md-button class="md-primary" @click.native="doGetStarted()">Get Started</md-button>
       </md-dialog-actions>
     </md-dialog>
-
+  
   </div>
 </template>
 
@@ -70,32 +70,24 @@ export default {
 </script>
 
 <style lang="scss">
-  @import './styles/main.scss';
+@import './styles/main.scss';
 
-  .solid-background {
-    background-color: #FDFDFD;
+.max-width {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+#welcome-dialog .md-dialog {
+  max-width: 500px;
+
+  ol:not(.md-list)>li+li {
+    margin-top: 8px;
   }
-
-  .max-width {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-  }
-
-  .goto-right {
-    margin-left: auto;
-  }
-
-  #welcome-dialog .md-dialog {
-    max-width: 500px;
-
-    ol:not(.md-list)>li+li {
-      margin-top: 8px;
-    }
-  }
+}
 </style>
