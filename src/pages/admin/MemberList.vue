@@ -66,11 +66,11 @@
     </md-table>
 
     <div class="pagination">
-      <md-button class="md-icon-button md-raised" @click.native="prevPage">
+      <md-button class="md-icon-button md-raised" @click.native="prevPage" :disabled="filters.currentPage === 1">
         <md-icon>arrow_back</md-icon>
       </md-button>
       <div>Page {{ filters.currentPage}} of {{ totalPages }} ({{ totalMembers }} members)</div>
-      <md-button class="md-icon-button md-raised" @click.native="nextPage">
+      <md-button class="md-icon-button md-raised" @click.native="nextPage" :disabled="filters.currentPage === totalPages">
         <md-icon>arrow_forward</md-icon>
       </md-button>
     </div>
