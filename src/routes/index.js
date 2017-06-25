@@ -11,6 +11,7 @@ import projectRankingForm from './project-ranking-form';
 import solutioneering101 from './solutioneering-101';
 import solutioneering101Quiz from './solutioneering-101-quiz';
 
+
 import members from './members';
 
 const routes = [
@@ -35,7 +36,8 @@ const routes = [
       requiresAuthentication: true,
     },
     children: [
-      createRoute('', dashboard),
+      createRoute('', { redirect: { name: 'dashboard' } }),
+      createRoute('/dashboard/:showDialog?', dashboard),
       createRoute('/cohort', cohort),
       createRoute('/project-ranking-form', projectRankingForm),
       createRoute('/confidentiality-agreement', confidentialityAgreement),

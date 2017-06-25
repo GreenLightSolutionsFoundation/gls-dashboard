@@ -78,7 +78,7 @@ export default {
         this.setSolutioneering101QuizCompletedStatus(true)
           .then((result) => {
             if (result) {
-              this.$router.push({ name: 'dashboard' });
+              this.$router.push({ name: 'dashboard', params: { showDialog: 'solutioneerCongrats' } });
             }
           });
       } else {
