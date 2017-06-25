@@ -35,7 +35,8 @@ const routes = [
       requiresAuthentication: true,
     },
     children: [
-      createRoute('', dashboard),
+      createRoute('', { redirect: { name: 'dashboard' } }),
+      createRoute('/dashboard/:showDialog?', dashboard),
       createRoute('/project-ranking-form', projectRankingForm),
       createRoute('/confidentiality-agreement', confidentialityAgreement),
       createRoute('/commitment-agreement', commitmentAgreement),

@@ -21,3 +21,7 @@ yarn run test
 # build for production with minification
 yarn run build
 ```
+
+## Design Prototype/Mockups
+
+[Prototype](https://www.justinmind.com/usernote/tests/25432407/25579562/26854229/index.html)
