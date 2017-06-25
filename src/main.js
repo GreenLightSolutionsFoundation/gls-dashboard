@@ -9,15 +9,15 @@ window.parse = parse;
 
 Vue.use(VueMaterial);
 
-Vue.material.registerTheme(
-  'default', {
+Vue.material.registerTheme({
+  default: {
     primary: 'green',
     background: 'white',
   },
-  'white', {
+  white: {
     primary: 'white',
   },
-);
+});
 
 // pre-route auth checking
 router.beforeEach((to, from, next) => {
