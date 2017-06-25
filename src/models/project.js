@@ -1,8 +1,10 @@
 import moment from 'moment';
 import parse from '../lib/parse';
+import ParseObject from './parse_object';
 
-export default class Project {
+export default class Project extends ParseObject {
   constructor(project) {
+    super();
     this.project = project || new parse.Project();
   }
 
