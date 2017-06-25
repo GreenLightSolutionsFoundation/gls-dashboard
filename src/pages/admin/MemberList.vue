@@ -192,6 +192,7 @@ export default {
     },
     closeEditUser() {
       this.showEditUser = false;
+      this.refreshMembers();
     },
   },
 };

@@ -35,7 +35,7 @@ export function update(id, data) {
       if (blacklisted.indexOf(prop) < 0) member[prop] = data[prop];
     });
 
-    return member.save();
+    return member.save().then(() => member);
   });
 }
 

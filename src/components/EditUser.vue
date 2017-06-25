@@ -64,8 +64,6 @@
 <script>
   import { update as updateUser } from '../services/members';
 
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPRTUVWXYZ1234567890';
-
   export default {
     name: 'edit-user',
     data: () => ({
@@ -89,7 +87,7 @@
         return updateUser(this.user.id, this.tempUser)
         .then(() => {
           this.savePending = false;
-          this.closeDialog();
+          this.$emit('close');
         })
         .catch((err) => {
           this.savePending = false;
