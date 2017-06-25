@@ -72,10 +72,6 @@ export default {
 <style lang="scss">
   @import './styles/main.scss';
 
-  .solid-background {
-    background-color: #FDFDFD;
-  }
-
   .max-width {
     max-width: 800px;
     margin-left: auto;
@@ -85,10 +81,6 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
-  }
-
-  .goto-right {
-    margin-left: auto;
   }
 
   #welcome-dialog .md-dialog {
