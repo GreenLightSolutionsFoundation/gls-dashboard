@@ -2,6 +2,7 @@
   <div>
     <PrimaryNavigation></PrimaryNavigation>
     <AdminNavigation></AdminNavigation>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -10,7 +11,6 @@ import PrimaryNavigation from '../../components/layout/Navigation-Primary.vue';
 import AdminNavigation from '../../components/admin/Navigation-Admin.vue';
 
 export default {
-  name: 'admin',
   components: {
     AdminNavigation,
     PrimaryNavigation,

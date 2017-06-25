@@ -11,6 +11,7 @@ import solutioneering101 from './solutioneering-101';
 import solutioneering101Quiz from './solutioneering-101-quiz';
 import admin from './admin';
 import members from './members';
+// import projects from './projects';
 
 const routes = [
   createRoute('/login', login),
@@ -23,7 +24,9 @@ const routes = [
       requireIsAdmin: true,
     },
     children: [
+      createRoute('', { redirect: { name: 'admin-members' } }),
       createRoute('members', members),
+      //createRoute('projects', projects),
     ],
   }),
 
