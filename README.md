@@ -8,10 +8,6 @@
 
 *These instructions use [yarn](https://yarnpkg.com/) (`npm install -g yarn`), but you can also use `npm`*
 
-## Design Prototype/Mockups
-
-[Prototype](https://www.justinmind.com/usernote/tests/25432407/25579562/26854229/index.html)
-
 ``` bash
 # install dependencies
 yarn
@@ -25,3 +21,7 @@ yarn run test
 # build for production with minification
 yarn run build
 ```
+
+## Design Prototype/Mockups
+
+[Prototype](https://www.justinmind.com/usernote/tests/25432407/25579562/26854229/index.html)
