@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: 0 */
 import { isPlainObject } from '../lib/utils';
 import parse from '../lib/parse';
 import queryBuilder from '../lib/query_builder';
@@ -16,9 +17,26 @@ export function getById(id) {
 export function update(id, data) {
   if (!isPlainObject(data)) return Promise.reject('data must be an object');
 
-  const member = typeof id === 'string' ? getById(id) : id;
-  Object.keys(data).forEach(prop => (member[prop] = data[prop]));
-  return member.save();
+  const getMember = typeof id === 'string' ? getById(id) : Promise.resolve(id);
+
+  return getMember
+  .then((member) => {
+    Object.keys(data).forEach((prop) => {
+      // don't update some fields
+      const blacklisted = [
+        'id',
+        'password',
+        'createdAt',
+        'updatedAt',
+        'fullName',
+        'isOnboarded',
+      ];
+
+      if (blacklisted.indexOf(prop) < 0) member[prop] = data[prop];
+    });
+
+    return member.save();
+  });
 }
 
 export function setActive(user, active) {

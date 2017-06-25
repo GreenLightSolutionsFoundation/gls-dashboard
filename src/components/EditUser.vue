@@ -4,7 +4,7 @@
       <md-dialog-title>Edit user {{user.username}}</md-dialog-title>
 
       <md-dialog-content>
-        <md-layout md-gutter>
+        <md-layout md-gutter="16">
           <md-layout md-flex="50">
 
             <md-input-container>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-  import { update as updateUser } from '../services/user';
+  import { update as updateUser } from '../services/members';
 
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPRTUVWXYZ1234567890';
 
@@ -79,14 +79,22 @@
     },
     methods: {
       closeDialog() {
-        this.$refs.editUser && this.$refs.editUser.close();
+        this.$refs.editUser.close();
       },
       openDialog() {
-        this.$refs.editUser && this.$refs.editUser.open();
+        this.$refs.editUser.open();
       },
       doSaveUser() {
-        // updateUser
-        console.log('save user', this.tempUser);
+        this.savePending = true;
+        return updateUser(this.user.id, this.tempUser)
+        .then(() => {
+          this.savePending = false;
+          this.closeDialog();
+        })
+        .catch((err) => {
+          this.savePending = false;
+          this.alert = err.message || 'Save failed :(';
+        });
       },
     },
     watch: {
