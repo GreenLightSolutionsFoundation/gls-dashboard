@@ -2,6 +2,7 @@
   <div>
     <!-- add user dialog -->
     <add-user :is-open="showAddUser" @close="closeAddUser" @create="refreshMembers"></add-user>
+    <edit-user :is-open="showEditUser" :user="selectedUser" @close="closeEditUser"></edit-user>
 
     <form @submit.prevent="refreshMembers">
       <md-toolbar class="md-transparent">
@@ -58,6 +59,9 @@
           <md-table-cell>{{ member.chapter }}</md-table-cell>
           <md-table-cell>{{ member.position }}</md-table-cell>
           <md-table-cell>{{ member.semesterJoined }}</md-table-cell>
+          <md-table-cell>
+            <md-icon @click.native="openEditUser(member)">edit</md-icon>
+          </md-table-cell>
         </md-table-row>
         <md-table-row v-if="pageMembers.length < filters.perPage" v-for="num in (filters.perPage - pageMembers.length)" :key="'_empty'+num">
           <md-table-cell></md-table-cell>
@@ -86,6 +90,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import AddUser from '../../components/AddUser.vue';
+import EditUser from '../../components/EditUser.vue';
 
 const ucFirst = str => str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
 
@@ -93,10 +98,15 @@ export default {
   name: 'admin-member-list-page',
   components: {
     AddUser,
+    EditUser,
   },
   data: () => ({
     searchInput: '',
     showAddUser: false,
+
+    showEditUser: false,
+    selectedUser: null,
+
     filters: {
       perPage: 20,
       currentPage: 1,
@@ -175,6 +185,13 @@ export default {
     },
     closeAddUser() {
       this.showAddUser = false;
+    },
+    openEditUser(user) {
+      this.selectedUser = user.toJSON();
+      this.showEditUser = true;
+    },
+    closeEditUser() {
+      this.showEditUser = false;
     },
   },
 };
