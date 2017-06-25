@@ -30,25 +30,25 @@ import bulb from './Bulb.vue';
 import brand from './Brand.vue';
 
 export default {
-    name: 'Navigation-Primary',
-    components: {
-        bulb,
-        brand,
+  name: 'Navigation-Primary',
+  components: {
+    bulb,
+    brand,
+  },
+  computed: {
+    ...mapGetters('authentication', ['username', 'isAdmin']),
+  },
+  methods: {
+    ...mapActions('authentication', ['logout']),
+    navigateTo(routeName) {
+      this.$router.push({ name: routeName });
     },
-    computed: {
-        ...mapGetters('authentication', ['username', 'isAdmin']),
+    doLogout() {
+      this.logout().then(() => {
+        this.$router.push({ name: 'login' });
+      });
     },
-    methods: {
-        ...mapActions('authentication', ['logout']),
-        navigateTo(routeName) {
-            this.$router.push({ name: routeName });
-        },
-        doLogout() {
-            this.logout().then(() => {
-                this.$router.push({ name: 'login' });
-            });
-        },
-    },
+  },
 };
 </script>
 

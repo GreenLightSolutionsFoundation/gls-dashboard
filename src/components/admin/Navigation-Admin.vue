@@ -16,7 +16,7 @@ export default {
       if (!this.isPath(active)) {
         this.$router.push({ name: active });
       }
-    }
+    },
   },
   data() {
     return {
