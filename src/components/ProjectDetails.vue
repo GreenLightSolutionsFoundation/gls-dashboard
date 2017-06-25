@@ -29,7 +29,7 @@
     props: {
       project: Object,
     },
-  }
+  };
 </script>
 
 <style lang="scss">

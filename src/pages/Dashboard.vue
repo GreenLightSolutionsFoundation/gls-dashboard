@@ -75,7 +75,7 @@
                 name: 'SolarCity',
                 logo: 'https://placehold.it/70x70?text=logo',
               },
-            }
+            },
           ],
           assignedProjects: [
             {
@@ -92,23 +92,23 @@
               endDate: '12/14/2017',
               resourcesUrl: 'https://drive.google.com/drive/folders/0B1FoB345Ur60ckxIa0dlYW1asdflE?usp=sharing', // not in project model
             },
-          ]
+          ],
         },
       };
     },
     methods: {
       doCongratsDialogClose() {
-        this.$refs['congratsDialog'].close();
+        this.$refs.congratsDialog.close();
       },
       doGoToProjectSelection() {
-        this.$refs['congratsDialog'].close();
+        this.$refs.congratsDialog.close();
         this.$router.push({ name: 'project-selections' });
       },
     },
-    mounted: function() {
-      this.$nextTick(function () {
+    mounted() {
+      this.$nextTick(() => {
         if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
-          this.$refs['congratsDialog'].open();
+          this.$refs.congratsDialog.open();
         }
       });
     },
