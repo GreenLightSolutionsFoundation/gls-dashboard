@@ -36,3 +36,5 @@ export default class Project {
 
   save() { return this.project.save(); }
 }
+
+export const wrapProject = project => new Project(project);
