@@ -31,18 +31,6 @@ export default class User extends ParseObject {
   get lastName() { return this.instance.get('lastName'); }
   set lastName(val) { return this.instance.set('lastName', val); }
 
-  // get semesterJoined() { return this.instance.get('semesterJoined'); }
-  // set semesterJoined(val) { return this.instance.set('semesterJoined', val); }
-
-  // get chapter() { return this.instance.get('chapter'); }
-  // set chapter(val) { return this.instance.set('chapter', val); }
-
-  // get position() { return this.instance.get('position'); }
-  // set position(val) { return this.instance.set('position', val); }
-
-  // get currentlyActive() { return this.instance.get('currentlyActive'); }
-  // set currentlyActive(val) { return this.instance.set('currentlyActive', Boolean(val)); }
-
   get commitmentAgreementSigned() { return this.instance.get('commitmentAgreementSigned'); }
   set commitmentAgreementSigned(val) { return this.instance.set('commitmentAgreementSigned', Boolean(val)); }
 
