@@ -31,3 +31,5 @@ export default class Project extends ParseObject {
   get totalPositions() { return this.instance.get('totalPositions'); }
   set totalPositions(val) { return this.instance.set('totalPositions', parseInt(val, 10)); }
 }
+
+export const wrapProject = project => new Project(project);
