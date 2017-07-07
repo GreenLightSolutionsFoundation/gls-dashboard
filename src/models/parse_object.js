@@ -27,10 +27,18 @@ export default class ParseObject {
   }
 
   toJSON() {
-    const keys = Object.getOwnPropertyNames(Object.getPrototypeOf(this));
+    const pKeys = Object.getOwnPropertyNames(Object.getPrototypeOf(this));
+    const keys = pKeys.concat(Object.keys(this).filter(name => name !== 'instance'));
 
     return keys.reduce((acc, key) => {
-      if (typeof this[key] !== 'function') acc[key] = this[key];
+      if (this[key] instanceof ParseObject) {
+        // if key is a parse object reference, call toJSON on it
+        acc[key] = this[key].toJSON();
+      } else if (typeof this[key] !== 'function') {
+        // if the property is serializable, keep it
+        acc[key] = this[key];
+      }
+
       return acc;
     }, {});
   }
