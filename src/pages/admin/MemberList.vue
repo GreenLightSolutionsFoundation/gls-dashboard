@@ -35,7 +35,7 @@
 
       <md-table-body v-if="!totalMembers">
         <md-table-row>
-          <td class="md-table-cell" colspan="7">No Members to found</td>
+          <td class="md-table-cell" colspan="7">No Members found</td>
         </md-table-row>
       </md-table-body>
 
@@ -48,13 +48,13 @@
           </md-table-cell>
           <md-table-cell>
             <!-- contact info -->
-            <div>{{ member.fullName }}</div>
-            <div>{{ member.email }}</div>
-            <div>{{ member.username }}</div>
+            <div>{{ member.user.fullName }}</div>
+            <div>{{ member.user.email }}</div>
+            <div>{{ member.user.username }}</div>
           </md-table-cell>
           <md-table-cell>
             <!-- onboarded -->
-            <md-icon v-if="member.isOnboarded">star</md-icon>
+            <md-icon v-if="member.user.isOnboarded">star</md-icon>
           </md-table-cell>
           <md-table-cell>{{ member.chapter }}</md-table-cell>
           <md-table-cell>{{ member.position }}</md-table-cell>
