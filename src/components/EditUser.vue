@@ -9,22 +9,22 @@
 
             <md-input-container>
               <label>Email</label>
-              <md-input v-model="tempUser.email"></md-input>
+              <md-input disabled v-model="tempUser.user.email"></md-input>
             </md-input-container>
             <md-input-container>
               <label>First Name</label>
-              <md-input v-model="tempUser.firstName"></md-input>
+              <md-input disabled v-model="tempUser.user.firstName"></md-input>
             </md-input-container>
             <md-input-container>
               <label>Last Name</label>
-              <md-input v-model="tempUser.lastName"></md-input>
+              <md-input disabled v-model="tempUser.user.lastName"></md-input>
             </md-input-container>
 
             <!-- onboarding info -->
             <div class="md-chips">
-              <md-chip v-if="tempUser.commitmentAgreementSigned">Agreement Signed</md-chip>
-              <md-chip v-if="tempUser.ndaSigned">Confidentiality Signed</md-chip>
-              <md-chip v-if="tempUser.solutioneer101Passed">Solutioneering 101 Passed</md-chip>
+              <md-chip v-if="tempUser.user.commitmentAgreementSigned">Agreement Signed</md-chip>
+              <md-chip v-if="tempUser.user.ndaSigned">Confidentiality Signed</md-chip>
+              <md-chip v-if="tempUser.user.solutioneer101Passed">Solutioneering 101 Passed</md-chip>
             </div>
             <!-- <md-chip>Projects Selected</md-chip> -->
 
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-  import { update as updateUser } from '../services/members';
+  import { update as updateMember } from '../services/members';
 
   export default {
     name: 'edit-user',
@@ -84,7 +84,7 @@
       },
       doSaveUser() {
         this.savePending = true;
-        return updateUser(this.user.id, this.tempUser)
+        return updateMember(this.user.id, this.tempUser)
         .then(() => {
           this.savePending = false;
           this.$emit('close');
