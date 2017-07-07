@@ -45,22 +45,19 @@ export default class User extends ParseObject {
 
   static create() {
     const user = new parse.User();
-    user.signUp(null);
+    return user.signUp(null);
   }
 
   static login(username, password) {
-    const user = new parse.User();
-    user.logIn(username, password);
+    return parse.User.logIn(username, password);
   }
 
   static logout() {
-    const user = new parse.User();
-    user.logOut();
+    return parse.User.logOut();
   }
 
   static getCurrent() {
-    const user = new parse.User();
-    user.current();
+    return parse.User.current();
   }
 }
 
