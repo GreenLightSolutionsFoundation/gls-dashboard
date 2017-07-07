@@ -7,9 +7,6 @@ export default class User extends ParseObject {
     super(user || new parse.User());
   }
 
-  get id() { return this.instance.id; }
-  get createdAt() { return this.instance.createdAt; }
-  get updatedAt() { return this.instance.updatedAt; }
   get fullName() { return `${this.firstName} ${this.lastName}`; }
   get isOnboarded() {
     return this.solutioneer101Passed && this.ndaSigned && this.commitmentAgreementSigned;
@@ -46,8 +43,25 @@ export default class User extends ParseObject {
   get ndaSignedDate() { return this.instance.get('ndaSignedDate'); }
   set ndaSignedDate(val) { return this.instance.set('ndaSignedDate', moment(val).utc().toDate()); }
 
-  save() { return this.instance.save(); }
-  create() { return this.instance.signUp(null); }
+  static create() {
+    const user = new parse.User();
+    user.signUp(null);
+  }
+
+  static login(username, password) {
+    const user = new parse.User();
+    user.logIn(username, password);
+  }
+
+  static logout() {
+    const user = new parse.User();
+    user.logOut();
+  }
+
+  static getCurrent() {
+    const user = new parse.User();
+    user.current();
+  }
 }
 
 export const wrapUser = user => new User(user);
