@@ -40,7 +40,6 @@
     watch: {
       isOpen(val) {
         this.$nextTick(() => {
-          console.log('isOpen', val)
           if (val) this.openDialog();
           else this.closeDialog();
         });
