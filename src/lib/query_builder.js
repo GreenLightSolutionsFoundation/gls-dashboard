@@ -17,6 +17,7 @@ export default function queryBuilder(query, options) {
     sortField: 'lastName',
     sortOrder: 'asc',
     search: [],
+    include: [],
   };
   const props = Object.assign(defaults, options);
 
@@ -36,6 +37,11 @@ export default function queryBuilder(query, options) {
         else query.equalTo(field, value);
       }
     });
+  }
+  if (props.include.length > 0) {
+    for (let i = 0; i < props.include.length; i += 1) {
+      query.include(props.include[i]);
+    }
   }
 
   return query;
