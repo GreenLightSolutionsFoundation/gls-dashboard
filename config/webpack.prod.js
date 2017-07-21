@@ -60,7 +60,7 @@ module.exports = merge(baseConfig({ distPath }), {
 
     // uglify-js settings for production build
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
+      sourceMap: false,
       compress: {
         warnings: false,
       },
