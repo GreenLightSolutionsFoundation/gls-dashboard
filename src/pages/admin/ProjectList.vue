@@ -21,11 +21,13 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
-    return {};
+    return {
+      projects: [],
+    };
   },
   methods: {
     ...mapActions('admin/projects', ['getProjects']),
@@ -35,8 +37,7 @@ export default {
     },
   },
   created() {
-    debugger;
-    this.getProjects();
+    this.projects = this.getProjects();
   },
 };
 </script>
