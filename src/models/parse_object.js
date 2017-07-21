@@ -30,7 +30,7 @@ export default class ParseObject {
     const pKeys = Object.getOwnPropertyNames(Object.getPrototypeOf(this));
     const keys = pKeys.concat(Object.keys(this).filter(name => name !== 'instance'));
 
-    return keys.reduce((acc, key) => {
+    return keys.concat(['id', 'createdAt', 'updatedAt']).reduce((acc, key) => {
       if (this[key] instanceof ParseObject) {
         // if key is a parse object reference, call toJSON on it
         acc[key] = this[key].toJSON();
