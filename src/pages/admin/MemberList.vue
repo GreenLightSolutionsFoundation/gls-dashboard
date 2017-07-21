@@ -186,8 +186,8 @@ export default {
     closeAddUser() {
       this.showAddUser = false;
     },
-    openEditUser(user) {
-      this.selectedUser = user.toJSON();
+    openEditUser(member) {
+      this.selectedUser = member;
       this.showEditUser = true;
     },
     closeEditUser() {

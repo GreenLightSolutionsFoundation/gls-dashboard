@@ -84,6 +84,7 @@
       },
       doSaveUser() {
         this.savePending = true;
+
         return updateMember(this.user.id, this.tempUser)
         .then(() => {
           this.savePending = false;
@@ -101,7 +102,7 @@
         else this.closeDialog();
       },
       user(userObj) {
-        this.tempUser = { ...userObj };
+        this.tempUser = userObj.toJSON();
       },
     },
     mounted() {
