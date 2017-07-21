@@ -6,13 +6,13 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config config/webpack.dev.js",
-    "build": "npm run test && rimraf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
+    "build": "npm run test && rimraf public && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
     "lint": "eslint \"src/**/*.{js,vue}\" \"config/**/*.js\"",
     "test": "npm run lint && npm run testOnly",
     "testOnly": "jest",
     "prepush": "npm run lint",
     "deploy:getVersion": "node -r dotenv/config node_modules/parse-on-buddy -v && echo 'Now run: yarn run deploy -- -c <version + 1>'",
-    "deploy": "node -r dotenv/config node_modules/parse-on-buddy"
+    "deploy": "npm run build && node -r dotenv/config node_modules/parse-on-buddy"
   },
   "jest": {
     "verbose": true,
