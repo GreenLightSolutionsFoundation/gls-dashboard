@@ -7,9 +7,9 @@ const baseConfig = require('./webpack.base');
 
 const ROOT = path.resolve(__dirname, '..');
 const srcPath = 'src';
-const distPath = 'dist';
+const distPath = 'dev';
 
-module.exports = merge(baseConfig, {
+module.exports = merge(baseConfig({ distPath }), {
   devtool: '#source-map',
   module: {
     rules: [
