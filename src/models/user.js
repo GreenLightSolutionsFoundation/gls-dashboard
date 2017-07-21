@@ -4,63 +4,61 @@ import ParseObject from './parse_object';
 
 export default class User extends ParseObject {
   constructor(user) {
-    super();
-    this.user = user || new parse.User();
+    super(user || new parse.User());
   }
 
-  get id() { return this.user.id; }
-  get createdAt() { return this.user.createdAt; }
-  get updatedAt() { return this.user.updatedAt; }
   get fullName() { return `${this.firstName} ${this.lastName}`; }
   get isOnboarded() {
     return this.solutioneer101Passed && this.ndaSigned && this.commitmentAgreementSigned;
   }
 
-  get email() { return this.user.get('email'); }
-  set email(val) { return this.user.set('email', val); }
+  get email() { return this.instance.get('email'); }
+  set email(val) { return this.instance.set('email', val); }
 
-  get username() { return this.user.get('username'); }
-  set username(val) { return this.user.set('username', val); }
+  get username() { return this.instance.get('username'); }
+  set username(val) { return this.instance.set('username', val); }
 
   // eslint-disable-next-line class-methods-use-this
   get password() { return null; }
-  set password(val) { return this.user.set('password', val); }
+  set password(val) { return this.instance.set('password', val); }
 
-  get firstName() { return this.user.get('firstName'); }
-  set firstName(val) { return this.user.set('firstName', val); }
+  get firstName() { return this.instance.get('firstName'); }
+  set firstName(val) { return this.instance.set('firstName', val); }
 
-  get lastName() { return this.user.get('lastName'); }
-  set lastName(val) { return this.user.set('lastName', val); }
+  get lastName() { return this.instance.get('lastName'); }
+  set lastName(val) { return this.instance.set('lastName', val); }
 
-  get semesterJoined() { return this.user.get('semesterJoined'); }
-  set semesterJoined(val) { return this.user.set('semesterJoined', val); }
+  get commitmentAgreementSigned() { return this.instance.get('commitmentAgreementSigned'); }
+  set commitmentAgreementSigned(val) { return this.instance.set('commitmentAgreementSigned', Boolean(val)); }
 
-  get chapter() { return this.user.get('chapter'); }
-  set chapter(val) { return this.user.set('chapter', val); }
+  get commitmentAgreementSignedDate() { return this.instance.get('commitmentAgreementSignedDate'); }
+  set commitmentAgreementSignedDate(val) { return this.instance.set('commitmentAgreementSignedDate', moment(val).utc().toDate()); }
 
-  get position() { return this.user.get('position'); }
-  set position(val) { return this.user.set('position', val); }
+  get solutioneer101Passed() { return this.instance.get('solutioneer101Passed'); }
+  set solutioneer101Passed(val) { return this.instance.set('solutioneer101Passed', Boolean(val)); }
 
-  get currentlyActive() { return this.user.get('currentlyActive'); }
-  set currentlyActive(val) { return this.user.set('currentlyActive', Boolean(val)); }
+  get ndaSigned() { return this.instance.get('ndaSigned'); }
+  set ndaSigned(val) { return this.instance.set('ndaSigned', Boolean(val)); }
 
-  get commitmentAgreementSigned() { return this.user.get('commitmentAgreementSigned'); }
-  set commitmentAgreementSigned(val) { return this.user.set('commitmentAgreementSigned', Boolean(val)); }
+  get ndaSignedDate() { return this.instance.get('ndaSignedDate'); }
+  set ndaSignedDate(val) { return this.instance.set('ndaSignedDate', moment(val).utc().toDate()); }
 
-  get commitmentAgreementSignedDate() { return this.user.get('commitmentAgreementSignedDate'); }
-  set commitmentAgreementSignedDate(val) { return this.user.set('commitmentAgreementSignedDate', moment(val).utc().toDate()); }
+  static create() {
+    const user = new parse.User();
+    return user.signUp(null);
+  }
 
-  get solutioneer101Passed() { return this.user.get('solutioneer101Passed'); }
-  set solutioneer101Passed(val) { return this.user.set('solutioneer101Passed', Boolean(val)); }
+  static login(username, password) {
+    return parse.User.logIn(username, password);
+  }
 
-  get ndaSigned() { return this.user.get('ndaSigned'); }
-  set ndaSigned(val) { return this.user.set('ndaSigned', Boolean(val)); }
+  static logout() {
+    return parse.User.logOut();
+  }
 
-  get ndaSignedDate() { return this.user.get('ndaSignedDate'); }
-  set ndaSignedDate(val) { return this.user.set('ndaSignedDate', moment(val).utc().toDate()); }
-
-  save() { return this.user.save(); }
-  create() { return this.user.signUp(null); }
+  static getCurrent() {
+    return parse.User.current();
+  }
 }
 
 export const wrapUser = user => new User(user);

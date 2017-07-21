@@ -1,8 +1,8 @@
-import parse from '../lib/parse';
 import User, { wrapUser } from '../models/user';
+import Member from '../models/member';
 
 export function login(username, password) {
-  return parse.User.logIn(username, password);
+  return User.login(username, password);
 }
 
 export function create(details = {}) {
@@ -30,11 +30,15 @@ export function create(details = {}) {
   }
 
   Object.assign(user, { username, password, email, firstName, lastName });
-  return user.create();
+  return user.create()
+  .then((newUser) => {
+    const member = new Member();
+    member.create(newUser);
+  });
 }
 
 export function adminCreate(details = {}) {
-  const user = new parse.User();
+  const user = new User();
   const {
     username,
     email,
@@ -51,21 +55,25 @@ export function adminCreate(details = {}) {
     return Promise.reject(new Error('Please enter a first and last name'));
   }
 
-  user.set('email', email);
-  user.set('username', username);
-  user.set('password', password);
-  user.set('firstName', firstName);
-  user.set('lastName', lastName);
+  user.email = email;
+  user.username = username;
+  user.password = password;
+  user.firstName = firstName;
+  user.lastName = lastName;
 
-  return user.save();
+  return user.save()
+  .then((newUser) => {
+    const member = new Member();
+    member.create(newUser);
+  });
 }
 
 export function logout() {
-  return parse.User.logOut();
+  return User.logout();
 }
 
 export function getCurrent() {
-  const currentUser = wrapUser(parse.User.current());
+  const currentUser = wrapUser(User.getCurrent());
 
   if (currentUser) return Promise.resolve(currentUser);
   return Promise.resolve(null);
