@@ -23,8 +23,11 @@ export default {
       areas: [
         { route: 'admin-members', id: 'Members', label: 'Members' },
         { route: 'admin-projects', id: 'Projects', label: 'Projects' },
-        { route: 'admin-chapters', id: 'Chapters', label: 'Chapters' },
-        { route: 'admin-partnerorganizations', id: 'PartnerOrganizations', label: 'Partner Organizations' },
+        //{ route: 'admin-chapters', id: 'Chapters', label: 'Chapters' },
+        //{ route: 'admin-organizations',
+            //id: 'PartnerOrganizations',
+            //label: 'Partner Organizations'
+        //},
       ],
     };
   },

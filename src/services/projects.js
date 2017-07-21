@@ -1,7 +1,11 @@
-import parse from '../lib/parse';
+import queryBuilder from '../lib/query_builder';
 
-// import project from '../models/project';
+import Project, { wrapProject } from '../models/project';
 
-export default function getAll() {
-  return parse.Query();
+export function getAll(filters = {}) { // eslint-disable-line import/prefer-default-export
+  const project = new Project();
+  const query = project.query();
+  return queryBuilder(query, filters).find().then((projects) => {
+    projects.map(wrapProject);
+  });
 }
