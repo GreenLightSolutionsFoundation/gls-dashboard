@@ -33,12 +33,4 @@ export default {
     padding-right: 20px;
     padding-bottom: 20px;
   }
-
-  #welcome-dialog .md-dialog {
-    max-width: 500px;
-
-    ol:not(.md-list)>li+li {
-      margin-top: 8px;
-    }
-  }
 </style>

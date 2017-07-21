@@ -1,6 +1,6 @@
 <template>
   <!-- Welcome Dialog -->
-  <md-dialog ref="welcomeDialog" id="welcome-dialog">
+  <md-dialog ref="welcomeDialog" :md-esc-to-close="false" :md-click-outside-to-close="false">
     <md-dialog-title>Welcome!</md-dialog-title>
     <md-dialog-content>
       <p>We're glad you're here.  Here's what's next:</p>
@@ -50,3 +50,13 @@
     },
   };
 </script>
+
+<style scoped lang="scss">
+  .md-dialog {
+    max-width: 500px;
+
+    ol:not(.md-list)>li+li {
+      margin-top: 8px;
+    }
+  }
+</style>
