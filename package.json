@@ -6,11 +6,13 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config config/webpack.dev.js",
-    "build": "npm run test && rimraf dist && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
+    "build": "npm run test && rimraf public && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
     "lint": "eslint \"src/**/*.{js,vue}\" \"config/**/*.js\"",
     "test": "npm run lint && npm run testOnly",
     "testOnly": "jest",
-    "prepush": "npm run lint"
+    "prepush": "npm run lint",
+    "deploy:getVersion": "node -r dotenv/config node_modules/parse-on-buddy -v && echo 'Now run: yarn run deploy -- -c <version + 1>'",
+    "deploy": "npm run build && node -r dotenv/config node_modules/parse-on-buddy"
   },
   "jest": {
     "verbose": true,
@@ -35,6 +37,7 @@
     "babel-preset-latest": "^6.0.0",
     "cross-env": "^3.0.0",
     "css-loader": "^0.27.3",
+    "dotenv": "^4.0.0",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-vue": "^2.0.2",
@@ -48,6 +51,7 @@
     "husky": "^0.13.3",
     "jest": "^19.0.2",
     "node-sass": "^4.5.0",
+    "parse-on-buddy": "^2.1.4",
     "rimraf": "^2.6.1",
     "sass-loader": "^5.0.1",
     "style-loader": "^0.16.0",

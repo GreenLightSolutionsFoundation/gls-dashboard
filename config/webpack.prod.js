@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
@@ -8,12 +9,12 @@ const baseConfig = require('./webpack.base');
 
 const ROOT = path.resolve(__dirname, '..');
 const srcPath = 'src';
-const distPath = 'dist';
-// const basepath = 'whatever';
+const distPath = 'public';
+const basepath = `/public/${process.env.BUDDY_PARSE_APP_ID}`;
 
-module.exports = merge(baseConfig, {
+module.exports = merge(baseConfig({ distPath }), {
   output: {
-    publicPath: '/greenlight',
+    publicPath: basepath,
     filename: path.join('js', '[name].[chunkhash].js'),
   },
   module: {

@@ -22,6 +22,35 @@ yarn run test
 yarn run build
 ```
 
+## Deployment
+
+Once the application is ready to be deployed to Buddy, you'll need to run a couple commands. You'll also need to configure two environment variables about the Parse app; `BUDDY_PARSE_APP_ID` and `BUDDY_PARSE_MASTER_KEY`.
+
+Consult the Parse dashboard for these values, and set them in your environment. The easiest way to configure them is to create a `.env` file in the root of the project, with the following content:
+
+```
+BUDDY_PARSE_APP_ID=<your application's app id>
+BUDDY_PARSE_MASTER_KEY=<your application's master key>
+```
+
+#### Get current version
+
+To start, you need to get the current version of the application on Buddy's platform
+
+```
+yarn run deploy:getVersion
+```
+
+This will return a number. Next, we'll depoy with a new number. Ideally, this will simply be the current version plus 1.
+
+#### Deploy code
+
+Deployments will deploy both cloud code as well as the build application. The build will run automatically as part of the script. For this to work, the command needs to be given a `-c` flag, with the new version to deploy.
+
+```
+yarn run deploy -- -c <CURRENT VERSION + 1>
+```
+
 ## Design Prototype/Mockups
 
 [Prototype](https://www.justinmind.com/usernote/tests/25432407/25579562/26854229/index.html)
