@@ -26,6 +26,12 @@ export default class Member extends ParseObject {
     query.include('user');
     return query;
   }
+
+  create(user) {
+    if (user) this.user = user;
+    this.instance.set('user', this.user);
+    return this.instance.save();
+  }
 }
 
 export const wrapMember = member => new Member(member);
