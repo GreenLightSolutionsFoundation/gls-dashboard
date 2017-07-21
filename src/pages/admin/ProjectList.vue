@@ -21,11 +21,24 @@
   </div>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
   data() {
-    return {}
-  }
-}
+    return {};
+  },
+  methods: {
+    ...mapActions('admin/projects', ['getProjects']),
+    getColumns: () => {
+      const columns = [];
+      return columns;
+    },
+  },
+  created() {
+    debugger;
+    this.getProjects();
+  },
+};
 </script>
 <style lang="scss">
 
