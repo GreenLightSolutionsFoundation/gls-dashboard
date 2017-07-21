@@ -10,7 +10,7 @@ const baseConfig = require('./webpack.base');
 const ROOT = path.resolve(__dirname, '..');
 const srcPath = 'src';
 const distPath = 'public';
-const basepath = `/public/${process.env.BUDDY_PARSE_APP_ID}`;
+const basepath = process.env.APP_BASEPATH || `/public/${process.env.BUDDY_PARSE_APP_ID}`;
 
 module.exports = merge(baseConfig({ distPath }), {
   output: {
