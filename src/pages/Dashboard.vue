@@ -1,5 +1,7 @@
 <template>
   <div>
+    <welcome-dialog :is-open="isWelcomeOpen" @getStarted="doGetStarted"></welcome-dialog>
+
     <!-- My Projects -->
     <div class="section-container">
       <div class="page-heading">My Projects</div>
@@ -15,7 +17,7 @@
         </div>
         <p>You will receive an e-mail once you've been added to a project.</p>
       </div>
-      
+
       <div v-else>
         <p>You have not yet made your project selections.</p>
         <md-button class="md-raised md-primary">Make My Project Selections</md-button>
@@ -39,17 +41,21 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import ProjectSummary from '../components/ProjectSummary.vue';
   import ProjectDetails from '../components/ProjectDetails.vue';
+  import WelcomeDialog from '../components/WelcomeDialog.vue';
 
   export default {
     name: 'dashboard',
     components: {
       ProjectSummary,
       ProjectDetails,
+      WelcomeDialog,
     },
     data() {
       return {
+        isWelcomeOpen: false,
         user: {
           selectedProjects: [
             {
@@ -96,7 +102,13 @@
         },
       };
     },
+    computed: {
+      ...mapState('onboarding', ['solutioneering101Quiz']),
+    },
     methods: {
+      doGetStarted() {
+        this.$router.push({ name: 'confidentiality-agreement' });
+      },
       doCongratsDialogClose() {
         this.$refs.congratsDialog.close();
       },
@@ -106,11 +118,11 @@
       },
     },
     mounted() {
-      this.$nextTick(() => {
-        if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
-          this.$refs.congratsDialog.open();
-        }
-      });
+      if (!this.solutioneering101Quiz.complete) {
+        this.isWelcomeOpen = true;
+      } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
+        this.$refs.congratsDialog.open();
+      }
     },
   };
 </script>
