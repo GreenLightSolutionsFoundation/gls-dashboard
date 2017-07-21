@@ -4,7 +4,8 @@ import ParseObject from './parse_object';
 
 export default class Project extends ParseObject {
   constructor(project) {
-    super(project || new parse.Project());
+    const ParseProject = parse.Object.extend('Project');
+    super(project || new ParseProject());
   }
 
   get name() { return this.instance.get('name'); }
