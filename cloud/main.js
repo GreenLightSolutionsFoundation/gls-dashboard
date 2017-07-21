@@ -5,3 +5,7 @@ Parse.Cloud.beforeSave(Parse.User, function ensureUserDetails(request, response)
     response.success();
   }
 });
+
+Parse.Cloud.define('hello', function sayHello(request, response) {
+  response.success('well, howdy partner!');
+});
