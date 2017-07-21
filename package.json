@@ -6,10 +6,12 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config config/webpack.dev.js",
-    "build": "npm run test && rimraf public && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
+    "build": "npm run test && npm run build:only",
+    "build:only": "rimraf public && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
+    "build:run": "APP_BASEPATH=/ npm run build:only && ecstatic public",
     "lint": "eslint \"src/**/*.{js,vue}\" \"config/**/*.js\"",
-    "test": "npm run lint && npm run testOnly",
-    "testOnly": "jest",
+    "test": "npm run lint && npm run test:only",
+    "test:only": "jest",
     "prepush": "npm run lint",
     "deploy:getVersion": "node -r dotenv/config node_modules/parse-on-buddy -v && echo 'Now run: yarn run deploy -- -c <version + 1>'",
     "deploy": "npm run build && node -r dotenv/config node_modules/parse-on-buddy"
@@ -38,6 +40,7 @@
     "cross-env": "^3.0.0",
     "css-loader": "^0.27.3",
     "dotenv": "^4.0.0",
+    "ecstatic": "^2.2.1",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-vue": "^2.0.2",

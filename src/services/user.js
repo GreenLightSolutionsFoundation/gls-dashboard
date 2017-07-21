@@ -73,9 +73,9 @@ export function logout() {
 }
 
 export function getCurrent() {
-  const currentUser = wrapUser(User.getCurrent());
+  const currentUser = User.getCurrent();
 
-  if (currentUser) return Promise.resolve(currentUser);
+  if (currentUser) return Promise.resolve(wrapUser(currentUser));
   return Promise.resolve(null);
 }
 
