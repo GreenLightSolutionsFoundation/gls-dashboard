@@ -1,9 +1,8 @@
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const distPath = 'dist';
 
-module.exports = {
+module.exports = ({ distPath } = { distPath: 'dist' }) => ({
   entry: path.join(ROOT, 'src', 'main.js'),
   output: {
     path: path.join(ROOT, distPath),
@@ -66,4 +65,4 @@ module.exports = {
   performance: {
     hints: false,
   },
-};
+});

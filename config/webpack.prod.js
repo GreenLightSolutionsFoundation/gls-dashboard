@@ -10,11 +10,11 @@ const baseConfig = require('./webpack.base');
 const ROOT = path.resolve(__dirname, '..');
 const srcPath = 'src';
 const distPath = 'public';
-// const basepath = 'whatever';
+const basepath = `/public/${process.env.BUDDY_PARSE_APP_ID}`;
 
-module.exports = merge(baseConfig, {
+module.exports = merge(baseConfig({ distPath }), {
   output: {
-    publicPath: `/public/${process.env.BUDDY_PARSE_APP_ID}`,
+    publicPath: basepath,
     filename: path.join('js', '[name].[chunkhash].js'),
   },
   module: {
