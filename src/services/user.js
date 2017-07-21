@@ -1,4 +1,5 @@
 import User, { wrapUser } from '../models/user';
+import Member from '../models/member';
 
 export function login(username, password) {
   return User.login(username, password);
@@ -29,7 +30,11 @@ export function create(details = {}) {
   }
 
   Object.assign(user, { username, password, email, firstName, lastName });
-  return user.create();
+  return user.create()
+  .then((newUser) => {
+    const member = new Member();
+    member.create(newUser);
+  });
 }
 
 export function adminCreate(details = {}) {
@@ -56,7 +61,11 @@ export function adminCreate(details = {}) {
   user.firstName = firstName;
   user.lastName = lastName;
 
-  return user.save();
+  return user.save()
+  .then((newUser) => {
+    const member = new Member();
+    member.create(newUser);
+  });
 }
 
 export function logout() {
