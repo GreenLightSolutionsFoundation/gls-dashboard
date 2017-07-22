@@ -1,7 +1,10 @@
 {
   "presets": [
-    ["latest", {
-      "es2015": { "modules": false }
+    ["env", {
+      "targets": {
+        "node": "6.11",
+        "browsers": ["> 5% in US", "last 2 versions"]
+      }
     }]
   ],
   "plugins": ["transform-object-rest-spread"],
