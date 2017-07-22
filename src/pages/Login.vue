@@ -39,6 +39,7 @@
     data() {
       return {
         mode: 'login',
+        pending: false,
         email: '',
         password: '',
         passwordConfirm: '',
@@ -65,7 +66,7 @@
       return null;
     },
     computed: {
-      ...mapState('authentication', ['pending', 'errorMessage']),
+      ...mapState('authentication', ['errorMessage']),
       ...mapGetters('authentication', ['isAuthenticated']),
     },
     methods: {
@@ -80,15 +81,19 @@
         this[field] = value;
       },
       doLogin(fields) {
+        this.pending = true;
         this.login(fields).then((user) => {
-          if (user === null) return this.$router.push({ name: 'approval-pending' });
+          this.pending = false;
+          if (user == null) return this.$router.push({ name: 'approval-pending' });
           return this.$router.push(this.sendTo);
-        });
+        }).catch(() => (this.pending = false));
       },
       doSignup(fields) {
+        this.pending = true;
         this.signup(fields).then((user) => {
-          if (user === null) this.$router.push({ name: 'approval-pending' });
-        });
+          this.pending = false;
+          if (user == null) this.$router.push({ name: 'approval-pending' });
+        }).catch(() => (this.pending = false));
       },
     },
   };

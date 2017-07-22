@@ -53,6 +53,13 @@
       ProjectDetails,
       WelcomeDialog,
     },
+    mounted() {
+      if (!this.user.isOnboarded) {
+        this.isWelcomeOpen = true;
+      } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
+        this.$refs.congratsDialog.open();
+      }
+    },
     data: () => ({
       isWelcomeOpen: false,
       selectedProjects: [
@@ -112,13 +119,6 @@
         this.$refs.congratsDialog.close();
         this.$router.push({ name: 'project-selections' });
       },
-    },
-    mounted() {
-      if (!this.user.isOnboarded) {
-        this.isWelcomeOpen = true;
-      } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
-        this.$refs.congratsDialog.open();
-      }
     },
   };
 </script>
