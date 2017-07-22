@@ -8,7 +8,5 @@ export function getAll(filters = {}) { // eslint-disable-line import/prefer-defa
     include: ['chapter', 'partnerOrganization', 'projectLead'],
   };
   Object.assign(filters, options);
-  return queryBuilder(query, filters).find().then((projects) => {
-    return projects.map(wrapProject);
-  });
+  return queryBuilder(query, filters).find().then(projects => projects.map(wrapProject));
 }
