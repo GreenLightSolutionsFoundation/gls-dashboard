@@ -118,11 +118,11 @@
       },
     },
     mounted() {
-      // if (!this.solutioneering101Quiz.complete) {
-      //   this.isWelcomeOpen = true;
-      // } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
-      //   this.$refs.congratsDialog.open();
-      // }
+      if (!this.solutioneering101Quiz.complete) {
+        this.isWelcomeOpen = true;
+      } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
+        this.$refs.congratsDialog.open();
+      }
     },
   };
 </script>
