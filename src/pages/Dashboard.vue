@@ -117,7 +117,7 @@
       },
       doGoToProjectSelection() {
         this.$refs.congratsDialog.close();
-        this.$router.push({ name: 'project-selections' });
+        this.$router.push({ name: 'project-ranking-form' });
       },
     },
   };

@@ -25,97 +25,29 @@
     </md-card>
 
     <md-layout md-align="end">
-      <md-button class="md-raised md-primary project-selection-submit-button">Submit Project Selections</md-button>
+      <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
+    </md-layout>
+    <md-layout md-align="end">
+      <md-button class="md-raised md-primary project-selection-submit-button" @click.native.prevent="doSubmit">Submit Project Selections</md-button>
     </md-layout>
   </div>
 </template>
 
 <script>
   import ProjectCard from '../components/ProjectCard.vue';
-  // import { getAll } from '../services/projects';
+  import { getAll, submitSelectedProjects } from '../services/projectSelection';
+  import FormError from '../components/FormError.vue';
 
   export default {
     name: 'project-ranking-form',
-    components: { ProjectCard },
+    components: { ProjectCard, FormError },
     data() {
       return {
+        projects: [],
         selectedRank1ProjectId: 0,
         selectedRank2ProjectId: 0,
         selectedRank3ProjectId: 0,
-        projects: [
-          {
-            projectId: 1,
-            projectName: 'Build Us Hope',
-            partnerName: 'Singleton Community Services, INC.',
-            logo: 'http://buildushope.com/uploads/3/4/9/7/34974251/1466964601.png',
-            projectDescription: 'Design and build an affordable and sustainable tiny home community.',
-            openPositions: 5,
-            totalPositions: 10,
-            projectStartDate: new Date(2017, 8, 15),
-            projectEndDate: new Date(2017, 12, 14),
-            isRank1Selected: false,
-            isRank2Selected: false,
-            isRank3Selected: false,
-          },
-          {
-            projectId: 2,
-            projectName: 'Shaw Montessori Project',
-            partnerName: 'Augustus H. Shaw Jr. Elementary School',
-            logo: 'http://shaw.phxschools.org/common/phxschools/images/district_school_logo.png',
-            projectDescription: `This project is focused on the development of a comprehensive
-                plan for a sustainable permeable paver system as well as acquiring funding for implementation.`,
-            openPositions: 5,
-            totalPositions: 10,
-            projectStartDate: new Date(2017, 8, 15),
-            projectEndDate: new Date(2017, 12, 14),
-            isRank1Selected: false,
-            isRank2Selected: false,
-            isRank3Selected: false,
-          },
-          {
-            projectId: 3,
-            projectName: 'Build Us Hope',
-            partnerName: 'Singleton Community Services, INC.',
-            logo: 'http://buildushope.com/uploads/3/4/9/7/34974251/1466964601.png',
-            projectDescription: 'Design and build an affordable and sustainable tiny home community.',
-            openPositions: 5,
-            totalPositions: 10,
-            projectStartDate: new Date(2017, 8, 15),
-            projectEndDate: new Date(2017, 12, 14),
-            isRank1Selected: false,
-            isRank2Selected: false,
-            isRank3Selected: false,
-          },
-          {
-            projectId: 4,
-            projectName: 'Shaw Montessori Project',
-            partnerName: 'Augustus H. Shaw Jr. Elementary School',
-            logo: 'http://shaw.phxschools.org/common/phxschools/images/district_school_logo.png',
-            projectDescription: `This project is focused on the development of a comprehensive
-                plan for a sustainable permeable paver system as well as acquiring funding for implementation.`,
-            openPositions: 5,
-            totalPositions: 10,
-            projectStartDate: new Date(2017, 8, 15),
-            projectEndDate: new Date(2017, 12, 14),
-            isRank1Selected: false,
-            isRank2Selected: false,
-            isRank3Selected: false,
-          },
-          {
-            projectId: 5,
-            projectName: 'Build Us Hope',
-            partnerName: 'Singleton Community Services, INC.',
-            logo: 'http://buildushope.com/uploads/3/4/9/7/34974251/1466964601.png',
-            projectDescription: 'Design and build an affordable and sustainable tiny home community.',
-            openPositions: 5,
-            totalPositions: 10,
-            projectStartDate: new Date(2017, 8, 15),
-            projectEndDate: new Date(2017, 12, 14),
-            isRank1Selected: false,
-            isRank2Selected: false,
-            isRank3Selected: false,
-          },
-        ],
+        errorMessage: '',
       };
     },
     methods: {
@@ -139,21 +71,46 @@
           }
         });
       },
-    },
+      doSubmit() {
+        if (
+          this.selectedRank1ProjectId === 0 ||
+          this.selectedRank2ProjectId === 0 ||
+          this.selectedRank3ProjectId === 0) {
+          this.errorMessage = 'Please select 3 projects.';
+        }
 
-    // created() {
-    //   this.error = null;
-    //   getAll().then(
-    //     (data) => {
-    //       this.projects = data;
-    //     },
-    //   ).catch(
-    //     (error) => {
-    //       this.error = error;
-    //       // this.projects = null;
-    //     },
-    //   );
-    // },
+        // TODO: Persist selected projects
+        const selectedProjectIds = [
+          this.selectedRank1ProjectId,
+          this.selectedRank2ProjectId,
+          this.selectedRank3ProjectId,
+        ];
+        submitSelectedProjects(selectedProjectIds);
+      },
+    },
+    created() {
+      this.error = null;
+      getAll().then(
+        (data) => {
+          // Attach a few properties to track and set the selected rank of for each project
+          data.forEach((project) => {
+            const projectOptions = {
+              isRank1Selected: false,
+              isRank2Selected: false,
+              isRank3Selected: false,
+            };
+            Object.assign(project, projectOptions);
+          });
+
+          this.projects = data;
+        },
+      ).catch(
+        (error) => {
+          this.error = error;
+          // this.projects = null;
+        },
+      );
+    },
   };
 </script>
 
