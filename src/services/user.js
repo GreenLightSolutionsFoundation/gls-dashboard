@@ -1,4 +1,4 @@
-import User, { wrapUser } from '../models/user';
+import User from '../models/user';
 import Member from '../models/member';
 
 export function login(username, password) {
@@ -73,10 +73,7 @@ export function logout() {
 }
 
 export function getCurrent() {
-  const currentUser = User.getCurrent();
-
-  if (currentUser) return Promise.resolve(wrapUser(currentUser));
-  return Promise.resolve(null);
+  return User.getCurrent();
 }
 
 export function getUser(user) {
