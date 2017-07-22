@@ -99,7 +99,7 @@
       ],
     }),
     computed: {
-      ...mapState('onboarding', ['solutioneering101Quiz']),
+      ...mapState('authentication', ['user']),
     },
     methods: {
       doGetStarted() {
@@ -114,7 +114,7 @@
       },
     },
     mounted() {
-      if (!this.solutioneering101Quiz.complete) {
+      if (!this.user.isOnboarded) {
         this.isWelcomeOpen = true;
       } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
         this.$refs.congratsDialog.open();
