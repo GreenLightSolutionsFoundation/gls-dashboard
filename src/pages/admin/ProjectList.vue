@@ -30,7 +30,7 @@ import moment from 'moment';
 export default {
   data: () => ({
     columns: [],
-    userCount: 0
+    userCount: 0,
   }),
   methods: {
     ...mapActions('admin/projects', ['getProjects']),
@@ -47,14 +47,13 @@ export default {
     ...mapState('admin/projects', ['projects']),
   },
   filters: {
-    formatDate: function(value) {
+    formatDate: (value) => {
       if (!value) {
-        debugger;
-        return 'error';
-      } 
+        return '';
+      }
       return moment(value).format('MM/DD/YYYY');
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">
