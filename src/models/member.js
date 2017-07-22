@@ -32,6 +32,17 @@ export default class Member extends ParseObject {
     this.instance.set('user', this.user);
     return this.instance.save();
   }
+
+  static fromUser(user) {
+    const parseUser = new parse.User();
+    parseUser.id = user.id;
+
+    const query = new parse.Query('Member');
+    query.include('user'); // hydrate the user property
+    query.equalTo('user', parseUser);
+
+    return query.first().then(member => member && new Member(member));
+  }
 }
 
 export const wrapMember = member => new Member(member);
