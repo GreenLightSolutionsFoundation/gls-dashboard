@@ -32,14 +32,11 @@
 
 <script>
   import ProjectCard from '../components/ProjectCard.vue';
-  import { getAll } from '../services/projects';
+  // import { getAll } from '../services/projects';
 
   export default {
     name: 'project-ranking-form',
     components: { ProjectCard },
-    props: {
-      
-    },
     data() {
       return {
         selectedRank1ProjectId: 0,
@@ -134,15 +131,15 @@
 
         // Update all the projects to make sure that only one project has the selected rank
         this.projects.forEach((project) => {
-          const rankProperty = 'isRank' + event.selectedRank + 'Selected';
+          const rankProperty = `isRank${event.selectedRank}Selected`;
           if (project.projectId === event.projectId) {
-            project[rankProperty] = true;
+            project[rankProperty] = true; // eslint-disable-line no-param-reassign
           } else {
-            project[rankProperty] = false;
+            project[rankProperty] = false; // eslint-disable-line no-param-reassign
           }
         });
       },
-    }
+    },
 
     // created() {
     //   this.error = null;

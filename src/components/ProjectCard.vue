@@ -49,7 +49,7 @@
   export default {
     name: 'project-card',
     props: {
-      project: Object
+      project: Object,
     },
     data() {
       const rank = this.rank || 0;
@@ -68,14 +68,12 @@
     methods: {
       handleSelect(ev) {
         this.rank = ev.target.value || this.rank;
-        this.$emit('rank-selected', { selectedRank: parseInt(this.rank), projectId: this.projectId });
+        this.$emit('rank-selected', { selectedRank: parseInt(this.rank, 10), projectId: this.projectId });
       },
     },
     filters: {
-      formatDate: (value) => {
-        return moment(value).format('M/D/YYYY');
-      },
-    }
+      formatDate: value => moment(value).format('M/D/YYYY'),
+    },
   };
 </script>
 
