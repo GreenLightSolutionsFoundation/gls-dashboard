@@ -89,7 +89,4 @@ module.exports = merge(baseConfig({ distPath }), {
       chunks: ['vendor'],
     }),
   ],
-  performance: {
-    hints: 'warning',
-  },
 });
