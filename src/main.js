@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueMaterial from 'vue-material';
-import 'vue-material/dist/vue-material.css';
 import router from './router';
 import store from './store';
 import parse from './lib/parse';
