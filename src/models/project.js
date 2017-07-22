@@ -4,7 +4,8 @@ import ParseObject from './parse_object';
 
 export default class Project extends ParseObject {
   constructor(project) {
-    super(project || new parse.Project());
+    const ParseProject = parse.Object.extend('Project');
+    super(project || new ParseProject());
   }
 
   get name() { return this.instance.get('name'); }
@@ -22,12 +23,8 @@ export default class Project extends ParseObject {
   get status() { return this.instance.get('status'); }
   set status(val) { return this.instance.set('status', val); }
 
-  get chapter() { return this.instance.get('chapter'); }
-  set chapter(val) { return this.instance.set('chapter'); }
-
-  get partnerOrganization() { return this.instance.get('partnerOrganization'); }
-  set partnerOrganization(val) { return this.instance.set('partnerOrganization', val); }
-
   get totalPositions() { return this.instance.get('totalPositions'); }
   set totalPositions(val) { return this.instance.set('totalPositions', parseInt(val, 10)); }
 }
+
+export const wrapProject = project => new Project(project);
