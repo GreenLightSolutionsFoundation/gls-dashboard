@@ -1,19 +1,19 @@
 <template>
-  <div>
+  <div class="max-width">
     <welcome-dialog :is-open="isWelcomeOpen" @getStarted="doGetStarted"></welcome-dialog>
 
     <!-- My Projects -->
     <div class="section-container">
       <div class="page-heading">My Projects</div>
 
-      <div v-if="user.assignedProjects && user.assignedProjects.length > 0">
-        <project-details v-for="project in user.assignedProjects" :key="project.id" :project="project"></project-details>
+      <div v-if="assignedProjects && assignedProjects.length > 0">
+        <project-details v-for="project in assignedProjects" :key="project.id" :project="project"></project-details>
       </div>
 
-      <div v-else-if="user.selectedProjects && user.selectedProjects.length > 0">
+      <div v-else-if="selectedProjects && selectedProjects.length > 0">
         <p>Your project application is pending.  Your project picks were:</p>
         <div id="project-selections">
-          <project-summary v-for="project in user.selectedProjects" :key="project.id" :project="project"></project-summary>
+          <project-summary v-for="project in selectedProjects" :key="project.id" :project="project"></project-summary>
         </div>
         <p>You will receive an e-mail once you've been added to a project.</p>
       </div>
@@ -53,57 +53,60 @@
       ProjectDetails,
       WelcomeDialog,
     },
-    data() {
-      return {
-        isWelcomeOpen: false,
-        user: {
-          selectedProjects: [
-            {
-              id: 1,
-              name: 'Build Us Hope',
-              partnerOrganization: {
-                name: 'Singleton Community Services, INC.',
-                logo: 'https://placehold.it/70x70?text=logo',
-              },
-            },
-            {
-              id: 2,
-              name: 'Shaw Montessori Project',
-              partnerOrganization: {
-                name: 'Augustus H. Shaw Jr. Elementary School',
-                logo: 'https://placehold.it/70x70?text=logo',
-              },
-            },
-            {
-              id: 3,
-              name: 'Solar Impact in the Valley of the Sun',
-              partnerOrganization: {
-                name: 'SolarCity',
-                logo: 'https://placehold.it/70x70?text=logo',
-              },
-            },
-          ],
-          assignedProjects: [
-            {
-              id: 1,
-              name: 'Build Us Hope',
-              description: 'Design and build an affordable and sustainable tiny home community.',
-              partnerOrganization: {
-                name: 'Singleton Community Services, INC.',
-                logo: 'https://placehold.it/70x70?text=logo',
-              },
-              enrolledPositions: 5, // not in project model
-              totalPositions: 10,
-              startDate: '8/15/2017',
-              endDate: '12/14/2017',
-              resourcesUrl: 'https://drive.google.com/drive/folders/0B1FoB345Ur60ckxIa0dlYW1asdflE?usp=sharing', // not in project model
-            },
-          ],
-        },
-      };
+    mounted() {
+      if (!this.user.isOnboarded) {
+        this.isWelcomeOpen = true;
+      } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
+        this.$refs.congratsDialog.open();
+      }
     },
+    data: () => ({
+      isWelcomeOpen: false,
+      selectedProjects: [
+        {
+          id: 1,
+          name: 'Build Us Hope',
+          partnerOrganization: {
+            name: 'Singleton Community Services, INC.',
+            logo: 'https://placehold.it/70x70?text=logo',
+          },
+        },
+        {
+          id: 2,
+          name: 'Shaw Montessori Project',
+          partnerOrganization: {
+            name: 'Augustus H. Shaw Jr. Elementary School',
+            logo: 'https://placehold.it/70x70?text=logo',
+          },
+        },
+        {
+          id: 3,
+          name: 'Solar Impact in the Valley of the Sun',
+          partnerOrganization: {
+            name: 'SolarCity',
+            logo: 'https://placehold.it/70x70?text=logo',
+          },
+        },
+      ],
+      assignedProjects: [
+        {
+          id: 1,
+          name: 'Build Us Hope',
+          description: 'Design and build an affordable and sustainable tiny home community.',
+          partnerOrganization: {
+            name: 'Singleton Community Services, INC.',
+            logo: 'https://placehold.it/70x70?text=logo',
+          },
+          enrolledPositions: 5, // not in project model
+          totalPositions: 10,
+          startDate: '8/15/2017',
+          endDate: '12/14/2017',
+          resourcesUrl: 'https://drive.google.com/drive/folders/0B1FoB345Ur60ckxIa0dlYW1asdflE?usp=sharing', // not in project model
+        },
+      ],
+    }),
     computed: {
-      ...mapState('onboarding', ['solutioneering101Quiz']),
+      ...mapState('authentication', ['user']),
     },
     methods: {
       doGetStarted() {
@@ -116,13 +119,6 @@
         this.$refs.congratsDialog.close();
         this.$router.push({ name: 'project-selections' });
       },
-    },
-    mounted() {
-      if (!this.solutioneering101Quiz.complete) {
-        this.isWelcomeOpen = true;
-      } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
-        this.$refs.congratsDialog.open();
-      }
     },
   };
 </script>

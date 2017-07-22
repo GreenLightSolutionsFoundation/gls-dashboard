@@ -27,6 +27,7 @@
 
 <script>
   import { mapActions, mapState, mapGetters } from 'vuex';
+  import Member from '../models/member';
   import LoginForm from '../components/LoginForm.vue';
   import SignupForm from '../components/SignupForm.vue';
 
@@ -39,6 +40,7 @@
     data() {
       return {
         mode: 'login',
+        pending: false,
         email: '',
         password: '',
         passwordConfirm: '',
@@ -65,11 +67,11 @@
       return null;
     },
     computed: {
-      ...mapState('authentication', ['pending', 'errorMessage']),
+      ...mapState('authentication', ['errorMessage']),
       ...mapGetters('authentication', ['isAuthenticated']),
     },
     methods: {
-      ...mapActions('authentication', ['login', 'signup']),
+      ...mapActions('authentication', ['login', 'logout', 'signup', 'setErrorMessage']),
       setMode(mode) {
         this.mode = mode;
       },
@@ -80,25 +82,53 @@
         this[field] = value;
       },
       doLogin(fields) {
+        this.pending = true;
+
         this.login(fields).then((user) => {
-          if (user === null) return this.$router.push({ name: 'approval-pending' });
-          return this.$router.push(this.sendTo);
-        });
+          if (this.errorMessage) {
+            // error happend, message will be shown
+            this.pending = false;
+          } else {
+            // create a member model instance form the user record
+            Member.fromUser(user)
+            .then((member) => {
+              // we're done with the async stuff, reset pending state
+              this.pending = false;
+
+              // member not found, show error message
+              if (!member) {
+                this.logout();
+                this.setErrorMessage('Login failed, member not found');
+                return;
+              }
+
+              // check if the user is active, send to pending page if they are
+              if (!member.currentlyActive) this.$router.push({ name: 'approval-pending' });
+
+              // otherwise, send them where they need to go
+              else this.$router.push(this.sendTo);
+            })
+            .catch(() => (this.setErrorMessage('Login failed, member not found')));
+          }
+        })
+        .catch(() => (this.pending = false));
       },
       doSignup(fields) {
+        this.pending = true;
         this.signup(fields).then((user) => {
-          if (user === null) this.$router.push({ name: 'approval-pending' });
-        });
+          this.pending = false;
+          if (user == null) this.$router.push({ name: 'approval-pending' });
+        }).catch(() => (this.pending = false));
       },
     },
   };
 </script>
 
 <style>
-.new-here-signup {
-  margin: 20px auto;
-  width: 80%;
-  max-width: 500px;
-  text-align: center;
-}
+  .new-here-signup {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+  }
 </style>

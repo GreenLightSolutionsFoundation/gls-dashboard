@@ -1,4 +1,3 @@
-import { omit } from '../lib/utils';
 import { getCurrent, login, logout, create } from '../services/user';
 
 export default {
@@ -10,16 +9,13 @@ export default {
   },
   mutations: {
     setUser(state, user) {
-      state.user = user ? omit(user, ['access_token', 'token_type']) : user;
+      state.user = user;
     },
     resetUser(state) {
       state.user = null;
     },
     setErrorMessage(state, msg) {
       state.errorMessage = msg;
-    },
-    togglePending(state, pending = null) {
-      state.pending = (pending !== null) ? pending : !state.pending;
     },
   },
   actions: {
@@ -37,19 +33,17 @@ export default {
 
       // clear error and set pending state
       commit('setErrorMessage', '');
-      commit('togglePending');
 
       return login(username, password)
       .then((user) => {
-        commit('togglePending');
         commit('setUser', user);
+        return user;
       })
       .catch((err) => {
         const defaultMsg = 'Login failed';
         const { code, message } = err;
 
         // toggle pending state
-        commit('togglePending');
         if (!message) return commit('setErrorMessage', defaultMsg);
 
         // codes: http://docs.parseplatform.org/js/guide/#error-codes
@@ -64,17 +58,12 @@ export default {
     signup({ commit }, userDetails) {
       // clear error and set pending state
       commit('setErrorMessage', '');
-      commit('togglePending');
 
       return create(userDetails)
-      .then(() => {
-        commit('togglePending');
-        return {
-          username: userDetails.username,
-        };
-      })
+      .then(() => ({
+        username: userDetails.username,
+      }))
       .catch((err) => {
-        commit('togglePending');
         const defaultMsg = 'Signup failed, please try again';
         const { code, message } = err;
 
