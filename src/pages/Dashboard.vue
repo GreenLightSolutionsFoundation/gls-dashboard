@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max-width">
     <welcome-dialog :is-open="isWelcomeOpen" @getStarted="doGetStarted"></welcome-dialog>
 
     <!-- My Projects -->
