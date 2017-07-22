@@ -37,6 +37,7 @@ export default {
       return login(username, password)
       .then((user) => {
         commit('setUser', user);
+        return user;
       })
       .catch((err) => {
         const defaultMsg = 'Login failed';
