@@ -70,9 +70,8 @@
         this.$refs.addUser.close();
       },
       openDialog() {
+        this.reset();
         this.$refs.addUser.open();
-        this.email = '';
-        this.password = this.generatePassword();
       },
       generatePassword(len = 10) {
         let str = '';
@@ -94,9 +93,14 @@
           firstName: this.firstName,
           lastName: this.lastName,
         }).then(() => {
-          this.createPending = false;
-          this.$emit('create');
-          this.$emit('close');
+          // build in some additional delay to let parse catch up...
+          const delay = 100;
+          setTimeout(() => {
+            this.createPending = false;
+            this.$emit('create');
+            this.$emit('close');
+            this.reset();
+          }, delay);
         }).catch((err) => {
           this.createPending = false;
           this.alert = err.message;
@@ -106,6 +110,13 @@
         if (!this.username.length) {
           this.username = this.email.split('@')[0].replace(/[^a-zA-Z0-9]/, '');
         }
+      },
+      reset() {
+        this.email = '';
+        this.username = '';
+        this.firstName = '';
+        this.lastName = '';
+        this.password = this.generatePassword();
       },
     },
     watch: {

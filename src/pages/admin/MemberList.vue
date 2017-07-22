@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- add user dialog -->
-    <add-user :is-open="showAddUser" @close="closeAddUser" @create="refreshMembers"></add-user>
+    <add-user :is-open="showAddUser" @close="closeAddUser" @create="closeAddAndRefresh"></add-user>
     <edit-user :is-open="showEditUser" :user="selectedUser" @close="closeEditUser"></edit-user>
 
     <form @submit.prevent="refreshMembers">
@@ -185,6 +185,10 @@ export default {
     },
     closeAddUser() {
       this.showAddUser = false;
+    },
+    closeAddAndRefresh() {
+      this.closeAddUser();
+      this.refreshMembers();
     },
     openEditUser(member) {
       this.selectedUser = member;
