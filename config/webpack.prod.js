@@ -11,6 +11,7 @@ const ROOT = path.resolve(__dirname, '..');
 const srcPath = 'src';
 const distPath = 'public';
 const basepath = process.env.APP_BASEPATH || `/public/${process.env.BUDDY_PARSE_APP_ID}`;
+const nodeModules = path.join(ROOT, 'node_modules');
 
 module.exports = merge(baseConfig({ distPath }), {
   output: {
@@ -20,18 +21,11 @@ module.exports = merge(baseConfig({ distPath }), {
   module: {
     rules: [
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-            // the "scss" and "sass" values for the lang attribute to the right configs here.
-            // other preprocessors should work out of the box, no loader config like this necessary.
-            scss: 'vue-style-loader!css-loader!sass-loader',
-            sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
-          },
-          // other vue-loader options go here
-        },
+        test: /\.(css|scss|sass)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
+        }),
       },
     ],
   },
@@ -48,22 +42,21 @@ module.exports = merge(baseConfig({ distPath }), {
       },
     }),
 
-
-    // minify output
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-    }),
-
-    // extract css into its own file
-    new ExtractTextPlugin(path.join('css', 'style.[contenthash].css')),
-
     // uglify-js settings for production build
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {
         warnings: false,
       },
+    }),
+
+    // extract css into its own file
+    new ExtractTextPlugin(path.join('css', '[name].[contenthash].css')),
+
+    // minify output
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
     }),
 
     // generate dist index.html with correct asset hash for caching.
@@ -86,15 +79,7 @@ module.exports = merge(baseConfig({ distPath }), {
     // prevents hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks(module) {
-        // any required modules inside node_modules are extracted to vendor
-        const nodeModules = path.join(ROOT, 'node_modules');
-        return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(nodeModules) === 0
-        );
-      },
+      minChunks: ({ resource }) => (resource && /\.js$/.test(resource) && resource.indexOf(nodeModules) === 0),
     }),
 
     // extract webpack runtime and module manifest into its own file
