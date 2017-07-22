@@ -4,9 +4,9 @@
       <md-card-header-text>
         <div class="md-title">Confidentiality Policy</div>
       </md-card-header-text>
-  
+
     </md-card-header>
-  
+
     <md-card-content>
       <p>GreenLight Solutions Foundation (“Corporation”) recognizes that efficient operation requires the maintenance and management of extensive Confidential Information related to its programs as well as donor and prospect records. The purpose of this Confidentiality Policy (“Policy”) is to memorialize the Corporation’s position on confidentiality.</p>
       <p>The Corporation is working to create educational opportunities for university students, as well as community and business organizations, by engaging them in applied projects based upon leading sustainability research and practices to create strategic solutions (“Mission”). The Corporation considers certain information related to the Mission to be “Confidential Information”. Such Confidential Information includes, but is not limited to, the following:</p>
@@ -46,7 +46,7 @@
         <strong>H. Public Disclosure.</strong> The Corporation will comply with both the letter and spirit of all public disclosure requirements, including the open availability of its Form 990 tax returns. This policy shall not be construed in any manner so as to prevent the Corporation from disclosing information to taxing authorities or other governmental agencies or courts having regulatory control or jurisdiction over the Corporation. However, all staff, volunteers, and consultants must hold strictly confidential all issues of a private nature, including, but not limited to, all issues explicitly discussed in this policy.</p>
       <p>
         <strong>I. Consequences of Policy Violation.</strong> Violations of the Policy are considered very serious, and may result in disciplinary action up to and including dismissal for employees or consultants or removal from the Board or any committee for volunteers.</p>
-  
+
       <h1 class="md-title">Confidentiality Agreement</h1>
       <p>By signing below, I acknowledge that:</p>
       <ol>
@@ -55,7 +55,7 @@
         <li>I agree to abide by this Policy to the best of my ability in my role as a director, officer, volunteer, consultant or employee.</li>
       </ol>
       <p>I acknowledge and agree that I will not disclose any Confidential Information, in whatever form to unauthorized parties. I agree that at the end of my relationship with the Corporation, I will destroy or return to the Corporation all Records containing Confidential Information in my possession or control regardless of how stored or maintained, including all originals, copies and compilations and all information stored or maintained on computer, tapes, discs, E-mail or any other form of technology.</p>
-  
+
       <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
       <agreement-signature-form :name="confidentialityAgreement.name" :date="confidentialityAgreement.date" :onSubmit="doContinue" :errorMessage="errorMessage">
       </agreement-signature-form>
@@ -70,14 +70,21 @@ import FormError from '../components/FormError.vue';
 
 export default {
   name: 'confidentiality-agreement',
+  components: {
+    AgreementSignatureForm,
+    FormError,
+  },
+  mounted() {
+    if (this.user.ndaSigned) this.$router.replace({ name: 'commitment-agreement' });
+  },
   data() {
     return {
       errorMessage: '',
     };
   },
-  components: {
-    AgreementSignatureForm,
-    FormError,
+  computed: {
+    ...mapState('onboarding', ['confidentialityAgreement']),
+    ...mapState('authentication', ['user']),
   },
   methods: {
     ...mapActions('onboarding', ['signConfidentialityAgreement']),
@@ -93,9 +100,6 @@ export default {
         })
         .catch((err) => { this.errorMessage = err; });
     },
-  },
-  computed: {
-    ...mapState('onboarding', ['confidentialityAgreement']),
   },
 };
 </script>
