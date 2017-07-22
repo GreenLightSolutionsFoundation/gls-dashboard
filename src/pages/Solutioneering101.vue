@@ -17,8 +17,16 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
+
   export default {
     name: 'solutioneering-101',
+    mounted() {
+      if (this.user.solutioneer101Passed) this.$router.replace({ name: 'dashboard' });
+    },
+    computed: {
+      ...mapState('authentication', ['user']),
+    },
     methods: {
       doContinue() {
         this.$router.push({ name: 'solutioneering-101-quiz' });
