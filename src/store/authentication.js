@@ -10,7 +10,7 @@ export default {
   },
   mutations: {
     setUser(state, user) {
-      state.user = user ? omit(user, ['access_token', 'token_type']) : user;
+      state.user = user;
     },
     resetUser(state) {
       state.user = null;
