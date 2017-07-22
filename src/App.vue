@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import 'vue-material/dist/vue-material.css';
 import primaryNav from './components/layout/Navigation-Primary.vue';
 
 export default {

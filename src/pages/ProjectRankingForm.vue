@@ -23,13 +23,13 @@
 
 <script>
   import ProjectCard from '../components/ProjectCard.vue';
-  import getAll from '../services/projects';
-  
+  import { getAll } from '../services/projects';
+
   export default {
     name: 'project-ranking-form',
-  
+
     components: { ProjectCard },
-  
+
     data() {
       return {
         projects: [{
@@ -44,7 +44,7 @@
         }],
       };
     },
-  
+
     created() {
       this.error = null;
       getAll().then(

@@ -95,10 +95,10 @@
 </script>
 
 <style>
-.new-here-signup {
-  margin: 20px auto;
-  width: 80%;
-  max-width: 500px;
-  text-align: center;
-}
+  .new-here-signup {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+  }
 </style>
