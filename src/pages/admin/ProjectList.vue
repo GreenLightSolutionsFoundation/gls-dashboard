@@ -4,47 +4,57 @@
       <md-table-header>
         <md-table-row>
           <md-table-head v-for="(column, index) in columns" :key="index">{{column.name}}</md-table-head>
+          <md-table-head></md-table-head>
         </md-table-row>
       </md-table-header>
   
       <md-table-body>
-        <md-table-row v-for="(project, index) in projects" :key="index">
+        <md-table-row v-for="project in projects" :key="project.objectId">
           <md-table-cell>{{project.name}}</md-table-cell>
-          <md-table-cell>{{project.startDate}}</md-table-cell>
-          <md-table-cell>{{project.endDate}}</md-table-cell>
-          <md-table-cell>{{project.totalPositions}}</md-table-cell>
           <md-table-cell>{{project.description}}</md-table-cell>
+          <md-table-cell>{{project.startDate | formatDate }}</md-table-cell>
+          <md-table-cell>{{ project.endDate | formatDate }}</md-table-cell>
+          <md-table-cell>{{project.totalPositions}}</md-table-cell>
+          <md-table-cell>
+            <md-icon>edit</md-icon>
+          </md-table-cell>
         </md-table-row>
       </md-table-body>
     </md-table>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+import moment from 'moment';
 
 export default {
-  data() {
-    return {
-      projects: {},
-      columns: [],
-    };
-  },
+  data: () => ({
+    columns: [],
+    userCount: 0
+  }),
   methods: {
     ...mapActions('admin/projects', ['getProjects']),
     getColumns: () => {
-      const columns = [{ name: 'test1' }, { name: 'test2' }, { name: 'test3' }, { name: 'test4' }, { name: 'test5' }];
+      const columns = [{ name: 'Name' }, { name: 'Description' }, { name: 'Start Date' }, { name: 'End Date' }, { name: 'Total Positions' }];
       return columns;
     },
   },
   created() {
-    this.projects = this.getProjects();
+    this.getProjects();
     this.columns = this.getColumns();
   },
   computed: {
-    updateColumns: function(){
-      return this.projects._result;
-    }
+    ...mapState('admin/projects', ['projects']),
   },
+  filters: {
+    formatDate: function(value) {
+      if (!value) {
+        debugger;
+        return 'error';
+      } 
+      return moment(value).format('MM/DD/YYYY');
+    }
+  }
 };
 </script>
 <style lang="scss">
