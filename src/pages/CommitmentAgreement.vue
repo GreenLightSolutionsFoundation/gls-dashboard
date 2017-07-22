@@ -46,7 +46,7 @@ export default {
     AgreementSignatureForm,
     FormError,
   },
-  mounted() {
+  created() {
     if (this.user.commitmentAgreementSigned) this.$router.replace({ name: 'solutioneering-101' });
   },
   data() {

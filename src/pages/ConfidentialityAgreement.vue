@@ -74,7 +74,7 @@ export default {
     AgreementSignatureForm,
     FormError,
   },
-  mounted() {
+  created() {
     if (this.user.ndaSigned) this.$router.replace({ name: 'commitment-agreement' });
   },
   data() {

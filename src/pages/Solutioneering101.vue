@@ -21,7 +21,7 @@
 
   export default {
     name: 'solutioneering-101',
-    mounted() {
+    created() {
       if (this.user.solutioneer101Passed) this.$router.replace({ name: 'dashboard' });
     },
     computed: {
