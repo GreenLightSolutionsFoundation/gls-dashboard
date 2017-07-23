@@ -83,9 +83,9 @@
         const enrolledPositions = this.totalPositions - this.openPositions;
         if (this.openPositions !== 0) {
           return `Enrolled Solutioneers: ${enrolledPositions}/${this.totalPositions}`;
-        } else {
-          return `All ${this.totalPositions} positions filled!`;
         }
+
+        return `All ${this.totalPositions} positions filled!`;
       },
     },
     methods: {
