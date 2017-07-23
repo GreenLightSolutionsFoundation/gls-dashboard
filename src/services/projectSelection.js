@@ -29,7 +29,7 @@ export function getAll() { // eslint-disable-line import/prefer-default-export
       partnerName: 'Singleton Community Services, INC.',
       logo: 'http://buildushope.com/uploads/3/4/9/7/34974251/1466964601.png',
       projectDescription: 'Design and build an affordable and sustainable tiny home community.',
-      openPositions: 5,
+      openPositions: 0,
       totalPositions: 10,
       projectStartDate: new Date(2017, 8, 15),
       projectEndDate: new Date(2017, 12, 14),

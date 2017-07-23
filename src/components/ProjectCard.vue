@@ -16,7 +16,11 @@
           <div class="project-card-content-summary-items">
             <div class="project-card-content-summary-item">
               <md-icon>people</md-icon>
-              <span class="project-card-content-summary-item-description">{{positionsStatusMessage}}</span>
+              <span
+                class="project-card-content-summary-item-description"
+                v-bind:style="{ color: openPositions !== 0 ? 'auto' : 'red' }">
+                {{positionsStatusMessage}}
+              </span>
             </div>
             <div class="project-card-content-summary-item">
               <md-icon>date_range</md-icon>
@@ -34,9 +38,27 @@
 
       <div @click="handleSelect">
         <md-button-toggle md-single class="md-primary">
-          <md-button class="md-icon-button" :class="{'md-toggle': project.isRank1Selected}" value="1">1</md-button>
-          <md-button class="md-icon-button" :class="{'md-toggle': project.isRank2Selected}" value="2">2</md-button>
-          <md-button class="md-icon-button" :class="{'md-toggle': project.isRank3Selected}" value="3">3</md-button>
+          <md-button
+            class="md-icon-button"
+            :class="{'md-toggle': project.isRank1Selected}"
+            value="1"
+            :disabled="project.openPositions !== 0 ? false : true">
+            1
+          </md-button>
+          <md-button
+            class="md-icon-button"
+            :class="{'md-toggle': project.isRank2Selected}"
+            value="2"
+            :disabled="project.openPositions !== 0 ? false : true">
+            2
+          </md-button>
+          <md-button
+            class="md-icon-button"
+            :class="{'md-toggle': project.isRank3Selected}"
+            value="3"
+            :disabled="project.openPositions !== 0 ? false : true">
+            3
+          </md-button>
         </md-button-toggle>
       </div>
     </md-card-area>
@@ -58,11 +80,12 @@
     },
     computed: {
       positionsStatusMessage() {
-        if (this.totalPositions !== this.openPositions) {
-          const enrolledPositions = this.totalPositions - this.openPositions;
+        const enrolledPositions = this.totalPositions - this.openPositions;
+        if (this.openPositions !== 0) {
           return `Enrolled Solutioneers: ${enrolledPositions}/${this.totalPositions}`;
+        } else {
+          return `All ${this.totalPositions} positions filled!`;
         }
-        return `All ${this.totalPositions} positions filled!`;
       },
     },
     methods: {
