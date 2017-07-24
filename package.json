@@ -8,7 +8,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config config/webpack.dev.js",
     "build": "npm run test && npm run build:only",
     "build:only": "rimraf public && cross-env NODE_ENV=production webpack --progress --hide-modules --config config/webpack.prod.js",
-    "build:run": "APP_BASEPATH=/ npm run build:only && ecstatic public",
+    "build:run": "APP_BASEPATH=/ npm run build:only && ecstatic --port 8081 public",
     "lint": "eslint \"src/**/*.{js,vue}\" \"config/**/*.js\"",
     "test": "npm run lint && npm run test:only",
     "test:only": "jest",
