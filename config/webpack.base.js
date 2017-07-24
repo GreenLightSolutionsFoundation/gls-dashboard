@@ -26,6 +26,7 @@ module.exports = ({ distPath } = { distPath: 'dist' }) => ({
             sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
           },
           // other vue-loader options go here
+          sourceMap: !isProduction,
           extract: isProduction,
         },
       },
