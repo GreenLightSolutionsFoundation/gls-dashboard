@@ -35,7 +35,7 @@
 
 <script>
   import ProjectCard from '../components/ProjectCard.vue';
-  import { getAll, submitSelectedProjects } from '../services/projectSelection';
+  import { getAll, submitSelectedProjects } from '../services/project_selection';
   import FormError from '../components/FormError.vue';
 
   export default {
