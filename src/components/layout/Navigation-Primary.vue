@@ -8,9 +8,9 @@
                 <md-button v-if="isAdmin" @click.native.prevent="navigateTo('admin')">Admin</md-button>
                 <md-menu md-align-trigger class="goto-right">
                     <md-button md-menu-trigger>
-                        <span>Abbey Christansen</span>
+                        <span>{{ this.user.fullName }}</span>
                         <md-avatar>
-                            <img src="https://placeimg.com/40/40/people/5" alt="People">
+                            <img :src="this.user.gravatar" alt="People">
                         </md-avatar>
                     </md-button>
                     <md-menu-content class="solid-background">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import bulb from './Bulb.vue';
 import brand from './Brand.vue';
 
@@ -36,7 +36,8 @@ export default {
     brand,
   },
   computed: {
-    ...mapGetters('authentication', ['username', 'isAdmin']),
+    ...mapGetters('authentication', ['isAdmin']),
+    ...mapState('authentication', ['user']),
   },
   methods: {
     ...mapActions('authentication', ['logout']),
