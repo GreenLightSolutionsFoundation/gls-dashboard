@@ -1,4 +1,5 @@
 import moment from 'moment';
+import md5sum from '../lib/md5sum';
 import parse from '../lib/parse';
 import ParseObject from './parse_object';
 
@@ -11,6 +12,7 @@ export default class User extends ParseObject {
   get isOnboarded() {
     return this.solutioneer101Passed && this.ndaSigned && this.commitmentAgreementSigned;
   }
+  get gravatar() { return `https://www.gravatar.com/avatar/${md5sum(this.email.trim().toLowerCase())}.json`; }
 
   get email() { return this.instance.get('email'); }
   set email(val) { return this.instance.set('email', val); }
