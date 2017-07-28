@@ -20,7 +20,7 @@
 
       <div v-else>
         <p>You have not yet made your project selections.</p>
-        <md-button class="md-raised md-primary">Make My Project Selections</md-button>
+        <md-button class="md-raised md-primary" @click.native="doGoToProjectSelection()">Make My Project Selections Now</md-button>
       </div>
     </div>
 
