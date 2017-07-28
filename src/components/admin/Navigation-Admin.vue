@@ -21,11 +21,11 @@ export default {
     ],
   }),
   watch: {
-    $route: function (value) {
+    $route: function (value) { //eslint-disable-line
       this.setActiveTab(value);
     },
   },
-  created(){
+  created() {
     this.setActiveTab(this.$route);
   },
   methods: {
@@ -44,7 +44,7 @@ export default {
 
       this.firstLoad = false;
     },
-    setActiveTab (value){
+    setActiveTab(value) {
       this.activeTab = this.areas.find(area => area.routeName === value.name);
     },
   },
