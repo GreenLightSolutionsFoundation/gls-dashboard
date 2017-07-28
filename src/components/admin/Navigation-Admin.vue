@@ -5,7 +5,7 @@
       v-for="area in areas"
       :id="area.id"
       :md-label="area.label"
-      :md-active="activeTab.routeName === area.routeName"
+      :md-active="activeTab && activeTab.routeName === area.routeName"
       :key="area.id"
     />
   </md-tabs>
