@@ -38,30 +38,29 @@
     <md-card-area class="pick-option-container">
       <div class="pick-option-text">My Pick #</div>
 
-      <div @click="handleSelect">
-        wtf
+      <div>
         <md-button-toggle md-single class="md-primary">
           <md-button
             class="md-icon-button"
-            value="1"
-            :class="{ 'md-toggle': project.isRank1Selected }"
+            :class="{ 'md-toggle': projectRank === 1 }"
             :disabled="project.openPositions !== 0 ? false : true"
+            @click="handleSelect(1)"
           >
             1
           </md-button>
           <md-button
             class="md-icon-button"
-            :class="{ 'md-toggle': project.isRank2Selected }"
-            value="2"
+            :class="{ 'md-toggle': projectRank === 2 }"
             :disabled="project.openPositions !== 0 ? false : true"
+            @click="handleSelect(2)"
           >
             2
           </md-button>
           <md-button
             class="md-icon-button"
-            :class="{ 'md-toggle': project.isRank3Selected }"
-            value="3"
+            :class="{ 'md-toggle': projectRank === 3 }"
             :disabled="project.openPositions !== 0 ? false : true"
+            @click="handleSelect(3)"
           >
             3
           </md-button>
@@ -77,9 +76,20 @@
   export default {
     name: 'project-card',
     props: {
-      project: Object,
+      project: {
+        type: Object,
+        required: true,
+      },
+      selectedProjects: {
+        type: Array,
+        required: true,
+      },
     },
     computed: {
+      projectRank() {
+        const rank = this.selectedProjects.indexOf(this.project.id);
+        return (rank >= 0) ? rank + 1 : null;
+      },
       positionsStatusMessage() {
         const enrolledPositions = this.totalPositions - this.openPositions;
         if (this.openPositions !== 0) {
@@ -90,10 +100,8 @@
       },
     },
     methods: {
-      handleSelect(ev) {
-        console.log('handleSelect', rank, project.id)
-        // this.rank = ev.target.value || this.rank;
-        // this.$emit('rank-selected', { selectedRank: parseInt(this.rank, 10), projectId: this.projectId });
+      handleSelect(rank) {
+        this.$emit('rank-selected', { projectId: this.project.id, rank });
       },
     },
     filters: {
