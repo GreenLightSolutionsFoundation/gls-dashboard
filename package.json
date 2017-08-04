@@ -5,6 +5,7 @@
   "author": "Greenlight Solutions <greenlightsolutionsfoundation@gmail.com>",
   "private": true,
   "scripts": {
+    "bootstrap": "lerna run bootstrap",
     "build": "lerna run build",
     "test": "lerna run test",
     "deploy:getVersion": "lerna run deploy:getVersion",
