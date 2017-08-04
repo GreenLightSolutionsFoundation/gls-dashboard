@@ -1,14 +1,14 @@
 <template>
   <md-card class="project-card">
 
-    <md-card-area class="project-card-header" v-if="logo">
-      <img :src="logo" :alt="projectName">
+    <md-card-area class="project-card-header" v-if="project.logo">
+      <img :src="project.logo" :alt="project.projectName">
     </md-card-area>
 
     <md-card-area>
       <md-card-header>
-        <div class="md-title">{{projectName}}</div>
-        <div class="md-subhead">{{partnerName}}</div>
+        <div class="md-title">{{project.projectName}}</div>
+        <div class="md-subhead">{{project.partnerName}}</div>
       </md-card-header>
 
       <md-card-content>
@@ -18,17 +18,19 @@
               <md-icon>people</md-icon>
               <span
                 class="project-card-content-summary-item-description"
-                v-bind:style="{ color: openPositions !== 0 ? 'auto' : 'red' }">
-                {{positionsStatusMessage}}
+                v-bind:style="{ color: project.openPositions !== 0 ? 'auto' : 'red' }">
+                {{project.positionsStatusMessage}}
               </span>
             </div>
             <div class="project-card-content-summary-item">
               <md-icon>date_range</md-icon>
-              <span class="project-card-content-summary-item-description">{{projectStartDate | formatDate}} - {{projectEndDate | formatDate}}</span>
+              <span class="project-card-content-summary-item-description">
+                {{project.projectStartDate | formatDate}} - {{project.projectEndDate | formatDate}}
+              </span>
             </div>
           </div>
 
-          <div>{{projectDescription}}</div>
+          <div>{{project.projectDescription}}</div>
         </div>
       </md-card-content>
     </md-card-area>
@@ -36,27 +38,30 @@
     <md-card-area class="pick-option-container">
       <div class="pick-option-text">My Pick #</div>
 
-      <div @click="handleSelect">
+      <div>
         <md-button-toggle md-single class="md-primary">
           <md-button
             class="md-icon-button"
-            :class="{'md-toggle': project.isRank1Selected}"
-            value="1"
-            :disabled="project.openPositions !== 0 ? false : true">
+            :class="{ 'md-toggle': projectRank === 1 }"
+            :disabled="project.openPositions !== 0 ? false : true"
+            @click="handleSelect(1)"
+          >
             1
           </md-button>
           <md-button
             class="md-icon-button"
-            :class="{'md-toggle': project.isRank2Selected}"
-            value="2"
-            :disabled="project.openPositions !== 0 ? false : true">
+            :class="{ 'md-toggle': projectRank === 2 }"
+            :disabled="project.openPositions !== 0 ? false : true"
+            @click="handleSelect(2)"
+          >
             2
           </md-button>
           <md-button
             class="md-icon-button"
-            :class="{'md-toggle': project.isRank3Selected}"
-            value="3"
-            :disabled="project.openPositions !== 0 ? false : true">
+            :class="{ 'md-toggle': projectRank === 3 }"
+            :disabled="project.openPositions !== 0 ? false : true"
+            @click="handleSelect(3)"
+          >
             3
           </md-button>
         </md-button-toggle>
@@ -67,18 +72,24 @@
 
 <script>
   import moment from 'moment';
-  
+
   export default {
     name: 'project-card',
     props: {
-      project: Object,
-    },
-    data() {
-      const rank = this.rank || 0;
-      const project = this.project || {};
-      return { rank, ...project };
+      project: {
+        type: Object,
+        required: true,
+      },
+      selectedProjects: {
+        type: Array,
+        required: true,
+      },
     },
     computed: {
+      projectRank() {
+        const rank = this.selectedProjects.indexOf(this.project.id);
+        return (rank >= 0) ? rank + 1 : null;
+      },
       positionsStatusMessage() {
         const enrolledPositions = this.totalPositions - this.openPositions;
         if (this.openPositions !== 0) {
@@ -89,9 +100,8 @@
       },
     },
     methods: {
-      handleSelect(ev) {
-        this.rank = ev.target.value || this.rank;
-        this.$emit('rank-selected', { selectedRank: parseInt(this.rank, 10), projectId: this.projectId });
+      handleSelect(rank) {
+        this.$emit('rank-selected', { projectId: this.project.id, rank });
       },
     },
     filters: {
@@ -107,7 +117,7 @@
   width: 100%;
   max-width: 340px;
   margin-bottom: 40px;
-  
+
   .project-card-header {
     display: flex;
 
@@ -125,7 +135,7 @@
 
       .project-card-content-summary-item {
         margin-bottom: 5px;
-        
+
         .project-card-content-summary-item-description {
           vertical-align: bottom;
           padding-left: 5px;
