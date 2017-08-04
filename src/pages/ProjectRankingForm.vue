@@ -9,7 +9,7 @@
         :key="project.projectId"
         md-flex-xsmall="100"
         md-flex="50">
-        <project-card :project="project" v-on:rank-selected="rankSelected"></project-card>
+        <project-card :project="project" @rank-selected="rankSelected"></project-card>
       </md-layout>
     </md-layout>
 
@@ -43,7 +43,7 @@
     components: { ProjectCard, FormError },
     data() {
       return {
-        projects: [],
+        projects: [null, null, null],
         selectedRank1ProjectId: 0,
         selectedRank2ProjectId: 0,
         selectedRank3ProjectId: 0,
@@ -51,20 +51,20 @@
       };
     },
     methods: {
-      rankSelected(event) {
+      rankSelected({ selectedRank, projectId }) {
         // Track the ID of the project that was selected for the selected rank
-        if (event.selectedRank === 1) {
-          this.selectedRank1ProjectId = event.projectId;
-        } else if (event.selectedRank === 2) {
-          this.selectedRank2ProjectId = event.projectId;
-        } else if (event.selectedRank === 3) {
-          this.selectedRank3ProjectId = event.projectId;
+        if (selectedRank === 1) {
+          this.selectedRank1ProjectId = projectId;
+        } else if (selectedRank === 2) {
+          this.selectedRank2ProjectId = projectId;
+        } else if (selectedRank === 3) {
+          this.selectedRank3ProjectId = projectId;
         }
 
         // Update all the projects to make sure that only one project has the selected rank
         this.projects.forEach((project) => {
-          const rankProperty = `isRank${event.selectedRank}Selected`;
-          if (project.projectId === event.projectId) {
+          const rankProperty = `isRank${selectedRank}Selected`;
+          if (project.projectId === projectId) {
             project[rankProperty] = true; // eslint-disable-line no-param-reassign
           } else {
             project[rankProperty] = false; // eslint-disable-line no-param-reassign
