@@ -1,0 +1,17 @@
+{
+  "name": "gls-dashboard",
+  "description": "greenlight solutions dashboard",
+  "version": "1.0.0",
+  "author": "Greenlight Solutions <greenlightsolutionsfoundation@gmail.com>",
+  "private": true,
+  "scripts": {
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "deploy:getVersion": "lerna run deploy:getVersion",
+    "deploy": "lerna run deploy"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "^2.0.0"
+  }
+}

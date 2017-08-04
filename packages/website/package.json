@@ -12,9 +12,7 @@
     "lint": "eslint \"src/**/*.{js,vue}\" \"config/**/*.js\"",
     "test": "npm run lint && npm run test:only",
     "test:only": "jest",
-    "prepush": "npm run lint",
-    "deploy:getVersion": "node -r dotenv/config node_modules/parse-on-buddy -v && echo 'Now run: yarn run deploy -- -c <version + 1>'",
-    "deploy": "npm run build && node -r dotenv/config node_modules/parse-on-buddy"
+    "prepush": "npm run lint"
   },
   "jest": {
     "verbose": true,
