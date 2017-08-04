@@ -9,7 +9,7 @@
         :key="project.projectId"
         md-flex-xsmall="100"
         md-flex="50">
-        <project-card :project="project" @rank-selected="rankSelected"></project-card>
+        <project-card :project="project" :selectedProjects="selectedProjects" @rank-selected="rankSelected"></project-card>
       </md-layout>
     </md-layout>
 
@@ -28,7 +28,9 @@
       <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
     </md-layout>
     <md-layout md-align="end">
-      <md-button class="md-raised md-primary project-selection-submit-button" @click.native.prevent="doSubmit">Submit Project Selections</md-button>
+      <md-button class="md-raised md-primary project-selection-submit-button" @click.native.prevent="doSubmit">
+        Submit Project Selections
+      </md-button>
     </md-layout>
   </div>
 </template>
@@ -43,73 +45,57 @@
     components: { ProjectCard, FormError },
     data() {
       return {
-        projects: [null, null, null],
-        selectedRank1ProjectId: 0,
-        selectedRank2ProjectId: 0,
-        selectedRank3ProjectId: 0,
+        projects: [],
+        selectedProjects: [null, null, null],
         errorMessage: '',
       };
     },
+    computed: {
+      projectIds() {
+        return this.projects.map(p => p.id);
+      },
+    },
     methods: {
-      rankSelected({ selectedRank, projectId }) {
-        // Track the ID of the project that was selected for the selected rank
-        if (selectedRank === 1) {
-          this.selectedRank1ProjectId = projectId;
-        } else if (selectedRank === 2) {
-          this.selectedRank2ProjectId = projectId;
-        } else if (selectedRank === 3) {
-          this.selectedRank3ProjectId = projectId;
-        }
+      rankSelected({ projectId, rank }) {
+        // ignore invalid data
+        // TODO: probably a good idea to do something when we get weird data
+        if ([1, 2, 3].indexOf(rank) < 0 || this.projectIds.indexOf(projectId) < 0) return;
+        const rankIndex = rank - 1;
 
-        // Update all the projects to make sure that only one project has the selected rank
-        this.projects.forEach((project) => {
-          const rankProperty = `isRank${selectedRank}Selected`;
-          if (project.projectId === projectId) {
-            project[rankProperty] = true; // eslint-disable-line no-param-reassign
-          } else {
-            project[rankProperty] = false; // eslint-disable-line no-param-reassign
-          }
+        this.selectedProjects = this.selectedProjects.map((id, i) => {
+          if (id != null && id === projectId && i !== rankIndex) return null;
+          if (i === rankIndex) return projectId;
+          return id;
         });
       },
       doSubmit() {
-        if (
-          this.selectedRank1ProjectId === 0 ||
-          this.selectedRank2ProjectId === 0 ||
-          this.selectedRank3ProjectId === 0) {
+        this.errorMessage = '';
+        if (!this.selectedProjects.every(projectId => projectId != null)) {
           this.errorMessage = 'Please select 3 projects.';
+          return;
         }
 
-        // TODO: Persist selected projects
-        const selectedProjectIds = [
-          this.selectedRank1ProjectId,
-          this.selectedRank2ProjectId,
-          this.selectedRank3ProjectId,
-        ];
-        submitSelectedProjects(selectedProjectIds);
+        submitSelectedProjects(this.selectedProjects);
       },
     },
     created() {
       this.error = null;
-      getAll().then(
-        (data) => {
-          // Attach a few properties to track and set the selected rank of for each project
-          data.forEach((project) => {
-            const projectOptions = {
-              isRank1Selected: false,
-              isRank2Selected: false,
-              isRank3Selected: false,
-            };
-            Object.assign(project, projectOptions);
-          });
+      getAll().then((data) => {
+        // Attach a few properties to track and set the selected rank of for each project
+        data.forEach((project) => {
+          const projectOptions = {
+            isRank1Selected: false,
+            isRank2Selected: false,
+            isRank3Selected: false,
+          };
+          Object.assign(project, projectOptions);
+        });
 
-          this.projects = data;
-        },
-      ).catch(
-        (error) => {
-          this.error = error;
-          // this.projects = null;
-        },
-      );
+        this.projects = data;
+      }).catch((error) => {
+        this.error = error;
+        // this.projects = null;
+      });
     },
   };
 </script>
