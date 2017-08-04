@@ -1,7 +1,7 @@
 export function getAll() { // eslint-disable-line import/prefer-default-export
   return Promise.resolve([
     {
-      projectId: 1,
+      id: 1,
       projectName: 'Build Us Hope',
       partnerName: 'Singleton Community Services, INC.',
       logo: 'http://buildushope.com/uploads/3/4/9/7/34974251/1466964601.png',
@@ -12,7 +12,7 @@ export function getAll() { // eslint-disable-line import/prefer-default-export
       projectEndDate: new Date(2017, 12, 14),
     },
     {
-      projectId: 2,
+      id: 2,
       projectName: 'Shaw Montessori Project',
       partnerName: 'Augustus H. Shaw Jr. Elementary School',
       logo: 'http://shaw.phxschools.org/common/phxschools/images/district_school_logo.png',
@@ -24,7 +24,7 @@ export function getAll() { // eslint-disable-line import/prefer-default-export
       projectEndDate: new Date(2017, 12, 14),
     },
     {
-      projectId: 3,
+      id: 3,
       projectName: 'Build Us Hope',
       partnerName: 'Singleton Community Services, INC.',
       logo: 'http://buildushope.com/uploads/3/4/9/7/34974251/1466964601.png',
@@ -35,7 +35,7 @@ export function getAll() { // eslint-disable-line import/prefer-default-export
       projectEndDate: new Date(2017, 12, 14),
     },
     {
-      projectId: 4,
+      id: 4,
       projectName: 'Shaw Montessori Project',
       partnerName: 'Augustus H. Shaw Jr. Elementary School',
       logo: 'http://shaw.phxschools.org/common/phxschools/images/district_school_logo.png',
@@ -47,7 +47,7 @@ export function getAll() { // eslint-disable-line import/prefer-default-export
       projectEndDate: new Date(2017, 12, 14),
     },
     {
-      projectId: 5,
+      id: 5,
       projectName: 'Build Us Hope',
       partnerName: 'Singleton Community Services, INC.',
       logo: 'http://buildushope.com/uploads/3/4/9/7/34974251/1466964601.png',
