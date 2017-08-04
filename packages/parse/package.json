@@ -1,0 +1,21 @@
+{
+  "name": "gls-dashboard-parse",
+  "version": "1.0.0",
+  "description": "parse code for the greenlight solutions dashboard",
+  "scripts": {
+    "deploy:getVersion": "node -r dotenv/config node_modules/parse-on-buddy -v && echo 'Now run: yarn run deploy -- -c <version + 1>'",
+    "deploy": "npm run build && node -r dotenv/config node_modules/parse-on-buddy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GreenLightSolutionsFoundation/gls-dashboard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GreenLightSolutionsFoundation/gls-dashboard/issues"
+  },
+  "homepage": "https://github.com/GreenLightSolutionsFoundation/gls-dashboard#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "parse-on-buddy": "^2.1.4"
+  }
+}

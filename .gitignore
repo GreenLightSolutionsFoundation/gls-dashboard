@@ -4,4 +4,4 @@ dist/
 npm-debug.log
 yarn-error.log
 .env
-public/
+packages/parse/public/
