@@ -4,29 +4,45 @@
 
 > greenlight solutions dashboard
 
-## Build Setup
+## Setup
 
-*These instructions use [yarn](https://yarnpkg.com/) (`npm install -g yarn`), but you can also use `npm`*
+This project is set up as a monorepo using [lerna](https://github.com/lerna/lerna).
+
+To begin, install the root packages and bootstrap all of the packages with the bootstrap command.
+
+```bash
+yarn # or use npm install
+yarn run bootstrap # or npm run bootstrap
+```
+
+Once the project is bootstrapped, you can use the core scripts to build, test, and deploy all packages:
 
 ``` bash
-# install dependencies
-yarn
-
-# serve with hot reload at localhost:8080
-yarn run dev
-
 # run the tests
 yarn run test
 
 # build for production with minification
 yarn run build
+
+# deploy the code (see notes below)
+yarn run deploy:getVersion
+yarn run deploy
+```
+
+## Website development
+
+To develop on the webside, `cd` into `packages/website` and run the dev server:
+
+```bash
+# serve with hot reload at localhost:8080
+yarn run dev
 ```
 
 ## Deployment
 
 Once the application is ready to be deployed to Buddy, you'll need to run a couple commands. You'll also need to configure two environment variables about the Parse app; `BUDDY_PARSE_APP_ID` and `BUDDY_PARSE_MASTER_KEY`.
 
-Consult the Parse dashboard for these values, and set them in your environment. The easiest way to configure them is to create a `.env` file in the root of the project, with the following content:
+Consult the Parse dashboard for these values, and set them in your environment. The easiest way to configure them is to create a `.env` file in the parse package (`packages/parse/.env`), with the following content:
 
 ```
 BUDDY_PARSE_APP_ID=<your application's app id>
