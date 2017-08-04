@@ -16,7 +16,7 @@ const nodeModules = path.join(ROOT, 'node_modules');
 module.exports = merge(baseConfig({ distPath }), {
   output: {
     publicPath: basepath,
-    filename: path.join('js', '[name].[chunkhash].js'),
+    filename: path.join('js', '[name].[chunkhash:8].js'),
   },
   module: {
     rules: [
@@ -51,7 +51,7 @@ module.exports = merge(baseConfig({ distPath }), {
     }),
 
     // extract css into its own file
-    new ExtractTextPlugin(path.join('css', '[name].[contenthash].css')),
+    new ExtractTextPlugin(path.join('css', '[name].[contenthash:8].css')),
 
     // minify output
     new webpack.LoaderOptionsPlugin({
@@ -79,7 +79,7 @@ module.exports = merge(baseConfig({ distPath }), {
     // prevents hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: ({ resource }) => (resource && /\.js$/.test(resource) && resource.indexOf(nodeModules) === 0),
+      minChunks: ({ resource }) => resource && resource.indexOf(nodeModules) === 0 && /\.js$/.test(resource),
     }),
 
     // extract webpack runtime and module manifest into its own file

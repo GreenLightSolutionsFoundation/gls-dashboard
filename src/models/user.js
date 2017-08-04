@@ -1,4 +1,5 @@
 import moment from 'moment';
+import md5sum from '../lib/md5sum';
 import parse from '../lib/parse';
 import ParseObject from './parse_object';
 
@@ -11,6 +12,7 @@ export default class User extends ParseObject {
   get isOnboarded() {
     return this.solutioneer101Passed && this.ndaSigned && this.commitmentAgreementSigned;
   }
+  get gravatar() { return `https://www.gravatar.com/avatar/${md5sum(this.email.trim().toLowerCase())}.json`; }
 
   get email() { return this.instance.get('email'); }
   set email(val) { return this.instance.set('email', val); }
@@ -43,21 +45,33 @@ export default class User extends ParseObject {
   get ndaSignedDate() { return this.instance.get('ndaSignedDate'); }
   set ndaSignedDate(val) { return this.instance.set('ndaSignedDate', moment(val).utc().toDate()); }
 
-  static create() {
+  static create(wrap = true) {
     const user = new parse.User();
-    return user.signUp(null);
+    return user.signUp(null)
+    .then((newUser) => {
+      if (!wrap) return newUser;
+      return newUser && wrapUser(newUser); // eslint-disable-line no-use-before-define,max-len
+    });
   }
 
-  static login(username, password) {
-    return parse.User.logIn(username, password);
+  static login(username, password, wrap = true) {
+    return parse.User.logIn(username, password)
+    .then((user) => {
+      if (!wrap) return user;
+      return user && wrapUser(user); // eslint-disable-line no-use-before-define,max-len
+    });
   }
 
   static logout() {
     return parse.User.logOut();
   }
 
-  static getCurrent() {
-    return parse.User.current();
+  static getCurrent(wrap = true) {
+    const current = parse.User.current();
+
+    if (current && !wrap) return Promise.resolve(current);
+    if (current) return Promise.resolve(wrapUser(current)); // eslint-disable-line no-use-before-define,max-len
+    return Promise.resolve(null);
   }
 }
 
