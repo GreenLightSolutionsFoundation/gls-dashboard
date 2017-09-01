@@ -8,6 +8,5 @@
   "selectedBy": ["Parse Relationship: an array of user pointers"],
   "chapter": "Parse Relationship: pointer for the chapter",
   "partnerOrg": "Parse Relationship: pointer for the partner organization",
-  "projectLead": "Parse Relationship: pointer for the user",
-
+  "projectLead": "Parse Relationship: pointer for the user"
 }
