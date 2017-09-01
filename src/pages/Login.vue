@@ -27,7 +27,7 @@
 
 <script>
   import { mapActions, mapState, mapGetters } from 'vuex';
-  import Member from '../models/member';
+  import UserDetails from '../models/userDetails';
   import LoginForm from '../components/LoginForm.vue';
   import SignupForm from '../components/SignupForm.vue';
 
@@ -90,7 +90,7 @@
             this.pending = false;
           } else {
             // create a member model instance form the user record
-            Member.fromUser(user)
+            UserDetails.fromUser(user)
             .then((member) => {
               // we're done with the async stuff, reset pending state
               this.pending = false;
