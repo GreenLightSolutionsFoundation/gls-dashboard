@@ -7,10 +7,6 @@ export default class User extends ParseObject {
     super(user || new parse.User());
   }
 
-  get fullName() { return `${this.firstName} ${this.lastName}`; }
-  get isOnboarded() {
-    return this.solutioneer101Passed && this.ndaSigned && this.commitmentAgreementSigned;
-  }
   get gravatar() { return `https://www.gravatar.com/avatar/${md5sum(this.email.trim().toLowerCase())}.json`; }
 
   get email() { return this.instance.get('email'); }
@@ -26,18 +22,18 @@ export default class User extends ParseObject {
   static create(wrap = true) {
     const user = new parse.User();
     return user.signUp(null)
-    .then((newUser) => {
-      if (!wrap) return newUser;
-      return newUser && wrapUser(newUser); // eslint-disable-line no-use-before-define,max-len
-    });
+      .then((newUser) => {
+        if (!wrap) return newUser;
+        return newUser && wrapUser(newUser); // eslint-disable-line no-use-before-define,max-len
+      });
   }
 
   static login(username, password, wrap = true) {
     return parse.User.logIn(username, password)
-    .then((user) => {
-      if (!wrap) return user;
-      return user && wrapUser(user); // eslint-disable-line no-use-before-define,max-len
-    });
+      .then((user) => {
+        if (!wrap) return user;
+        return user && wrapUser(user); // eslint-disable-line no-use-before-define,max-len
+      });
   }
 
   static logout() {

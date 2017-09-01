@@ -3,11 +3,11 @@ import parse from '../lib/parse';
 import User from './user';
 import ParseObject from './parse_object';
 
-export default class UserDetails extends ParseObject {
-  constructor(userDetails) {
-    const ParseUserDetails = parse.Object.extend('UserDetails');
-    super(userDetails || new ParseUserDetails());
-    this.user = new User(userDetails && userDetails.attributes.user);
+export default class UserDetail extends ParseObject {
+  constructor(userDetail) {
+    const ParseUserDetail = parse.Object.extend('UserDetail');
+    super(userDetail || new ParseUserDetail());
+    this.user = new User(userDetail && userDetail.attributes.user);
   }
 
   get firstName() { return this.instance.get('firstName'); }
@@ -43,6 +43,14 @@ export default class UserDetails extends ParseObject {
   get currentlyActive() { return this.instance.get('currentlyActive'); }
   set currentlyActive(val) { return this.instance.set('currentlyActive', Boolean(val)); }
 
+  get fullName() { return `${this.firstName} ${this.lastName}`; }
+
+  get isOnboarded() {
+    return this.getSolutioneer101Passed()
+      && this.getNdaSigned()
+      && this.commitmentAgreementSigned();
+  }
+
   query() {
     const query = new parse.Query(this.instance);
     query.include('user');
@@ -59,12 +67,16 @@ export default class UserDetails extends ParseObject {
     const parseUser = new parse.User();
     parseUser.id = user.id;
 
-    const query = new parse.Query('UserDetails');
+    const query = new parse.Query('UserDetail');
     query.include('user'); // hydrate the user property
     query.equalTo('user', parseUser);
 
-    return query.first().then(member => member && new UserDetails(member));
+    return query.first().then(member => member && new UserDetail(member));
+  }
+
+  getFullName() {
+    return `${this.getFirstName()} ${this.getLastName()}`;
   }
 }
 
-export const wrapMember = member => new UserDetails(member);
+export const wrapMember = member => new UserDetail(member);

@@ -1,5 +1,5 @@
 import User from '../models/user';
-import UserDetails from '../models/userDetails';
+import UserDetail from '../models/userDetail';
 
 export function login(username, password) {
   return User.login(username, password);
@@ -13,8 +13,6 @@ export function create(details = {}) {
     email,
     password,
     passwordConfirm,
-    firstName,
-    lastName,
   } = details;
 
   if (username.length === 0 || email.length === 0 || password.length === 0) {
@@ -25,16 +23,16 @@ export function create(details = {}) {
     return Promise.reject(new Error('Passwords to not match'));
   }
 
-  if (!firstName || !lastName) {
-    return Promise.reject(new Error('Please enter your first and last name'));
-  }
+  // if (!firstName || !lastName) {
+  //   return Promise.reject(new Error('Please enter your first and last name'));
+  // }
 
-  Object.assign(user, { username, password, email, firstName, lastName });
+  Object.assign(user, { username, password, email });
   return user.create()
-  .then((newUser) => {
-    const member = new UserDetails();
-    member.create(newUser);
-  });
+    .then((newUser) => {
+      const userDetail = new UserDetail();
+      userDetail.create(newUser);
+    });
 }
 
 export function adminCreate(details = {}) {
@@ -43,29 +41,21 @@ export function adminCreate(details = {}) {
     username,
     email,
     password,
-    firstName,
-    lastName,
   } = details;
 
   if (username.length === 0 || email.length === 0 || password.length === 0) {
     return Promise.reject(new Error('Email, username, and password are all required'));
   }
 
-  if (!firstName || !lastName) {
-    return Promise.reject(new Error('Please enter a first and last name'));
-  }
-
   user.email = email;
   user.username = username;
   user.password = password;
-  user.firstName = firstName;
-  user.lastName = lastName;
 
   return user.save()
-  .then((newUser) => {
-    const member = new UserDetails();
-    member.create(newUser);
-  });
+    .then((newUser) => {
+      const userDetail = new UserDetail();
+      userDetail.create(newUser);
+    });
 }
 
 export function logout() {
@@ -82,4 +72,8 @@ export function getUser(user) {
 
 export function isAuthenticated(user) {
   return getUser(user).then(cUser => cUser.authenticated());
+}
+
+export function getFullName() {
+  return UserDetail.getFullName();
 }

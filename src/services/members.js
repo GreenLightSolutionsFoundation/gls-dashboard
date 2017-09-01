@@ -1,15 +1,15 @@
 /* eslint no-param-reassign: 0 */
 import { isPlainObject } from '../lib/utils';
 import queryBuilder from '../lib/query_builder';
-import UserDetails, { wrapMember } from '../models/userDetails';
+import UserDetail, { wrapMember } from '../models/userDetail';
 
 export function getAll(filters = {}) {
-  const member = new UserDetails();
+  const member = new UserDetail();
   return queryBuilder(member.query(), filters).find().then(members => members.map(wrapMember));
 }
 
 export function getById(id) {
-  const member = new UserDetails();
+  const member = new UserDetail();
   return member.query().get(id).then(wrapMember);
 }
 
