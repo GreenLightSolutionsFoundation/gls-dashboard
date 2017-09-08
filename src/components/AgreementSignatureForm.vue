@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'agreement-signature-form',
   data() {
@@ -28,8 +30,12 @@ export default {
       locals: {
         name: '',
         date: '',
+        user: {},
       },
     };
+  },
+  computed: {
+    ...mapState('authentication', ['user']),
   },
   props: {
     name: String,
@@ -41,11 +47,12 @@ export default {
       this.onSubmit({
         name: this.locals.name,
         date: this.locals.date,
+        user: this.user,
       });
     },
   },
   created() {
-    Object.assign(this.locals, { name: this.name, date: this.date });
+    Object.assign(this.locals, { name: this.name, date: this.date, user: this.user });
   },
 };
 </script>

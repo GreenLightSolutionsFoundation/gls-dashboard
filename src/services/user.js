@@ -75,5 +75,9 @@ export function isAuthenticated(user) {
 }
 
 export function getFullName() {
-  return UserDetail.getFullName();
+  return UserDetail.fullName();
+}
+
+export function getUserDetail(user) {
+  return UserDetail.fromUser(user);
 }
