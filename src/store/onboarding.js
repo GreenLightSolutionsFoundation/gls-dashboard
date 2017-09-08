@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { getUserDetail } from '../services/user';
+import { getCurrent } from '../services/user';
 
-function isSignedName(nameToCheck, userDetails) {
-  if (nameToCheck.trim().toLowerCase().replace(' ', '') !== userDetails.fullName.trim().toLowerCase().replace(' ', '')) {
+function isSignedName(nameToCheck, user) {
+  if (nameToCheck.trim().toLowerCase().replace(' ', '') !== user.fullName.trim().toLowerCase().replace(' ', '')) {
     return false;
   }
   return true;
@@ -123,60 +123,75 @@ export default {
       Object.assign(state.solutioneering101Quiz.questions[questionIndex].isCorrect = isCorrect);
     },
     setSolutioneering101QuizCompletedStatus(state, value) {
-      Object.assign(state.solutioneering101Quiz.completed = value);
+      Object.assign(state.solutioneering101Quiz.completed, { completed: value });
     },
   },
   actions: {
-    signConfidentialityAgreement({ commit, state }, { name, date, user }) {
-      return getUserDetail(user)
-        .then((detail) => {
-          if (!isSignedName(name, detail)) {
+    signConfidentialityAgreement({ commit, state }, { name, date }) {
+      const user = getCurrent();
+      return new Promise((resolve, reject) => {
+        if (user) {
+          resolve(user);
+        }
+        reject('no user found');
+      })
+        .then((res) => {
+          if (!isSignedName(name, res)) {
             return Promise.reject('signed name does not match the user name');
           }
-          detail.ndaSigned = true;
-          detail.ndaSignedDate = date;
-          return detail.save();
+          res.ndaSigned = true;
+          res.ndaSignedDate = date;
+          return res.save();
         })
         .then((res) => {
           const ndaSigned = res.attributes.ndaSigned;
           commit('setConfidentialityAgreement', { name, date, signed: ndaSigned });
           return Promise.resolve({ name, date, signed: ndaSigned });
-        })
-        .catch(error => Promise.reject(error));
+        });
     },
-    signCommitmentAgreement({ commit, state }, { name, date, user }) {
-      return getUserDetail(user)
-        .then((detail) => {
-          if (!isSignedName(name, detail)) {
+    signCommitmentAgreement({ commit, state }, { name, date }) {
+      const user = getCurrent();
+      return new Promise((resolve, reject) => {
+        if (user) {
+          resolve(user);
+        }
+        reject('no user found');
+      })
+        .then((res) => {
+          if (!isSignedName(name, res)) {
             return Promise.reject('signed name does not match the current user name');
           }
-          detail.commitmentAgreementSigned = true;
-          detail.commitmentAgreementSignedDate = date;
-          return detail.save();
+          res.commitmentAgreementSigned = true;
+          res.commitmentAgreementSignedDate = date;
+          return res.save();
         })
         .then((res) => {
           const commitmentAgreementSigned = res.attributes.commitmentAgreementSigned;
           commit('setCommitmentAgreement', { name, date, signed: commitmentAgreementSigned });
           return Promise.resolve({ name, date, signed: commitmentAgreementSigned });
-        })
-        .catch(error => Promise.reject(error));
+        });
     },
     setSolutioneering101QuizQuestionIsCorrectState({ commit }, value) {
       commit('setSolutioneering101QuestionIsCorrectState', value);
       return Promise.resolve(value);
     },
-    setSolutioneering101QuizCompletedStatus({ commit }, { completed, user }) {
-      return getUserDetail(user)
-        .then((detail) => {
-          detail.solutioneer101Passed = completed;
-          return detail.save();
+    setSolutioneering101QuizCompletedStatus({ commit }, value) {
+      const user = getCurrent();
+      return new Promise((resolve, reject) => {
+        if (user) {
+          resolve(user);
+        }
+        reject('no user found');
+      })
+        .then((res) => {
+          res.solutioneer101Passed = value;
+          return res.save();
         })
         .then((res) => {
-          const quizResult = res.attributes.solutioneer101Passed;
-          commit('setSolutioneering101QuizCompletedStatus', { value: quizResult });
-          return Promise.resolve(quizResult);
-        })
-        .catch(error => Promise.reject(error));
+          const completed = res.attributes.solutioneer101Passed;
+          commit('setSolutioneering101QuizCompletedStatus', { value: completed });
+          return Promise.resolve(completed);
+        });
     },
   },
 };

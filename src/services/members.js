@@ -1,16 +1,16 @@
 /* eslint no-param-reassign: 0 */
 import { isPlainObject } from '../lib/utils';
 import queryBuilder from '../lib/query_builder';
-import UserDetail, { wrapUserDetail } from '../models/userDetail';
+import UserDetail, { wrapMember } from '../models/userDetail';
 
 export function getAll(filters = {}) {
   const member = new UserDetail();
-  return queryBuilder(member.query(), filters).find().then(members => members.map(wrapUserDetail));
+  return queryBuilder(member.query(), filters).find().then(members => members.map(wrapMember));
 }
 
 export function getById(id) {
   const member = new UserDetail();
-  return member.query().get(id).then(wrapUserDetail);
+  return member.query().get(id).then(wrapMember);
 }
 
 export function update(id, data) {
@@ -28,6 +28,8 @@ export function update(id, data) {
         'password',
         'createdAt',
         'updatedAt',
+        'fullName',
+        'isOnboarded',
       ];
 
       if (blacklisted.indexOf(prop) < 0) member[prop] = data[prop];
