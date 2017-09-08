@@ -46,9 +46,9 @@ export default class UserDetail extends ParseObject {
   get fullName() { return `${this.firstName} ${this.lastName}`; }
 
   get isOnboarded() {
-    return this.getSolutioneer101Passed()
-      && this.getNdaSigned()
-      && this.commitmentAgreementSigned();
+    return this.getSolutioneer101Passed
+      && this.getNdaSigned
+      && this.commitmentAgreementSigned;
   }
 
   query() {
@@ -73,10 +73,6 @@ export default class UserDetail extends ParseObject {
 
     return query.first().then(member => member && new UserDetail(member));
   }
-
-  getFullName() {
-    return `${this.getFirstName()} ${this.getLastName()}`;
-  }
 }
 
-export const wrapMember = member => new UserDetail(member);
+export const wrapUserDetail = userDetail => new UserDetail(userDetail);
