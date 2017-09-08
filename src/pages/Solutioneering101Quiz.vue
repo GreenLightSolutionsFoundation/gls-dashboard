@@ -75,7 +75,7 @@ export default {
       }
 
       if (allQuestionsCorrect) {
-        this.setSolutioneering101QuizCompletedStatus(true)
+        this.setSolutioneering101QuizCompletedStatus({ completed: true, user: this.user })
           .then((result) => {
             if (result) {
               this.$router.push({ name: 'dashboard', params: { showDialog: 'solutioneerCongrats' } });
@@ -88,6 +88,7 @@ export default {
   },
   computed: {
     ...mapState('onboarding', ['solutioneering101Quiz']),
+    ...mapState('authentication', ['user']),
   },
 };
 </script>

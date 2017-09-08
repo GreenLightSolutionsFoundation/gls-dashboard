@@ -29,7 +29,7 @@
       <p>GreenLight Solutions provides a fun and unique way to grow yourself personally and professionally. Just like with anything in life, the opportunity is what you make of it! Get involved, get activated, and do your very best to create sustainable solutions for your local community! By signing your name below, you are committing to the agreements herein and agree to join our movement of advancing sustainable business model evolution.</p>
 
       <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
-      <agreement-signature-form :name="commitmentAgreement.name" :date="commitmentAgreement.date" :onSubmit="doContinue" :errorMessage="errorMessage">
+      <agreement-signature-form :name="commitmentAgreement.name" :date="commitmentAgreement.date" :user="commitmentAgreement.user" :onSubmit="doContinue">
       </agreement-signature-form>
     </md-card-content>
   </md-card>
@@ -39,6 +39,7 @@
 import { mapState, mapActions } from 'vuex';
 import AgreementSignatureForm from '../components/AgreementSignatureForm.vue';
 import FormError from '../components/FormError.vue';
+import UserDetail from '../models/userDetail';
 
 export default {
   name: 'confidentiality-agreement',
@@ -47,7 +48,9 @@ export default {
     FormError,
   },
   created() {
-    if (this.user.commitmentAgreementSigned) this.$router.replace({ name: 'solutioneering-101' });
+    UserDetail.fromUser(this.user).then((detail) => {
+      if (detail.commitmentAgreementSigned) this.$router.replace({ name: 'solutioneering-101' });
+    });
   },
   data() {
     return {
@@ -69,7 +72,9 @@ export default {
           }
           this.errorMessage = 'Commitment agreement must be signed';
         })
-        .catch((err) => { this.errorMessage = err; });
+        .catch((err) => {
+          this.errorMessage = err;
+        });
     },
   },
 };
