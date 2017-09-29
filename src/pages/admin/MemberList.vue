@@ -56,7 +56,8 @@
             <!-- onboarded -->
             <md-icon v-if="member.isOnboarded">star</md-icon>
           </md-table-cell>
-          <md-table-cell>{{ member.chapter.attributes.name }}</md-table-cell>
+          <md-table-cell v-if="member.chapter">{{ member.chapter.attributes.name }}</md-table-cell>
+          <md-table-cell v-else></md-table-cell>
           <md-table-cell>{{ member.position }}</md-table-cell>
           <md-table-cell>{{ member.semesterJoined }}</md-table-cell>
           <md-table-cell>
