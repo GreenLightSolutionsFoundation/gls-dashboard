@@ -41,6 +41,8 @@ export function adminCreate(details = {}) {
     username,
     email,
     password,
+    firstName,
+    lastName,
   } = details;
 
   if (username.length === 0 || email.length === 0 || password.length === 0) {
@@ -55,6 +57,9 @@ export function adminCreate(details = {}) {
     .then((newUser) => {
       const userDetail = new UserDetail();
       userDetail.create(newUser);
+      userDetail.firstName = firstName;
+      userDetail.lastName = lastName;
+      userDetail.save();
     });
 }
 
