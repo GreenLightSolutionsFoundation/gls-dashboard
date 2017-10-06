@@ -46,14 +46,15 @@ export default class UserDetail extends ParseObject {
   get fullName() { return `${this.firstName} ${this.lastName}`; }
 
   get isOnboarded() {
-    return this.getSolutioneer101Passed
-      && this.getNdaSigned
+    return this.solutioneer101Passed
+      && this.ndaSignedDate
       && this.commitmentAgreementSigned;
   }
 
   query() {
     const query = new parse.Query(this.instance);
     query.include('user');
+    query.include('chapter');
     return query;
   }
 
