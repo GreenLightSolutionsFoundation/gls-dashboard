@@ -34,7 +34,7 @@
 
         <md-input-container>
           <label for="selectedChapter">Chapter</label>
-          <md-select name="selectedChapter" id="selectedChapter" v-model="selectedChapter">
+          <md-select name="selectedChapter.id" id="selectedChapter.id" v-model="selectedChapter.id" @selected="setSelectedChapter">
             <md-option v-for="chapter in chapters" :value="chapter.id" :key="chapter.id">{{chapter.name}}</md-option>
           </md-select>
         </md-input-container>
@@ -55,7 +55,7 @@
 
 <script>
 import { adminCreate as createUser } from '../services/user';
-import { getAll as getAllChapters } from '../services/chapters';
+import { getAll as getAllChapters, getById } from '../services/chapters';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPRTUVWXYZ1234567890';
 
@@ -69,13 +69,18 @@ export default {
     password: '',
     alert: '',
     createPending: false,
-    selectedChapter: '',
     chapters: [],
+    selectedChapter: {},
   }),
   props: {
     isOpen: false,
   },
   methods: {
+    setSelectedChapter(val) {
+      getById(val).then((result) => {
+        this.selectedChapter = result;
+      });
+    },
     closeDialog() {
       this.$refs.addUser.close();
     },
@@ -102,7 +107,7 @@ export default {
         password: this.password,
         firstName: this.firstName,
         lastName: this.lastName,
-        chapter: this.chapter,
+        chapter: this.selectedChapter,
       }).then(() => {
         // build in some additional delay to let parse catch up...
         const delay = 100;
@@ -129,6 +134,7 @@ export default {
       this.lastName = '';
       this.password = this.generatePassword();
       this.chapter = {};
+      this.selectedChapter = {};
     },
   },
   watch: {
