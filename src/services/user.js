@@ -43,6 +43,7 @@ export function adminCreate(details = {}) {
     password,
     firstName,
     lastName,
+    chapter,
   } = details;
 
   if (username.length === 0 || email.length === 0 || password.length === 0) {
@@ -59,6 +60,7 @@ export function adminCreate(details = {}) {
       userDetail.create(newUser);
       userDetail.firstName = firstName;
       userDetail.lastName = lastName;
+      userDetail.chapter = chapter.instance;
       userDetail.save();
     });
 }
