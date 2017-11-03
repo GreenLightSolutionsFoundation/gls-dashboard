@@ -32,7 +32,7 @@
           <md-layout>
             <md-input-container>
               <label for="selectedChapter">Chapter</label>
-              <md-select name="selectedChapter.id" id="selectedChapter.id" v-model="selectedChapter.id">
+              <md-select name="selectedChapter" :id="selectedChapter.id" v-model="selectedChapter.id">
                 <md-option selected v-for="chapter in chapters" :value="chapter.id" :key="chapter.id">{{chapter.name}}</md-option>
               </md-select>
             </md-input-container>
@@ -63,7 +63,7 @@
 
 <script>
 import { update as updateMember } from '../services/members';
-import { getAll as getAllChapters } from '../services/chapters';
+import { getAll as getAllChapters, getById } from '../services/chapters';
 
 export default {
   name: 'edit-user',
@@ -79,6 +79,13 @@ export default {
     user: Object,
   },
   methods: {
+    setSelectedChapter(val) {
+      if (typeof val !== 'undefined') {
+        getById(val).then((result) => {
+          this.selectedChapter = result.instance;
+        });
+      }
+    },
     closeDialog() {
       this.$refs.editUser.close();
     },
@@ -105,15 +112,12 @@ export default {
       else this.closeDialog();
     },
     user(userObj) {
+      const user = this;
       this.tempUser = userObj.toJSON();
+      this.setSelectedChapter(this.tempUser.chapter.id);
       getAllChapters().then((results) => {
-        results.forEach((element) => {
-          this.chapters.push(element);
-          if (element.id === this.user.chapter.id) {
-            this.selectedChapter = element;
-          }
-        }, this);
-      });
+        user.chapters = results;
+      }, user);
     },
   },
   mounted() {
@@ -122,7 +126,7 @@ export default {
 };
 </script>
 <style>
-  .text-capitalize {
-    text-transform: capitalize;
-  }
+.text-capitalize {
+  text-transform: capitalize;
+}
 </style>
