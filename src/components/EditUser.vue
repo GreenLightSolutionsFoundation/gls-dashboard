@@ -32,7 +32,7 @@
           <md-layout>
             <md-input-container>
               <label for="selectedChapter">Chapter</label>
-              <md-select name="selectedChapter" :id="selectedChapter.id" v-model="selectedChapter.id">
+              <md-select name="selectedChapter" :id="selectedChapter" v-model="selectedChapter">
                 <md-option selected v-for="chapter in chapters" :value="chapter.id" :key="chapter.id">{{chapter.name}}</md-option>
               </md-select>
             </md-input-container>
@@ -63,7 +63,7 @@
 
 <script>
 import { update as updateMember } from '../services/members';
-import { getAll as getAllChapters, getById } from '../services/chapters';
+import { getAll as getAllChapters } from '../services/chapters';
 
 export default {
   name: 'edit-user',
@@ -72,20 +72,13 @@ export default {
     alert: '',
     savePending: false,
     chapters: [],
-    selectedChapter: {},
+    selectedChapter: '',
   }),
   props: {
     isOpen: false,
     user: Object,
   },
   methods: {
-    setSelectedChapter(val) {
-      if (typeof val !== 'undefined') {
-        getById(val).then((result) => {
-          this.selectedChapter = result.instance;
-        });
-      }
-    },
     closeDialog() {
       this.$refs.editUser.close();
     },
@@ -94,7 +87,6 @@ export default {
     },
     doSaveUser() {
       this.savePending = true;
-
       return updateMember(this.user.id, this.tempUser)
         .then(() => {
           this.savePending = false;
@@ -112,12 +104,15 @@ export default {
       else this.closeDialog();
     },
     user(userObj) {
-      const user = this;
       this.tempUser = userObj.toJSON();
-      this.setSelectedChapter(this.tempUser.chapter.id);
+      this.selectedChapter = this.tempUser.chapter.id;
       getAllChapters().then((results) => {
-        user.chapters = results;
-      }, user);
+        this.chapters = results;
+      });
+    },
+    selectedChapter(value) {
+      const chapterInstance = this.chapters.find(chapter => chapter.id === value);
+      this.tempUser.chapter = chapterInstance ? chapterInstance.instance : null;
     },
   },
   mounted() {

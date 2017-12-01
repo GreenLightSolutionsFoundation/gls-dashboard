@@ -2,6 +2,7 @@ import moment from 'moment';
 import parse from '../lib/parse';
 import User from './user';
 import ParseObject from './parse_object';
+import { getById as getChapterById } from '../services/chapters';
 
 export default class UserDetail extends ParseObject {
   constructor(userDetail) {
@@ -10,45 +11,91 @@ export default class UserDetail extends ParseObject {
     this.user = new User(userDetail && userDetail.attributes.user);
   }
 
-  get firstName() { return this.instance.get('firstName'); }
-  set firstName(val) { return this.instance.set('firstName', val); }
+  get firstName() {
+    return this.instance.get('firstName');
+  }
+  set firstName(val) {
+    return this.instance.set('firstName', val);
+  }
 
-  get lastName() { return this.instance.get('lastName'); }
-  set lastName(val) { return this.instance.set('lastName', val); }
+  get lastName() {
+    return this.instance.get('lastName');
+  }
+  set lastName(val) {
+    return this.instance.set('lastName', val);
+  }
 
-  get commitmentAgreementSigned() { return this.instance.get('commitmentAgreementSigned'); }
-  set commitmentAgreementSigned(val) { return this.instance.set('commitmentAgreementSigned', Boolean(val)); }
+  get commitmentAgreementSigned() {
+    return this.instance.get('commitmentAgreementSigned');
+  }
+  set commitmentAgreementSigned(val) {
+    return this.instance.set('commitmentAgreementSigned', Boolean(val));
+  }
 
-  get commitmentAgreementSignedDate() { return this.instance.get('commitmentAgreementSignedDate'); }
-  set commitmentAgreementSignedDate(val) { return this.instance.set('commitmentAgreementSignedDate', moment(val).utc().toDate()); }
+  get commitmentAgreementSignedDate() {
+    return this.instance.get('commitmentAgreementSignedDate');
+  }
+  set commitmentAgreementSignedDate(val) {
+    return this.instance.set('commitmentAgreementSignedDate', moment(val).utc().toDate());
+  }
 
-  get solutioneer101Passed() { return this.instance.get('solutioneer101Passed'); }
-  set solutioneer101Passed(val) { return this.instance.set('solutioneer101Passed', Boolean(val)); }
+  get solutioneer101Passed() {
+    return this.instance.get('solutioneer101Passed');
+  }
+  set solutioneer101Passed(val) {
+    return this.instance.set('solutioneer101Passed', Boolean(val));
+  }
 
-  get ndaSigned() { return this.instance.get('ndaSigned'); }
-  set ndaSigned(val) { return this.instance.set('ndaSigned', Boolean(val)); }
+  get ndaSigned() {
+    return this.instance.get('ndaSigned');
+  }
+  set ndaSigned(val) {
+    return this.instance.set('ndaSigned', Boolean(val));
+  }
 
-  get ndaSignedDate() { return this.instance.get('ndaSignedDate'); }
-  set ndaSignedDate(val) { return this.instance.set('ndaSignedDate', moment(val).utc().toDate()); }
+  get ndaSignedDate() {
+    return this.instance.get('ndaSignedDate');
+  }
+  set ndaSignedDate(val) {
+    return this.instance.set('ndaSignedDate', moment(val).utc().toDate());
+  }
 
-  get semesterJoined() { return this.instance.get('semesterJoined'); }
-  set semesterJoined(val) { return this.instance.set('semesterJoined', val); }
+  get semesterJoined() {
+    return this.instance.get('semesterJoined');
+  }
+  set semesterJoined(val) {
+    return this.instance.set('semesterJoined', val);
+  }
 
-  get chapter() { return this.instance.get('chapter'); }
-  set chapter(val) { return this.instance.set('chapter', val); }
+  get chapter() {
+    return this.instance.get('chapter');
+  }
+  set chapter(val) {
+    return this.instance.set('chapter', val);
+  }
 
-  get position() { return this.instance.get('position'); }
-  set position(val) { return this.instance.set('position', val); }
+  get position() {
+    return this.instance.get('position');
+  }
+  set position(val) {
+    return this.instance.set('position', val);
+  }
 
-  get currentlyActive() { return this.instance.get('currentlyActive'); }
-  set currentlyActive(val) { return this.instance.set('currentlyActive', Boolean(val)); }
+  get currentlyActive() {
+    return this.instance.get('currentlyActive');
+  }
+  set currentlyActive(val) {
+    return this.instance.set('currentlyActive', Boolean(val));
+  }
 
-  get fullName() { return `${this.firstName} ${this.lastName}`; }
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
 
   get isOnboarded() {
-    return this.solutioneer101Passed
-      && this.ndaSignedDate
-      && this.commitmentAgreementSigned;
+    return this.solutioneer101Passed &&
+      this.ndaSignedDate &&
+      this.commitmentAgreementSigned;
   }
 
   query() {
@@ -62,6 +109,13 @@ export default class UserDetail extends ParseObject {
     if (user) this.user = user;
     this.instance.set('user', this.user);
     return this.instance.save();
+  }
+
+  createChapter(chapter) {
+    getChapterById(chapter).then((result) => {
+      this.instance.set('chapter', result.instance);
+      return this.instance.save();
+    });
   }
 
   static fromUser(user) {
