@@ -1,0 +1,12 @@
+{
+  "name": "",
+  "totalPositions": 0,
+  "description": "",
+  "startDate": "",
+  "endDate": "",
+  "status": false,
+  "selectedBy": ["Parse Relationship: an array of user pointers"],
+  "chapter": "Parse Relationship: pointer for the chapter",
+  "partnerOrg": "Parse Relationship: pointer for the partner organization",
+  "projectLead": "Parse Relationship: pointer for the user"
+}

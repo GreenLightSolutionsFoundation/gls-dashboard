@@ -12,28 +12,29 @@
               <md-input disabled v-model="tempUser.user.email"></md-input>
             </md-input-container>
             <md-input-container>
-              <label>First Name</label>
-              <md-input disabled v-model="tempUser.user.firstName"></md-input>
+              <label for="first-name">First Name</label>
+              <md-input name="first-name" class="text-capitalize" v-model="tempUser.firstName"></md-input>
             </md-input-container>
             <md-input-container>
-              <label>Last Name</label>
-              <md-input disabled v-model="tempUser.user.lastName"></md-input>
+              <label for="last-name">Last Name</label>
+              <md-input name="last-name" class="text-capitalize" v-model="tempUser.lastName"></md-input>
             </md-input-container>
 
             <!-- onboarding info -->
             <div class="md-chips">
-              <md-chip v-if="tempUser.user.commitmentAgreementSigned">Agreement Signed</md-chip>
-              <md-chip v-if="tempUser.user.ndaSigned">Confidentiality Signed</md-chip>
-              <md-chip v-if="tempUser.user.solutioneer101Passed">Solutioneering 101 Passed</md-chip>
+              <md-chip v-if="tempUser.commitmentAgreementSigned">Agreement Signed</md-chip>
+              <md-chip v-if="tempUser.ndaSigned">Confidentiality Signed</md-chip>
+              <md-chip v-if="tempUser.solutioneer101Passed">Solutioneering 101 Passed</md-chip>
             </div>
             <!-- <md-chip>Projects Selected</md-chip> -->
 
           </md-layout>
           <md-layout>
-
             <md-input-container>
-              <label>Chapter</label>
-              <md-input v-model="tempUser.chapter"></md-input>
+              <label for="selectedChapter">Chapter</label>
+              <md-select name="selectedChapter" :id="selectedChapter" v-model="selectedChapter">
+                <md-option selected v-for="chapter in chapters" :value="chapter.id" :key="chapter.id">{{chapter.name}}</md-option>
+              </md-select>
             </md-input-container>
             <md-input-container>
               <label>Position</label>
@@ -43,7 +44,6 @@
               <label>Semester Joined</label>
               <md-input v-model="tempUser.semesterJoined"></md-input>
             </md-input-container>
-
           </md-layout>
         </md-layout>
 
@@ -62,30 +62,32 @@
 </template>
 
 <script>
-  import { update as updateMember } from '../services/members';
+import { update as updateMember } from '../services/members';
+import { getAll as getAllChapters } from '../services/chapters';
 
-  export default {
-    name: 'edit-user',
-    data: () => ({
-      tempUser: {},
-      alert: '',
-      savePending: false,
-    }),
-    props: {
-      isOpen: false,
-      user: Object,
+export default {
+  name: 'edit-user',
+  data: () => ({
+    tempUser: {},
+    alert: '',
+    savePending: false,
+    chapters: [],
+    selectedChapter: '',
+  }),
+  props: {
+    isOpen: false,
+    user: Object,
+  },
+  methods: {
+    closeDialog() {
+      this.$refs.editUser.close();
     },
-    methods: {
-      closeDialog() {
-        this.$refs.editUser.close();
-      },
-      openDialog() {
-        this.$refs.editUser.open();
-      },
-      doSaveUser() {
-        this.savePending = true;
-
-        return updateMember(this.user.id, this.tempUser)
+    openDialog() {
+      this.$refs.editUser.open();
+    },
+    doSaveUser() {
+      this.savePending = true;
+      return updateMember(this.user.id, this.tempUser)
         .then(() => {
           this.savePending = false;
           this.$emit('close');
@@ -94,19 +96,32 @@
           this.savePending = false;
           this.alert = err.message || 'Save failed :(';
         });
-      },
     },
-    watch: {
-      isOpen(val) {
-        if (val) this.openDialog();
-        else this.closeDialog();
-      },
-      user(userObj) {
-        this.tempUser = userObj.toJSON();
-      },
+  },
+  watch: {
+    isOpen(val) {
+      if (val) this.openDialog();
+      else this.closeDialog();
     },
-    mounted() {
-      if (this.isOpen) this.openDialog();
+    user(userObj) {
+      this.tempUser = userObj.toJSON();
+      this.selectedChapter = this.tempUser.chapter.id;
+      getAllChapters().then((results) => {
+        this.chapters = results;
+      });
     },
-  };
+    selectedChapter(value) {
+      const chapterInstance = this.chapters.find(chapter => chapter.id === value);
+      this.tempUser.chapter = chapterInstance ? chapterInstance.instance : null;
+    },
+  },
+  mounted() {
+    if (this.isOpen) this.openDialog();
+  },
+};
 </script>
+<style>
+.text-capitalize {
+  text-transform: capitalize;
+}
+</style>

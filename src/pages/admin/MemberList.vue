@@ -48,15 +48,16 @@
           </md-table-cell>
           <md-table-cell>
             <!-- contact info -->
-            <div>{{ member.user.fullName }}</div>
+            <div>{{ member.fullName }}</div>
             <div>{{ member.user.email }}</div>
             <div>{{ member.user.username }}</div>
           </md-table-cell>
           <md-table-cell>
             <!-- onboarded -->
-            <md-icon v-if="member.user.isOnboarded">star</md-icon>
+            <md-icon v-if="member.isOnboarded">star</md-icon>
           </md-table-cell>
-          <md-table-cell>{{ member.chapter }}</md-table-cell>
+          <md-table-cell v-if="member.chapter">{{ member.chapter.attributes.name }}</md-table-cell>
+          <md-table-cell v-else></md-table-cell>
           <md-table-cell>{{ member.position }}</md-table-cell>
           <md-table-cell>{{ member.semesterJoined }}</md-table-cell>
           <md-table-cell>

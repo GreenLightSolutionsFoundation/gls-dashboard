@@ -1,0 +1,16 @@
+{
+  "firstName": "",
+  "lastName": "",
+  "ndaSigned": false,
+  "ndaSignedDate": "",
+  "solutioneer101Passed": false,
+  "commitmentAgreementSigned": false,
+  "commitmentAgreementSignedDate": "",
+  "className": "",
+  "semesterJoined": "",
+  "position": "",
+  "currentlyActive": false,
+  "chapter": "Parse Relationship: Pointer to the Chapter class",
+  "user": "Parse Relationship: Pointer to the User class",
+  "selectedProjects": ["Parse Relationship: array of pointers to project"]  
+}

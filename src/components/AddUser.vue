@@ -32,6 +32,13 @@
           <md-input v-model="password" disabled></md-input>
         </md-input-container>
 
+        <md-input-container>
+          <label for="selectedChapter">Chapter</label>
+          <md-select name="selectedChapter" :id="selectedChapter.id" v-model="selectedChapter">
+            <md-option v-for="chapter in chapters" :value="chapter.id" :key="chapter.id">{{chapter.name}}</md-option>
+          </md-select>
+        </md-input-container>
+
         <p style="color: red;" v-if="alert.length">
           <md-icon>error_output</md-icon>
           {{ alert }}
@@ -47,86 +54,102 @@
 </template>
 
 <script>
-  import { adminCreate as createUser } from '../services/user';
+import { adminCreate as createUser } from '../services/user';
+import { getAll as getAllChapters, getById } from '../services/chapters';
 
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPRTUVWXYZ1234567890';
+const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPRTUVWXYZ1234567890';
 
-  export default {
-    name: 'add-user',
-    data: () => ({
-      email: '',
-      username: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      alert: '',
-      createPending: false,
-    }),
-    props: {
-      isOpen: false,
+export default {
+  name: 'add-user',
+  data: () => ({
+    email: '',
+    username: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    alert: '',
+    createPending: false,
+    chapters: [],
+    selectedChapter: {},
+  }),
+  props: {
+    isOpen: false,
+  },
+  methods: {
+    setSelectedChapter(val) {
+      getById(val).then((result) => {
+        this.selectedChapter = result;
+      });
     },
-    methods: {
-      closeDialog() {
-        this.$refs.addUser.close();
-      },
-      openDialog() {
-        this.reset();
-        this.$refs.addUser.open();
-      },
-      generatePassword(len = 10) {
-        let str = '';
+    closeDialog() {
+      this.$refs.addUser.close();
+    },
+    openDialog() {
+      this.reset();
+      this.$refs.addUser.open();
+    },
+    generatePassword(len = 10) {
+      let str = '';
 
-        for (let i = 0; i < len; i += 1) {
-          const index = Math.floor(Math.random() * chars.length);
-          const char = chars[index];
-          str += char;
-        }
+      for (let i = 0; i < len; i += 1) {
+        const index = Math.floor(Math.random() * chars.length);
+        const char = chars[index];
+        str += char;
+      }
 
-        return str;
-      },
-      doCreateUser() {
-        this.createPending = true;
-        return createUser({
-          email: this.email,
-          username: this.username,
-          password: this.password,
-          firstName: this.firstName,
-          lastName: this.lastName,
-        }).then(() => {
-          // build in some additional delay to let parse catch up...
-          const delay = 100;
-          setTimeout(() => {
-            this.createPending = false;
-            this.$emit('create');
-            this.$emit('close');
-            this.reset();
-          }, delay);
-        }).catch((err) => {
+      return str;
+    },
+    doCreateUser() {
+      this.createPending = true;
+      return createUser({
+        email: this.email,
+        username: this.username,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        chapter: this.selectedChapter,
+      }).then(() => {
+        // build in some additional delay to let parse catch up...
+        const delay = 100;
+        setTimeout(() => {
           this.createPending = false;
-          this.alert = err.message;
-        });
-      },
-      setUsername() {
-        if (!this.username.length) {
-          this.username = this.email.split('@')[0].replace(/[^a-zA-Z0-9]/, '');
-        }
-      },
-      reset() {
-        this.email = '';
-        this.username = '';
-        this.firstName = '';
-        this.lastName = '';
-        this.password = this.generatePassword();
-      },
+          this.$emit('create');
+          this.$emit('close');
+          this.reset();
+        }, delay);
+      }).catch((err) => {
+        this.createPending = false;
+        this.alert = err.message;
+      });
     },
-    watch: {
-      isOpen(val) {
-        if (val) this.openDialog();
-        else this.closeDialog();
-      },
+    setUsername() {
+      if (!this.username.length) {
+        this.username = this.email.split('@')[0].replace(/[^a-zA-Z0-9]/, '');
+      }
     },
-    mounted() {
-      if (this.isOpen) this.openDialog();
+    reset() {
+      this.email = '';
+      this.username = '';
+      this.firstName = '';
+      this.lastName = '';
+      this.password = this.generatePassword();
+      this.chapter = {};
+      this.selectedChapter = {};
     },
-  };
+  },
+  watch: {
+    isOpen(val) {
+      if (val) this.openDialog();
+      else this.closeDialog();
+    },
+  },
+  mounted() {
+    if (this.isOpen) this.openDialog();
+  },
+  created() {
+    getAllChapters().then((results) => {
+      this.chapters = results;
+    });
+  },
+};
 </script>

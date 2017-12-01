@@ -55,13 +55,13 @@ export default {
         }
       });
     },
-    signup({ commit }, userDetails) {
+    signup({ commit }, userDetail) {
       // clear error and set pending state
       commit('setErrorMessage', '');
 
-      return create(userDetails)
+      return create(userDetail)
       .then(() => ({
-        username: userDetails.username,
+        username: userDetail.username,
       }))
       .catch((err) => {
         const defaultMsg = 'Signup failed, please try again';
