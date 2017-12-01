@@ -34,7 +34,7 @@
 
         <md-input-container>
           <label for="selectedChapter">Chapter</label>
-          <md-select name="selectedChapter" id="selectedChapter" v-model="selectedChapter">
+          <md-select name="selectedChapter" :id="selectedChapter.id" v-model="selectedChapter">
             <md-option v-for="chapter in chapters" :value="chapter.id" :key="chapter.id">{{chapter.name}}</md-option>
           </md-select>
         </md-input-container>
@@ -102,7 +102,7 @@ export default {
         password: this.password,
         firstName: this.firstName,
         lastName: this.lastName,
-        chapter: this.chapter,
+        chapter: this.selectedChapter,
       }).then(() => {
         // build in some additional delay to let parse catch up...
         const delay = 100;
