@@ -53,14 +53,13 @@ export function adminCreate(details = {}) {
   user.email = email;
   user.username = username;
   user.password = password;
-
   return user.save()
     .then((newUser) => {
       const userDetail = new UserDetail();
       userDetail.create(newUser);
       userDetail.firstName = firstName;
       userDetail.lastName = lastName;
-      userDetail.chapter = chapter.instance;
+      userDetail.createChapter(chapter);
       userDetail.save();
     });
 }

@@ -25,9 +25,10 @@ export function update(id, data) {
       // don't update some fields
       const blacklisted = [
         'id',
-        'password',
         'createdAt',
         'updatedAt',
+        'fullName',
+        'isOnboarded',
       ];
 
       if (blacklisted.indexOf(prop) < 0) member[prop] = data[prop];

@@ -34,7 +34,7 @@
 
         <md-input-container>
           <label for="selectedChapter">Chapter</label>
-          <md-select name="selectedChapter.id" id="selectedChapter.id" v-model="selectedChapter.id" @selected="setSelectedChapter">
+          <md-select name="selectedChapter" :id="selectedChapter.id" v-model="selectedChapter">
             <md-option v-for="chapter in chapters" :value="chapter.id" :key="chapter.id">{{chapter.name}}</md-option>
           </md-select>
         </md-input-container>

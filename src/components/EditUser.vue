@@ -32,7 +32,7 @@
           <md-layout>
             <md-input-container>
               <label for="selectedChapter">Chapter</label>
-              <md-select name="selectedChapter.id" id="selectedChapter.id" v-model="selectedChapter.id">
+              <md-select name="selectedChapter" :id="selectedChapter" v-model="selectedChapter">
                 <md-option selected v-for="chapter in chapters" :value="chapter.id" :key="chapter.id">{{chapter.name}}</md-option>
               </md-select>
             </md-input-container>
@@ -72,7 +72,7 @@ export default {
     alert: '',
     savePending: false,
     chapters: [],
-    selectedChapter: {},
+    selectedChapter: '',
   }),
   props: {
     isOpen: false,
@@ -87,7 +87,6 @@ export default {
     },
     doSaveUser() {
       this.savePending = true;
-
       return updateMember(this.user.id, this.tempUser)
         .then(() => {
           this.savePending = false;
@@ -106,14 +105,14 @@ export default {
     },
     user(userObj) {
       this.tempUser = userObj.toJSON();
+      this.selectedChapter = this.tempUser.chapter.id;
       getAllChapters().then((results) => {
-        results.forEach((element) => {
-          this.chapters.push(element);
-          if (element.id === this.user.chapter.id) {
-            this.selectedChapter = element;
-          }
-        }, this);
+        this.chapters = results;
       });
+    },
+    selectedChapter(value) {
+      const chapterInstance = this.chapters.find(chapter => chapter.id === value);
+      this.tempUser.chapter = chapterInstance ? chapterInstance.instance : null;
     },
   },
   mounted() {
@@ -122,7 +121,7 @@ export default {
 };
 </script>
 <style>
-  .text-capitalize {
-    text-transform: capitalize;
-  }
+.text-capitalize {
+  text-transform: capitalize;
+}
 </style>
