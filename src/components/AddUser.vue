@@ -55,7 +55,7 @@
 
 <script>
 import { adminCreate as createUser } from '../services/user';
-import { getAll as getAllChapters } from '../services/chapters';
+import { getAll as getAllChapters, getById } from '../services/chapters';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPRTUVWXYZ1234567890';
 
@@ -69,13 +69,18 @@ export default {
     password: '',
     alert: '',
     createPending: false,
-    selectedChapter: '',
     chapters: [],
+    selectedChapter: {},
   }),
   props: {
     isOpen: false,
   },
   methods: {
+    setSelectedChapter(val) {
+      getById(val).then((result) => {
+        this.selectedChapter = result;
+      });
+    },
     closeDialog() {
       this.$refs.addUser.close();
     },
@@ -129,6 +134,7 @@ export default {
       this.lastName = '';
       this.password = this.generatePassword();
       this.chapter = {};
+      this.selectedChapter = {};
     },
   },
   watch: {
