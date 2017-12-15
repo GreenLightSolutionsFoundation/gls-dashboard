@@ -4,21 +4,6 @@
     <add-user :is-open="showAddUser" @close="closeAddUser" @create="closeAddAndRefresh"></add-user>
     <edit-user :is-open="showEditUser" :user="selectedUser" @close="closeEditUser"></edit-user>
 
-    <form @submit.prevent="refreshMembers">
-      <md-toolbar class="md-transparent">
-        <md-input-container>
-          <h2 class="md-title" style="flex: 1">Members</h2>
-          <md-button class="md-icon-button" @click.native="openAddUser">
-            <md-icon>person_add</md-icon>
-          </md-button>
-          <md-button class="md-icon-button" type="submit">
-            <md-icon>search</md-icon>
-          </md-button>
-          <md-input placeholder="search" v-model="searchInput"></md-input>
-        </md-input-container>
-      </md-toolbar>
-    </form>
-
     <!-- TODO: add sorting -->
     <md-table :md-sort="filters.sortField" :md-sort-type="filters.sortOrder" @sort="onSort">
       <md-table-header>
@@ -102,9 +87,7 @@ export default {
     EditUser,
   },
   data: () => ({
-    searchInput: '',
     showAddUser: false,
-
     showEditUser: false,
     selectedUser: null,
 
@@ -155,7 +138,7 @@ export default {
   methods: {
     ...mapActions('admin/members', ['setActive', 'getMembers']),
     refreshMembers() {
-      this.getMembers({ ...this.filters, search: this.search });
+      this.getMembers({ ...this.filters });
     },
     activate(member) {
       this.setActive({ member, active: true });
