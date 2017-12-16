@@ -78,8 +78,6 @@ import { mapState, mapActions } from 'vuex';
 import AddUser from '../../components/AddUser.vue';
 import EditUser from '../../components/EditUser.vue';
 
-const ucFirst = str => str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
-
 export default {
   name: 'admin-member-list-page',
   components: {
