@@ -78,8 +78,6 @@ import { mapState, mapActions } from 'vuex';
 import AddUser from '../../components/AddUser.vue';
 import EditUser from '../../components/EditUser.vue';
 
-const ucFirst = str => str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
-
 export default {
   name: 'admin-member-list-page',
   components: {
@@ -120,19 +118,6 @@ export default {
       const end = start + this.filters.perPage;
 
       return this.members.slice(start, end);
-    },
-    search() {
-      const search = [];
-      const [firstName, lastName] = this.searchInput.split(' ');
-      if (firstName && firstName.length > 0) {
-        if (lastName && lastName.length > 0) {
-          search.push(['firstName', ucFirst(firstName)]);
-          search.push(['lastName', ucFirst(lastName)]);
-        } else {
-          search.push(['lastName', ucFirst(firstName)]);
-        }
-      }
-      return search;
     },
   },
   methods: {
