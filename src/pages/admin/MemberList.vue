@@ -49,15 +49,6 @@
             <md-icon @click.native="openEditUser(member)">edit</md-icon>
           </md-table-cell>
         </md-table-row>
-        <md-table-row v-if="pageMembers.length < filters.perPage" v-for="num in (filters.perPage - pageMembers.length)" :key="'_empty'+num">
-          <md-table-cell></md-table-cell>
-          <md-table-cell></md-table-cell>
-          <md-table-cell></md-table-cell>
-          <md-table-cell></md-table-cell>
-          <md-table-cell></md-table-cell>
-          <md-table-cell></md-table-cell>
-          <md-table-cell></md-table-cell>
-        </md-table-row>
       </md-table-body>
     </md-table>
 
