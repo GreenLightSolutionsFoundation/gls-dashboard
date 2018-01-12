@@ -1,3 +1,4 @@
+import 'vue-material/dist/vue-material.min.css';
 import Vue from 'vue';
 import VueMaterial from 'vue-material';
 import router from './router';
@@ -7,16 +8,6 @@ import parse from './lib/parse';
 window.parse = parse;
 
 Vue.use(VueMaterial);
-
-Vue.material.registerTheme({
-  default: {
-    primary: 'green',
-    background: 'white',
-  },
-  white: {
-    primary: 'white',
-  },
-});
 
 // initialize the application store
 store.dispatch('authentication/initialize')
