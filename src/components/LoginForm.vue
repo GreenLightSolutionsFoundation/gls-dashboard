@@ -2,18 +2,18 @@
   <div class="login">
     <logo-brand class="login-logo-brand"></logo-brand>
 
-    <form id="login-form"v-on:submit.prevent="handleSubmit">
+    <form id="login-form" @submit.prevent="handleSubmit">
       <h2>Dashboard Sign In</h2>
 
-      <md-input-container :class="{ 'md-input-invalid': usernameError }">
+      <md-field :class="{ 'md-input-invalid': usernameError }">
         <label>Username</label>
         <md-input type="text" v-model="username"></md-input>
-      </md-input-container>
+      </md-field>
 
-      <md-input-container :class="{'md-input-invalid': passwordError }">
+      <md-field :class="{'md-input-invalid': passwordError }">
         <label>Password</label>
         <md-input type="password" v-model="password"></md-input>
-      </md-input-container>
+      </md-field>
 
       <div class="input-row">
         <!-- <a class="forgot-password" href="#" @click.prevent="handleForgotPassword">
@@ -31,58 +31,67 @@
 </template>
 
 <script>
-  import LogoBrand from '../components/LogoBrand.vue';
-  import FormError from '../components/FormError.vue';
+import LogoBrand from "../components/LogoBrand.vue";
+import FormError from "../components/FormError.vue";
 
-  export default {
-    name: 'login-form',
+export default {
+  name: "login-form",
 
-    components: {
-      LogoBrand,
-      FormError,
+  components: {
+    LogoBrand,
+    FormError,
+  },
+
+  props: {
+    isLoading: Boolean,
+    errorMessage: String,
+    onSubmit: Function,
+  },
+
+  data() {
+    return {
+      username: "",
+      password: "",
+      usernameError: false,
+      passwordError: false,
+    };
+  },
+
+  methods: {
+    getValidationClass(fieldName) {
+      const field = this.$v.form[fieldName];
+
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
     },
-
-    props: {
-      isLoading: Boolean,
-      errorMessage: String,
-      onSubmit: Function,
+    resetErrors() {
+      this.usernameError = false;
+      this.passwordError = false;
     },
+    handleSubmit() {
+      let hasErrors = false;
+      this.resetErrors();
 
-    data() {
-      return {
-        username: '',
-        password: '',
-        usernameError: false,
-        passwordError: false,
-      };
+      if (!this.username || this.username.length < 1) {
+        this.usernameError = true;
+        hasErrors = true;
+      }
+
+      if (!this.password || this.password.length < 1) {
+        this.passwordError = true;
+        hasErrors = true;
+      }
+
+      if (hasErrors) return;
+
+      const { username, password } = this;
+      this.onSubmit({ username, password });
     },
-
-    methods: {
-      resetErrors() {
-        this.usernameError = false;
-        this.passwordError = false;
-      },
-      handleSubmit() {
-        let hasErrors = false;
-        this.resetErrors();
-
-        if (!this.username || this.username.length < 1) {
-          this.usernameError = true;
-          hasErrors = true;
-        }
-
-        if (!this.password || this.password.length < 1) {
-          this.passwordError = true;
-          hasErrors = true;
-        }
-
-        if (hasErrors) return;
-
-        const { username, password } = this;
-        this.onSubmit({ username, password });
-      },
-    },
-  };
+  },
+};
 </script>
 
 
@@ -102,7 +111,7 @@
     height: 200px;
     width: 100%;
     max-height: 200px;
-    max-width:300px;
+    max-width: 300px;
 
     path {
       fill: #66a52e;
