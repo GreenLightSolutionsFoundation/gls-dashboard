@@ -53,4 +53,4 @@ yarn run deploy -- -c <CURRENT VERSION + 1>
 
 ## Design Prototype/Mockups
 
-[Prototype](https://www.justinmind.com/usernote/tests/25432407/25579562/26854229/index.html)
+Design prototype/mockup is available within the "mockup" folder.
