@@ -21,7 +21,11 @@ export default {
     },
     updateMember(state, { id, data }) {
       state.members = state.members.map((member) => {
-        if (member.id === id) Object.keys(data).forEach(key => (member[key] = data[key]));
+        if (member.id === id) {
+          Object.keys(data).forEach((key) => {
+            member[key] = data[key];
+          });
+        }
         return member;
       });
     },

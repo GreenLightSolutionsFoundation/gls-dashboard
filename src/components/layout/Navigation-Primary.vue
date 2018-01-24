@@ -21,31 +21,31 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
-import bulb from "./Bulb.vue";
-import brand from "./Brand.vue";
+import { mapActions, mapGetters, mapState } from 'vuex';
+import bulb from './Bulb.vue';
+import brand from './Brand.vue';
 
 export default {
-  name: "Navigation-Primary",
+  name: 'Navigation-Primary',
   components: {
     bulb,
-    brand
+    brand,
   },
   computed: {
-    ...mapGetters("authentication", ["isAdmin"]),
-    ...mapState("authentication", ["user"])
+    ...mapGetters('authentication', ['isAdmin']),
+    ...mapState('authentication', ['user']),
   },
   methods: {
-    ...mapActions("authentication", ["logout"]),
+    ...mapActions('authentication', ['logout']),
     navigateTo(routeName) {
       this.$router.push({ name: routeName });
     },
     doLogout() {
       this.logout().then(() => {
-        this.$router.push({ name: "login" });
+        this.$router.push({ name: 'login' });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

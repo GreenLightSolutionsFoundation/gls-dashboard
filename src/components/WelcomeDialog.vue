@@ -23,7 +23,7 @@
 export default {
   name: 'welcome-dialog',
   props: {
-    isOpen: Boolean
+    isOpen: Boolean,
   },
   methods: {
     doGetStarted() {
@@ -35,7 +35,7 @@ export default {
     },
     closeDialog() {
       this.$emit('closed');
-    }
+    },
   },
   watch: {
     isOpen(val) {
@@ -43,11 +43,11 @@ export default {
         if (val) this.openDialog();
         else this.closeDialog();
       });
-    }
+    },
   },
   mounted() {
     if (this.isOpen) this.openDialog();
-  }
+  },
 };
 </script>
 

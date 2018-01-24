@@ -108,17 +108,23 @@
               // otherwise, send them where they need to go
               else this.$router.push(this.sendTo);
             })
-            .catch(() => (this.setErrorMessage('Login failed, member not found')));
+            .catch(() => {
+              this.setErrorMessage('Login failed, member not found');
+            });
           }
         })
-        .catch(() => (this.pending = false));
+        .catch(() => {
+          this.pending = false;
+        });
       },
       doSignup(fields) {
         this.pending = true;
         this.signup(fields).then((user) => {
           this.pending = false;
           if (user == null) this.$router.push({ name: 'approval-pending' });
-        }).catch(() => (this.pending = false));
+        }).catch(() => {
+          this.pending = false;
+        });
       },
     },
   };

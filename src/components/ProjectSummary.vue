@@ -12,10 +12,10 @@
 
 <script>
 export default {
-  name: "project-summary",
+  name: 'project-summary',
   props: {
-    project: Object
-  }
+    project: Object,
+  },
 };
 </script>
 

@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import LogoBrand from "../components/LogoBrand.vue";
-import FormError from "../components/FormError.vue";
+import LogoBrand from '../components/LogoBrand.vue';
+import FormError from '../components/FormError.vue';
 
 export default {
-  name: "login-form",
+  name: 'login-form',
 
   components: {
     LogoBrand,
@@ -50,8 +50,8 @@ export default {
 
   data() {
     return {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       usernameError: false,
       passwordError: false,
     };
@@ -63,9 +63,10 @@ export default {
 
       if (field) {
         return {
-          "md-invalid": field.$invalid && field.$dirty
+          'md-invalid': field.$invalid && field.$dirty,
         };
       }
+      return '';
     },
     resetErrors() {
       this.usernameError = false;
