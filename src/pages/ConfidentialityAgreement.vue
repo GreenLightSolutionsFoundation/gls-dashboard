@@ -57,8 +57,7 @@
       <p>I acknowledge and agree that I will not disclose any Confidential Information, in whatever form to unauthorized parties. I agree that at the end of my relationship with the Corporation, I will destroy or return to the Corporation all Records containing Confidential Information in my possession or control regardless of how stored or maintained, including all originals, copies and compilations and all information stored or maintained on computer, tapes, discs, E-mail or any other form of technology.</p>
 
       <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
-      <agreement-signature-form :name="confidentialityAgreement.name" :date="confidentialityAgreement.date" :user="confidentialityAgreement.user" :onSubmit="doContinue">
-      </agreement-signature-form>
+      <agreement-signature-form :name="confidentialityAgreement.name" :date="confidentialityAgreement.date" :user="confidentialityAgreement.user" :onSubmit="doContinue"></agreement-signature-form>
     </md-card-content>
   </md-card>
 </template>
@@ -80,6 +79,8 @@ export default {
   data() {
     return {
       errorMessage: '',
+      name: '',
+      date: null,
     };
   },
   computed: {
@@ -95,8 +96,8 @@ export default {
             this.$router.push({ name: 'commitment-agreement' });
             return;
           }
-
-          this.errorMessage = 'Confidentiality agreement must be signed';
+          debugger;
+          return Promise.reject('Confidentiality agreement must be signed');
         })
         .catch((err) => { this.errorMessage = err; });
     },

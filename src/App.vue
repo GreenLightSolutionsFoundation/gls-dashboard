@@ -23,15 +23,4 @@ export default {
 
 <style lang="scss">
   @import './styles/main.scss';
-
-  .max-width {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-  }
 </style>

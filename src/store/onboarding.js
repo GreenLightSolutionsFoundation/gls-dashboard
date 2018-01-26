@@ -15,12 +15,12 @@ export default {
     confidentialityAgreement: {
       signed: false,
       name: '',
-      date: '',
+      date: null,
     },
     commitmentAgreement: {
       signed: false,
       name: '',
-      date: '',
+      date: null,
     },
     solutioneering101Quiz: {
       completed: false,
