@@ -127,7 +127,7 @@ export default {
     },
   },
   actions: {
-    signConfidentialityAgreement({ commit, state }, { name, date, user }) {
+    signConfidentialityAgreement({ commit }, { name, date, user }) {
       return getUserDetail(user)
         .then((detail) => {
           if (!isSignedName(name, detail)) {
@@ -144,7 +144,7 @@ export default {
         })
         .catch(error => Promise.reject(error));
     },
-    signCommitmentAgreement({ commit, state }, { name, date, user }) {
+    signCommitmentAgreement({ commit }, { name, date, user }) {
       return getUserDetail(user)
         .then((detail) => {
           if (!isSignedName(name, detail)) {
