@@ -7,7 +7,7 @@
     <md-menu md-align-trigger class="goto-right">
         <md-button md-menu-trigger>
             <span>{{ this.user.fullName }}</span>
-            <md-avatar>
+            <md-avatar class="md-avatar-icon">
                 <img :src="this.user.gravatar" alt="People">
             </md-avatar>
         </md-button>
