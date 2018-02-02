@@ -25,7 +25,7 @@ export default {
       locals: {
         name: '',
         date: null,
-        user: {}
+        user: {},
       },
     };
   },
@@ -42,7 +42,7 @@ export default {
       this.onSubmit({
         name: this.locals.name,
         date: this.locals.date,
-        user: this.user
+        user: this.user,
       });
     },
   },
@@ -50,8 +50,8 @@ export default {
     Object.assign(this.locals, {
       name: this.name,
       date: this.date,
-      user: this.user
+      user: this.user,
     });
-  }
+  },
 };
 </script>

@@ -96,8 +96,7 @@ export default {
             this.$router.push({ name: 'commitment-agreement' });
             return;
           }
-          debugger;
-          return Promise.reject('Confidentiality agreement must be signed');
+          Promise.reject('Confidentiality agreement must be signed');
         })
         .catch((err) => { this.errorMessage = err; });
     },
