@@ -159,12 +159,11 @@ export default {
       this.refreshMembers();
     },
   },
-};
-</script>
+};</script>
 
 <style scoped>
-  .pagination {
-    display: flex;
-    padding: 6px;
-  }
+.pagination {
+  display: flex;
+  padding: 6px;
+}
 </style>

@@ -79,7 +79,8 @@ module.exports = merge(baseConfig({ distPath }), {
     // prevents hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: ({ resource }) => resource && resource.indexOf(nodeModules) === 0 && /\.js$/.test(resource),
+      minChunks: ({ resource }) =>
+        resource && resource.indexOf(nodeModules) === 0 && /\.js$/.test(resource),
     }),
 
     // extract webpack runtime and module manifest into its own file

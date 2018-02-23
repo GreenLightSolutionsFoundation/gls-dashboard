@@ -36,53 +36,54 @@
 </template>
 
 <script>
-  import ProjectCard from '../components/ProjectCard.vue';
-  import { getAll, submitSelectedProjects } from '../services/project_selection';
-  import FormError from '../components/FormError.vue';
+import ProjectCard from '../components/ProjectCard.vue';
+import { getAll, submitSelectedProjects } from '../services/project_selection';
+import FormError from '../components/FormError.vue';
 
-  export default {
-    name: 'project-ranking-form',
-    components: { ProjectCard, FormError },
-    data() {
-      return {
-        projects: [],
-        selectedProjects: [null, null, null],
-        errorMessage: '',
-      };
+export default {
+  name: 'project-ranking-form',
+  components: { ProjectCard, FormError },
+  data() {
+    return {
+      projects: [],
+      selectedProjects: [null, null, null],
+      errorMessage: '',
+    };
+  },
+  computed: {
+    projectIds() {
+      return this.projects.map(p => p.id);
     },
-    computed: {
-      projectIds() {
-        return this.projects.map(p => p.id);
-      },
-    },
-    methods: {
-      rankSelected({ projectId, rank }) {
-        // ignore invalid data
-        // TODO: probably a good idea to do something when we get weird data
-        if ([1, 2, 3].indexOf(rank) < 0 || this.projectIds.indexOf(projectId) < 0) return;
-        const rankIndex = rank - 1;
+  },
+  methods: {
+    rankSelected({ projectId, rank }) {
+      // ignore invalid data
+      // TODO: probably a good idea to do something when we get weird data
+      if ([1, 2, 3].indexOf(rank) < 0 || this.projectIds.indexOf(projectId) < 0) return;
+      const rankIndex = rank - 1;
 
-        this.selectedProjects = this.selectedProjects.map((id, i) => {
-          if (id != null && id === projectId && i !== rankIndex) return null;
-          if (i === rankIndex) return projectId;
-          return id;
-        });
-      },
-      doSubmit() {
-        this.errorMessage = '';
-        if (!this.selectedProjects.every(projectId => projectId != null)) {
-          this.errorMessage = 'Please select 3 projects.';
-          return;
-        }
-
-        submitSelectedProjects(this.selectedProjects);
-      },
+      this.selectedProjects = this.selectedProjects.map((id, i) => {
+        if (id != null && id === projectId && i !== rankIndex) return null;
+        if (i === rankIndex) return projectId;
+        return id;
+      });
     },
-    created() {
-      this.error = null;
-      getAll().then((data) => {
+    doSubmit() {
+      this.errorMessage = '';
+      if (!this.selectedProjects.every(projectId => projectId != null)) {
+        this.errorMessage = 'Please select 3 projects.';
+        return;
+      }
+
+      submitSelectedProjects(this.selectedProjects);
+    },
+  },
+  created() {
+    this.error = null;
+    getAll()
+      .then(data => {
         // Attach a few properties to track and set the selected rank of for each project
-        data.forEach((project) => {
+        data.forEach(project => {
           const projectOptions = {
             isRank1Selected: false,
             isRank2Selected: false,
@@ -92,16 +93,16 @@
         });
 
         this.projects = data;
-      }).catch((error) => {
+      })
+      .catch(error => {
         this.error = error;
         // this.projects = null;
       });
-    },
-  };
-</script>
+  },
+};</script>
 
 <style scoped lang="scss">
-  .project-cards {
-    margin-top: 40px;
-  }
+.project-cards {
+  margin-top: 40px;
+}
 </style>

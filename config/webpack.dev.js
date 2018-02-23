@@ -39,9 +39,7 @@ module.exports = merge(baseConfig({ distPath }), {
   ],
   devServer: {
     historyApiFallback: {
-      rewrites: [
-        { from: /^\/$/, to: path.join(srcPath, 'index.html') },
-      ],
+      rewrites: [{ from: /^\/$/, to: path.join(srcPath, 'index.html') }],
     },
     noInfo: true,
   },

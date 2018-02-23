@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <primaryNav></primaryNav>
-
     <!-- Page content -->
     <div class="page-content">
       <router-view></router-view>
@@ -18,9 +17,8 @@ export default {
   components: {
     primaryNav,
   },
-};
-</script>
+};</script>
 
 <style lang="scss">
-  @import './styles/main.scss';
+@import './styles/main.scss';
 </style>

@@ -91,15 +91,16 @@ export default {
     ...mapActions('onboarding', ['signConfidentialityAgreement']),
     doContinue(value) {
       this.signConfidentialityAgreement(value)
-        .then((signed) => {
+        .then(signed => {
           if (signed) {
             this.$router.push({ name: 'commitment-agreement' });
             return;
           }
           Promise.reject('Confidentiality agreement must be signed');
         })
-        .catch((err) => { this.errorMessage = err; });
+        .catch(err => {
+          this.errorMessage = err;
+        });
     },
   },
-};
-</script>
+};</script>

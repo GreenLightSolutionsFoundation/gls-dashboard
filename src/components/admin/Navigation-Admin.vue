@@ -21,7 +21,8 @@ export default {
     ],
   }),
   watch: {
-    $route: function (value) { //eslint-disable-line
+    $route: value => {
+      //eslint-disable-line
       this.setActiveTab(value);
     },
   },
@@ -48,8 +49,7 @@ export default {
       this.activeTab = this.areas.find(area => area.routeName === value.name);
     },
   },
-};
-</script>
+};</script>
 
 <style lang="sass">
 

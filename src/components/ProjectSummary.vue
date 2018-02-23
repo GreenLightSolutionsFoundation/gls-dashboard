@@ -16,8 +16,7 @@ export default {
   props: {
     project: Object,
   },
-};
-</script>
+};</script>
 
 <style lang="scss">
 .project-summary-container {

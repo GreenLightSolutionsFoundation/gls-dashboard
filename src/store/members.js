@@ -4,7 +4,8 @@ export default {
   namespaced: true,
   state: {
     members: [],
-    filters: { // see lib/query_builder for use
+    filters: {
+      // see lib/query_builder for use
       pageSize: 20,
       pageNumber: 1,
       sortField: 'lastName',
@@ -20,9 +21,9 @@ export default {
       Object.assign(state.filters, filters);
     },
     updateMember(state, { id, data }) {
-      state.members = state.members.map((member) => {
+      state.members = state.members.map(member => {
         if (member.id === id) {
-          Object.keys(data).forEach((key) => {
+          Object.keys(data).forEach(key => {
             member[key] = data[key];
           });
         }
@@ -33,7 +34,7 @@ export default {
   actions: {
     getMembers({ commit, state }, filters = {}) {
       commit('setFilters', filters);
-      return getAll(state.filters).then((members) => {
+      return getAll(state.filters).then(members => {
         commit('setMembers', members);
         return members;
       });

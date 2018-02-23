@@ -1,16 +1,21 @@
 /* eslint no-param-reassign: 0 */
 import { isPlainObject } from '../lib/utils';
 import queryBuilder from '../lib/query_builder';
-import UserDetail, { wrapUserDetail } from '../models/userDetail';
+import { UserDetail, wrapUserDetail } from '../models/userDetail';
 
 export function getAll(filters = {}) {
   const member = new UserDetail();
-  return queryBuilder(member.query(), filters).find().then(members => members.map(wrapUserDetail));
+  return queryBuilder(member.query(), filters)
+    .find()
+    .then(members => members.map(wrapUserDetail));
 }
 
 export function getById(id) {
   const member = new UserDetail();
-  return member.query().get(id).then(wrapUserDetail);
+  return member
+    .query()
+    .get(id)
+    .then(wrapUserDetail);
 }
 
 export function update(id, data) {
@@ -19,17 +24,10 @@ export function update(id, data) {
   // if the id is not a string, assume it's a parse instance
   const getMember = typeof id === 'string' ? getById(id) : Promise.resolve(id);
 
-  return getMember
-  .then((member) => {
-    Object.keys(data).forEach((prop) => {
+  return getMember.then(member => {
+    Object.keys(data).forEach(prop => {
       // don't update some fields
-      const blacklisted = [
-        'id',
-        'createdAt',
-        'updatedAt',
-        'fullName',
-        'isOnboarded',
-      ];
+      const blacklisted = ['id', 'createdAt', 'updatedAt', 'fullName', 'isOnboarded'];
 
       if (blacklisted.indexOf(prop) < 0) member[prop] = data[prop];
     });

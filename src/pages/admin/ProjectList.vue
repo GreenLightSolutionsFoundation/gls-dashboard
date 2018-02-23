@@ -37,7 +37,13 @@ export default {
   methods: {
     ...mapActions('admin/projects', ['getProjects']),
     getColumns: () => {
-      const columns = [{ name: 'Name' }, { name: 'Description' }, { name: 'Start Date' }, { name: 'End Date' }, { name: 'Total Positions' }];
+      const columns = [
+        { name: 'Name' },
+        { name: 'Description' },
+        { name: 'Start Date' },
+        { name: 'End Date' },
+        { name: 'Total Positions' },
+      ];
       return columns;
     },
   },
@@ -49,15 +55,14 @@ export default {
     ...mapState('admin/projects', ['projects']),
   },
   filters: {
-    formatDate: (value) => {
+    formatDate: value => {
       if (!value) {
         return '';
       }
       return moment(value).format('MM/DD/YYYY');
     },
   },
-};
-</script>
+};</script>
 <style lang="scss">
 
 </style>

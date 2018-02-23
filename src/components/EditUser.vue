@@ -92,7 +92,7 @@ export default {
           this.savePending = false;
           this.$emit('close');
         })
-        .catch((err) => {
+        .catch(err => {
           this.savePending = false;
           this.alert = err.message || 'Save failed :(';
         });
@@ -106,7 +106,7 @@ export default {
     user(userObj) {
       this.tempUser = userObj.toJSON();
       this.selectedChapter = this.tempUser.chapter.id;
-      getAllChapters().then((results) => {
+      getAllChapters().then(results => {
         this.chapters = results;
       });
     },
@@ -118,8 +118,7 @@ export default {
   mounted() {
     if (this.isOpen) this.openDialog();
   },
-};
-</script>
+};</script>
 <style>
 .text-capitalize {
   text-transform: capitalize;

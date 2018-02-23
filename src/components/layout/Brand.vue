@@ -63,7 +63,6 @@
 </template>
 
 <script>
-  export default {
-    name: 'brand',
-  };
-</script>
+export default {
+  name: 'brand',
+};</script>

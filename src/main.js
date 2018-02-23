@@ -10,7 +10,8 @@ window.parse = parse;
 Vue.use(VueMaterial);
 
 // initialize the application store
-store.dispatch('authentication/initialize')
+store
+  .dispatch('authentication/initialize')
   .then(() => {
     const app = new Vue({
       router,
@@ -20,7 +21,7 @@ store.dispatch('authentication/initialize')
 
     app.$mount('#root');
   })
-  .catch((err) => {
+  .catch(err => {
     // TODO: render error page, or othewise handle intiailization failure
     // eslint-disable-next-line no-console
     console.error('failed to load application', err);

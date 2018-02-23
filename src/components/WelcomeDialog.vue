@@ -48,8 +48,7 @@ export default {
   mounted() {
     if (this.isOpen) this.openDialog();
   },
-};
-</script>
+};</script>
 
 <style scoped lang="scss">
 .md-dialog {

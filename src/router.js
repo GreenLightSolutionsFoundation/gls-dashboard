@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
 
     // otherwise, redirect to login, preserving the requested route
     const { name, fullPath } = to;
-    const query = (name !== undefined) ? { redirect: name } : { prev: fullPath };
+    const query = name !== undefined ? { redirect: name } : { prev: fullPath };
     return next({ name: 'login', query });
   }
 

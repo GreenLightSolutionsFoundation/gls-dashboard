@@ -58,7 +58,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions('onboarding', ['setSolutioneering101QuizQuestionIsCorrectState', 'setSolutioneering101QuizCompletedStatus']),
+    ...mapActions('onboarding', [
+      'setSolutioneering101QuizQuestionIsCorrectState',
+      'setSolutioneering101QuizCompletedStatus',
+    ]),
     doContinue() {
       // Mark the form as isSubmitted
       this.isSubmitted = true;
@@ -80,10 +83,13 @@ export default {
       }
 
       if (allQuestionsCorrect) {
-        this.setSolutioneering101QuizCompletedStatus({ completed: true, user: this.user })
-          .then((result) => {
+        this.setSolutioneering101QuizCompletedStatus({ completed: true, user: this.user }).then(
+          result => {
             if (result) {
-              this.$router.push({ name: 'dashboard', params: { showDialog: 'solutioneerCongrats' } });
+              this.$router.push({
+                name: 'dashboard',
+                params: { showDialog: 'solutioneerCongrats' },
+              });
             }
           });
       } else {
@@ -95,8 +101,7 @@ export default {
     ...mapState('onboarding', ['solutioneering101Quiz']),
     ...mapState('authentication', ['user']),
   },
-};
-</script>
+};</script>
 
 <style  type="text/scss">
 .question-container {

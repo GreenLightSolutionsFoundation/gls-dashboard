@@ -15,27 +15,26 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+import { mapState } from 'vuex';
 
-  export default {
-    name: 'solutioneering-101',
-    created() {
-      if (this.user.solutioneer101Passed) this.$router.replace({ name: 'dashboard' });
+export default {
+  name: 'solutioneering-101',
+  created() {
+    if (this.user.solutioneer101Passed) this.$router.replace({ name: 'dashboard' });
+  },
+  computed: {
+    ...mapState('authentication', ['user']),
+  },
+  methods: {
+    doContinue() {
+      this.$router.push({ name: 'solutioneering-101-quiz' });
     },
-    computed: {
-      ...mapState('authentication', ['user']),
-    },
-    methods: {
-      doContinue() {
-        this.$router.push({ name: 'solutioneering-101-quiz' });
-      },
-    },
-  };
-</script>
+  },
+};</script>
 
 <style type="text/scss">
-    #iframe_container {
-        width: 100% !important;
-        height: 360px !important;
-    }
+#iframe_container {
+  width: 100% !important;
+  height: 360px !important;
+}
 </style>

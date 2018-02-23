@@ -37,28 +37,27 @@
 </template>
 
 <script>
-  export default {
-    name: 'signup-form',
-    data() {
-      return {
-        username: '',
-        email: '',
-        password: '',
-        passwordConfirm: '',
-        firstName: '',
-        lastName: '',
-      };
+export default {
+  name: 'signup-form',
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      firstName: '',
+      lastName: '',
+    };
+  },
+  props: {
+    isLoading: Boolean,
+    errorMessage: String,
+    onSubmit: Function,
+  },
+  methods: {
+    doSubmit() {
+      const { username, email, password, passwordConfirm, firstName, lastName, onSubmit } = this;
+      this.onSubmit({ username, email, password, passwordConfirm, firstName, lastName, onSubmit });
     },
-    props: {
-      isLoading: Boolean,
-      errorMessage: String,
-      onSubmit: Function,
-    },
-    methods: {
-      doSubmit() {
-        const { username, email, password, passwordConfirm, firstName, lastName, onSubmit } = this;
-        this.onSubmit({ username, email, password, passwordConfirm, firstName, lastName, onSubmit });
-      },
-    },
-  };
-</script>
+  },
+};</script>
