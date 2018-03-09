@@ -7,6 +7,10 @@ export default class Chapter extends ParseObject {
     super(chapter || new ParseChapter());
   }
 
-  get name() { return this.instance.get('name'); }
-  set name(val) { return this.instance.set('name', val); }
+  get name() {
+    return this.instance.get('name');
+  }
+  set name(val) {
+    return this.instance.set('name', val);
+  }
 }

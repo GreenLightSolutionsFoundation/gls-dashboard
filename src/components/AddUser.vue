@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     setSelectedChapter(val) {
-      getById(val).then((result) => {
+      getById(val).then(result => {
         this.selectedChapter = result;
       });
     },
@@ -108,19 +108,21 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         chapter: this.selectedChapter,
-      }).then(() => {
-        // build in some additional delay to let parse catch up...
-        const delay = 100;
-        setTimeout(() => {
+      })
+        .then(() => {
+          // build in some additional delay to let parse catch up...
+          const delay = 100;
+          setTimeout(() => {
+            this.createPending = false;
+            this.$emit('create');
+            this.$emit('close');
+            this.reset();
+          }, delay);
+        })
+        .catch(err => {
           this.createPending = false;
-          this.$emit('create');
-          this.$emit('close');
-          this.reset();
-        }, delay);
-      }).catch((err) => {
-        this.createPending = false;
-        this.alert = err.message;
-      });
+          this.alert = err.message;
+        });
     },
     setUsername() {
       if (!this.username.length) {
@@ -147,9 +149,8 @@ export default {
     if (this.isOpen) this.openDialog();
   },
   created() {
-    getAllChapters().then((results) => {
+    getAllChapters().then(results => {
       this.chapters = results;
     });
   },
-};
-</script>
+};</script>

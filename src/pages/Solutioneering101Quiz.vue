@@ -1,5 +1,9 @@
 <template>
-  <md-card class="max-width">
+  <div class="md-layout">
+    <div class="md-layout-item">
+      <p class="md-headline">Solutioneering 101 Quiz</p>
+    </div>
+    <md-card class="max-width">
     <md-card-header>
       <md-card-header-text>
         <div class="md-title">Solutioneering 101 Quiz</div>
@@ -13,7 +17,7 @@
             <strong>{{ question.text }}</strong>
           </p>
           <div v-for="(answer, answerIndex) in question.answers">
-            <md-radio class="md-primary" :id="'answer-' + questionIndex + '-' + answerIndex" :name="'question-' + questionIndex" v-model="userAnswers[questionIndex]" :md-value="answerIndex">
+            <md-radio class="md-primary" :id="`answer-${questionIndex}-${answerIndex}`" :name="`question-${questionIndex}`" v-model="userAnswers[questionIndex]" :value="answerIndex">
               {{ answer }}
               <div v-if="question.correctAnswerIndex === answerIndex && isSubmitted === true" class="correct-answer-label">
                 <md-icon class="md-primary">done</md-icon>
@@ -24,16 +28,17 @@
                 Incorrect Answer
               </div>
             </md-radio>
-            <div v-if="question.correctAnswerIndex === answerIndex && question.isCorrect === false" class="correct-answer-container">{{ question.correctAnswerReason }}</div>
+            <div v-if="question.correctAnswerIndex === answerIndex && question.isCorrect === false" class="correct-answer-container">
+              {{ question.correctAnswerReason }}
+            </div>
           </div>
         </div>
       </form>
       <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
-      <md-layout md-align="end">
-        <md-button class="md-raised md-primary" @click.native.prevent="doContinue">Continue</md-button>
-      </md-layout>
+      <md-button class="md-raised md-primary" @click.native.prevent="doContinue">Continue</md-button>
     </md-card-content>
   </md-card>
+  </div>
 </template>
 
 <script>
@@ -53,7 +58,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions('onboarding', ['setSolutioneering101QuizQuestionIsCorrectState', 'setSolutioneering101QuizCompletedStatus']),
+    ...mapActions('onboarding', [
+      'setSolutioneering101QuizQuestionIsCorrectState',
+      'setSolutioneering101QuizCompletedStatus',
+    ]),
     doContinue() {
       // Mark the form as isSubmitted
       this.isSubmitted = true;
@@ -75,10 +83,13 @@ export default {
       }
 
       if (allQuestionsCorrect) {
-        this.setSolutioneering101QuizCompletedStatus({ completed: true, user: this.user })
-          .then((result) => {
+        this.setSolutioneering101QuizCompletedStatus({ completed: true, user: this.user }).then(
+          result => {
             if (result) {
-              this.$router.push({ name: 'dashboard', params: { showDialog: 'solutioneerCongrats' } });
+              this.$router.push({
+                name: 'dashboard',
+                params: { showDialog: 'solutioneerCongrats' },
+              });
             }
           });
       } else {
@@ -90,8 +101,7 @@ export default {
     ...mapState('onboarding', ['solutioneering101Quiz']),
     ...mapState('authentication', ['user']),
   },
-};
-</script>
+};</script>
 
 <style  type="text/scss">
 .question-container {

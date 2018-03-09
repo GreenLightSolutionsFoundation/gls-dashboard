@@ -1,5 +1,5 @@
 function getFieldlist(fields) {
-  return (!Array.isArray(fields)) ? [fields] : fields;
+  return !Array.isArray(fields) ? [fields] : fields;
 }
 
 export function isArray(arr) {
@@ -7,7 +7,7 @@ export function isArray(arr) {
 }
 
 export function isPlainObject(obj) {
-  return (obj != null && typeof obj === 'object' && !isArray(obj));
+  return obj != null && typeof obj === 'object' && !isArray(obj);
 }
 
 export function pick(obj, fields) {
