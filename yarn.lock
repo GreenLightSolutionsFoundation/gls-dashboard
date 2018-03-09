@@ -4818,9 +4818,9 @@ parse5@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-1.5.1.tgz#9b7f3b0de32be78dc2401b17573ccaf0f6f59d94"
 
-parse@^1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/parse/-/parse-1.11.0.tgz#65a255cafc217c3f8ca24a036a8dc968ef363a64"
+parse@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/parse/-/parse-1.11.1.tgz#558e539d42d9fb89210e082209d6f3b03d5faed5"
   dependencies:
     babel-runtime "^6.11.6"
     ws "^3.3.1"
@@ -5226,6 +5226,10 @@ prepend-http@^1.0.0, prepend-http@^1.0.1:
 preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
+
+prettier@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.11.1.tgz#61e43fc4cd44e68f2b0dfc2c38cd4bb0fccdcc75"
 
 prettier@^1.7.0:
   version "1.10.2"
@@ -6664,7 +6668,7 @@ vue-loader@^14.1.0:
     vue-style-loader "^4.0.1"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-material@^1.0.0-beta-7:
+vue-material@^1.0.0-beta-8:
   version "1.0.0-beta-8"
   resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-1.0.0-beta-8.tgz#88b44095a59d46df5beed722dd5e2fb962f74138"
 
