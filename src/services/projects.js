@@ -1,8 +1,7 @@
 import queryBuilder from '../lib/query_builder';
-import { Project, wrapProject } from '../models/project';
+import Project, { wrapProject } from '../models/project';
 
 export default function getAll(filters = {}) {
-  // eslint-disable-line import/prefer-default-export
   const project = new Project();
   const query = project.query();
   const options = {

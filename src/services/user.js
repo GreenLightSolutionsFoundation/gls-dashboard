@@ -1,5 +1,5 @@
 import User from '../models/user';
-import { UserDetail } from '../models/userDetail';
+import UserDetail from '../models/userDetail';
 
 export function login(username, password) {
   return User.login(username, password);

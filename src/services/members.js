@@ -1,7 +1,7 @@
 /* eslint no-param-reassign: 0 */
 import { isPlainObject } from '../lib/utils';
 import queryBuilder from '../lib/query_builder';
-import { UserDetail, wrapUserDetail } from '../models/userDetail';
+import UserDetail, { wrapUserDetail } from '../models/userDetail';
 
 export function getAll(filters = {}) {
   const member = new UserDetail();

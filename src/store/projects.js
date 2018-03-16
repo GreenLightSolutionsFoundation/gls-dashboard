@@ -1,4 +1,4 @@
-import { getAll } from '../services/projects';
+import getAll from '../services/projects';
 
 export default {
   namespaced: true,

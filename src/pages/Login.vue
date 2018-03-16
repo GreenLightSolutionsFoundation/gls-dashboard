@@ -27,7 +27,7 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
-import { UserDetail } from '../models/userDetail';
+import UserDetail from '../models/userDetail';
 import LoginForm from '../components/LoginForm.vue';
 import SignupForm from '../components/SignupForm.vue';
 

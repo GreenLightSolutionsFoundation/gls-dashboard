@@ -39,7 +39,7 @@
 import { mapState, mapActions } from 'vuex';
 import AgreementSignatureForm from '../components/AgreementSignatureForm.vue';
 import FormError from '../components/FormError.vue';
-import { UserDetail } from '../models/userDetail';
+import UserDetail from '../models/userDetail';
 
 export default {
   name: 'confidentiality-agreement',
