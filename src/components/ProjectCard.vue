@@ -71,44 +71,43 @@
 </template>
 
 <script>
-  import moment from 'moment';
+import moment from 'moment';
 
-  export default {
-    name: 'project-card',
-    props: {
-      project: {
-        type: Object,
-        required: true,
-      },
-      selectedProjects: {
-        type: Array,
-        required: true,
-      },
+export default {
+  name: 'project-card',
+  props: {
+    project: {
+      type: Object,
+      required: true,
     },
-    computed: {
-      projectRank() {
-        const rank = this.selectedProjects.indexOf(this.project.id);
-        return (rank >= 0) ? rank + 1 : null;
-      },
-      positionsStatusMessage() {
-        const enrolledPositions = this.totalPositions - this.openPositions;
-        if (this.openPositions !== 0) {
-          return `Enrolled Solutioneers: ${enrolledPositions}/${this.totalPositions}`;
-        }
+    selectedProjects: {
+      type: Array,
+      required: true,
+    },
+  },
+  computed: {
+    projectRank() {
+      const rank = this.selectedProjects.indexOf(this.project.id);
+      return rank >= 0 ? rank + 1 : null;
+    },
+    positionsStatusMessage() {
+      const enrolledPositions = this.totalPositions - this.openPositions;
+      if (this.openPositions !== 0) {
+        return `Enrolled Solutioneers: ${enrolledPositions}/${this.totalPositions}`;
+      }
 
-        return `All ${this.totalPositions} positions filled!`;
-      },
+      return `All ${this.totalPositions} positions filled!`;
     },
-    methods: {
-      handleSelect(rank) {
-        this.$emit('rank-selected', { projectId: this.project.id, rank });
-      },
+  },
+  methods: {
+    handleSelect(rank) {
+      this.$emit('rank-selected', { projectId: this.project.id, rank });
     },
-    filters: {
-      formatDate: value => moment(value).format('M/D/YYYY'),
-    },
-  };
-</script>
+  },
+  filters: {
+    formatDate: value => moment(value).format('M/D/YYYY'),
+  },
+};</script>
 
 <style lang="scss">
 .project-card {
@@ -141,7 +140,6 @@
           padding-left: 5px;
         }
       }
-
     }
   }
 

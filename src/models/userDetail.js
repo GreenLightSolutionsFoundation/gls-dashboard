@@ -36,7 +36,12 @@ export default class UserDetail extends ParseObject {
     return this.instance.get('commitmentAgreementSignedDate');
   }
   set commitmentAgreementSignedDate(val) {
-    return this.instance.set('commitmentAgreementSignedDate', moment(val).utc().toDate());
+    return this.instance.set(
+      'commitmentAgreementSignedDate',
+      moment(val)
+        .utc()
+        .toDate()
+    );
   }
 
   get solutioneer101Passed() {
@@ -57,7 +62,12 @@ export default class UserDetail extends ParseObject {
     return this.instance.get('ndaSignedDate');
   }
   set ndaSignedDate(val) {
-    return this.instance.set('ndaSignedDate', moment(val).utc().toDate());
+    return this.instance.set(
+      'ndaSignedDate',
+      moment(val)
+        .utc()
+        .toDate()
+    );
   }
 
   get semesterJoined() {
@@ -93,9 +103,7 @@ export default class UserDetail extends ParseObject {
   }
 
   get isOnboarded() {
-    return this.solutioneer101Passed &&
-      this.ndaSignedDate &&
-      this.commitmentAgreementSigned;
+    return this.solutioneer101Passed && this.ndaSignedDate && this.commitmentAgreementSigned;
   }
 
   query() {
@@ -112,7 +120,7 @@ export default class UserDetail extends ParseObject {
   }
 
   createChapter(chapter) {
-    getChapterById(chapter).then((result) => {
+    getChapterById(chapter).then(result => {
       this.instance.set('chapter', result.instance);
       return this.instance.save();
     });

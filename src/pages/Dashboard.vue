@@ -41,98 +41,101 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import ProjectSummary from '../components/ProjectSummary.vue';
-  import ProjectDetails from '../components/ProjectDetails.vue';
-  import WelcomeDialog from '../components/WelcomeDialog.vue';
+import { mapState } from 'vuex';
+import ProjectSummary from '../components/ProjectSummary.vue';
+import ProjectDetails from '../components/ProjectDetails.vue';
+import WelcomeDialog from '../components/WelcomeDialog.vue';
 
-  export default {
-    name: 'dashboard',
-    components: {
-      ProjectSummary,
-      ProjectDetails,
-      WelcomeDialog,
-    },
-    mounted() {
-      if (!this.user.isOnboarded) {
-        this.isWelcomeOpen = true;
-      } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
-        this.$refs.congratsDialog.open();
-      }
-    },
-    data: () => ({
-      isWelcomeOpen: false,
-      selectedProjects: [
-        {
-          id: 1,
-          name: 'Build Us Hope',
-          partnerOrganization: {
-            name: 'Singleton Community Services, INC.',
-            logo: 'https://placehold.it/70x70?text=logo',
-          },
+export default {
+  name: 'dashboard',
+  components: {
+    ProjectSummary,
+    ProjectDetails,
+    WelcomeDialog,
+  },
+  mounted() {
+    if (!this.user.isOnboarded) {
+      this.isWelcomeOpen = true;
+    } else if (
+      this.$route.params.showDialog &&
+      this.$route.params.showDialog === 'solutioneerCongrats'
+    ) {
+      this.$refs.congratsDialog.open();
+    }
+  },
+  data: () => ({
+    isWelcomeOpen: false,
+    selectedProjects: [
+      {
+        id: 1,
+        name: 'Build Us Hope',
+        partnerOrganization: {
+          name: 'Singleton Community Services, INC.',
+          logo: 'https://placehold.it/70x70?text=logo',
         },
-        {
-          id: 2,
-          name: 'Shaw Montessori Project',
-          partnerOrganization: {
-            name: 'Augustus H. Shaw Jr. Elementary School',
-            logo: 'https://placehold.it/70x70?text=logo',
-          },
-        },
-        {
-          id: 3,
-          name: 'Solar Impact in the Valley of the Sun',
-          partnerOrganization: {
-            name: 'SolarCity',
-            logo: 'https://placehold.it/70x70?text=logo',
-          },
-        },
-      ],
-      assignedProjects: [
-        {
-          id: 1,
-          name: 'Build Us Hope',
-          description: 'Design and build an affordable and sustainable tiny home community.',
-          partnerOrganization: {
-            name: 'Singleton Community Services, INC.',
-            logo: 'https://placehold.it/70x70?text=logo',
-          },
-          enrolledPositions: 5, // not in project model
-          totalPositions: 10,
-          startDate: '8/15/2017',
-          endDate: '12/14/2017',
-          resourcesUrl: 'https://drive.google.com/drive/folders/0B1FoB345Ur60ckxIa0dlYW1asdflE?usp=sharing', // not in project model
-        },
-      ],
-    }),
-    computed: {
-      ...mapState('authentication', ['user']),
-    },
-    methods: {
-      doGetStarted() {
-        this.$router.push({ name: 'confidentiality-agreement' });
       },
-      doCongratsDialogClose() {
-        this.$refs.congratsDialog.close();
+      {
+        id: 2,
+        name: 'Shaw Montessori Project',
+        partnerOrganization: {
+          name: 'Augustus H. Shaw Jr. Elementary School',
+          logo: 'https://placehold.it/70x70?text=logo',
+        },
       },
-      doGoToProjectSelection() {
-        this.$refs.congratsDialog.close();
-        this.$router.push({ name: 'project-ranking-form' });
+      {
+        id: 3,
+        name: 'Solar Impact in the Valley of the Sun',
+        partnerOrganization: {
+          name: 'SolarCity',
+          logo: 'https://placehold.it/70x70?text=logo',
+        },
       },
+    ],
+    assignedProjects: [
+      {
+        id: 1,
+        name: 'Build Us Hope',
+        description: 'Design and build an affordable and sustainable tiny home community.',
+        partnerOrganization: {
+          name: 'Singleton Community Services, INC.',
+          logo: 'https://placehold.it/70x70?text=logo',
+        },
+        enrolledPositions: 5, // not in project model
+        totalPositions: 10,
+        startDate: '8/15/2017',
+        endDate: '12/14/2017',
+        resourcesUrl:
+          'https://drive.google.com/drive/folders/0B1FoB345Ur60ckxIa0dlYW1asdflE?usp=sharing', // not in project model
+      },
+    ],
+  }),
+  computed: {
+    ...mapState('authentication', ['user']),
+  },
+  methods: {
+    doGetStarted() {
+      this.$router.push({ name: 'confidentiality-agreement' });
     },
-  };
-</script>
+    doCongratsDialogClose() {
+      this.$refs.congratsDialog.close();
+    },
+    doGoToProjectSelection() {
+      this.$refs.congratsDialog.close();
+      this.$router.push({ name: 'project-ranking-form' });
+    },
+  },
+};</script>
 
 <style lang="scss">
-  #project-selections {
-    margin-left: 20px;
-  }
+#project-selections {
+  margin-left: 20px;
+}
 
-  #congrats-dialog .md-dialog {
-    max-width: 500px;
+#congrats-dialog .md-dialog {
+  max-width: 500px;
 
-    p {
-      margin-top: 14px;
-    }
+  p {
+    margin-top: 14px;
   }
+}
 </style>

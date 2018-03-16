@@ -19,26 +19,25 @@
 </template>
 
 <script>
-  import ProjectSummary from './ProjectSummary.vue';
+import ProjectSummary from './ProjectSummary.vue';
 
-  export default {
-    name: 'project-details',
-    components: {
-      ProjectSummary,
-    },
-    props: {
-      project: Object,
-    },
-  };
-</script>
+export default {
+  name: 'project-details',
+  components: {
+    ProjectSummary,
+  },
+  props: {
+    project: Object,
+  },
+};</script>
 
 <style lang="scss">
-  .project-details-description {
-    margin: 20px 0;
-  }
+.project-details-description {
+  margin: 20px 0;
+}
 
-  .project-details-detail-label {
-    padding-left: 5px;
-    vertical-align: bottom;
-  }
+.project-details-detail-label {
+  padding-left: 5px;
+  vertical-align: bottom;
+}
 </style>

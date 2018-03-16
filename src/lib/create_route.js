@@ -1,4 +1,4 @@
-export default function (path, def, attr) {
+export default function(path, def, attr) {
   return {
     path,
     ...def,

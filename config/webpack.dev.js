@@ -19,6 +19,7 @@ module.exports = merge(baseConfig({ distPath }), {
       },
     ],
   },
+  mode: 'development',
   plugins: [
     // http://vue-loader.vuejs.org/en/workflow/production.html
     new webpack.DefinePlugin({
@@ -39,9 +40,7 @@ module.exports = merge(baseConfig({ distPath }), {
   ],
   devServer: {
     historyApiFallback: {
-      rewrites: [
-        { from: /^\/$/, to: path.join(srcPath, 'index.html') },
-      ],
+      rewrites: [{ from: /^\/$/, to: path.join(srcPath, 'index.html') }],
     },
     noInfo: true,
   },

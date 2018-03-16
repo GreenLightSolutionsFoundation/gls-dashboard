@@ -37,47 +37,46 @@
 </template>
 
 <script>
-  export default {
-    name: 'cohort',
-  };
-</script>
+export default {
+  name: 'cohort',
+};</script>
 
 <style>
-  .contacts {
-    display: flex;
-    padding-top: 10px;
-    margin-bottom: 30px;
-  }
+.contacts {
+  display: flex;
+  padding-top: 10px;
+  margin-bottom: 30px;
+}
 
-  .md-headline {
-    font-size: 16px;
-  }
+.md-headline {
+  font-size: 16px;
+}
 
-  #calendarTitle {
-    font-size: 40px;
-  }
-  .md-subheading {
-    color: #999999;
-  }
+#calendarTitle {
+  font-size: 40px;
+}
+.md-subheading {
+  color: #999999;
+}
 
-  .faculty-advisor{
-    width: 45%;
-  }
-
-  .faculty-contact{
+.faculty-advisor {
   width: 45%;
-  }
+}
 
-  .md-display-1 {
-    font-size: 25px;
-  }
+.faculty-contact {
+  width: 45%;
+}
 
-  hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #DFDFDF;
-    margin: 1em 0;
-    padding: 0;
-  }
+.md-display-1 {
+  font-size: 25px;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #dfdfdf;
+  margin: 1em 0;
+  padding: 0;
+}
 </style>

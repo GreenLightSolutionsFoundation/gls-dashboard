@@ -5,9 +5,15 @@ export default class ParseObject {
     this.instance = instance;
   }
 
-  get id() { return this.instance.id; }
-  get createdAt() { return this.instance.createdAt; }
-  get updatedAt() { return this.instance.updatedAt; }
+  get id() {
+    return this.instance.id;
+  }
+  get createdAt() {
+    return this.instance.createdAt;
+  }
+  get updatedAt() {
+    return this.instance.updatedAt;
+  }
 
   query() {
     return new parse.Query(this.instance);

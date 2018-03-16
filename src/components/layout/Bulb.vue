@@ -12,7 +12,6 @@
 </template>
 
 <script>
-  export default {
-    name: 'bulb',
-  };
-</script>
+export default {
+  name: 'bulb',
+};</script>

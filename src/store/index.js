@@ -9,8 +9,7 @@ import projects from './projects';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  state: {
-  },
+  state: {},
   modules: {
     'admin/members': members,
     'admin/projects': projects,

@@ -70,7 +70,6 @@
 </template>
 
 <script>
-  export default {
-    name: 'logo-brand',
-  };
-</script>
+export default {
+  name: 'logo-brand',
+};</script>

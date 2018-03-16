@@ -1,4 +1,4 @@
-import { getAll } from '../services/projects';
+import getAll from '../services/projects';
 
 export default {
   namespaced: true,
@@ -16,7 +16,7 @@ export default {
   },
   actions: {
     getProjects({ commit, state }, filters = {}) {
-      return getAll(filters).then((projects) => {
+      return getAll(filters).then(projects => {
         commit('setProjects', projects);
         return projects;
       });

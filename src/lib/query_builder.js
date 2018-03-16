@@ -30,7 +30,7 @@ export default function queryBuilder(query, options) {
   }
 
   if (isArray(props.search)) {
-    props.search.forEach((s) => {
+    props.search.forEach(s => {
       if (isArray(s)) {
         const [field, value] = s;
         if (field.substring(0, 1) === '-') query.notEqualTo(field, value);

@@ -12,17 +12,16 @@
 </template>
 
 <script >
-  import { mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
-  export default {
-    name: 'approval-pending-page',
-    methods: {
-      doLogout() {
-        this.logout().then(() => {
-          this.$router.push({ name: 'login' });
-        });
-      },
-      ...mapActions('authentication', ['logout']),
+export default {
+  name: 'approval-pending-page',
+  methods: {
+    doLogout() {
+      this.logout().then(() => {
+        this.$router.push({ name: 'login' });
+      });
     },
-  };
-</script>
+    ...mapActions('authentication', ['logout']),
+  },
+};</script>

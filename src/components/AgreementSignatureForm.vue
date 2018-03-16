@@ -1,22 +1,17 @@
 <template>
   <form novalidate @submit.stop.prevent="submit">
-    <md-layout md-gutter="40">
-      <md-layout md-flex="60" md-flex-xsmall="100">
-        <md-input-container>
+    <div class="md-layout">
+      <div class="md-layout-item">
+        <md-field>
           <label>Full Name</label>
           <md-input v-model="locals.name"></md-input>
-        </md-input-container>
-      </md-layout>
-      <md-layout>
-        <md-input-container>
-          <label>Date</label>
-          <md-input type="date" v-model="locals.date"></md-input>
-        </md-input-container>
-      </md-layout>
-    </md-layout>
-    <md-layout md-align="end">
-      <md-button class="md-raised md-primary" @click.native.prevent="doSubmit">Continue</md-button>
-    </md-layout>
+        </md-field>
+      </div>
+      <div class="md-layout-item">
+        <md-datepicker v-model="locals.date"></md-datepicker>
+      </div>
+    </div>
+    <md-button class="md-raised md-primary" @click.native.prevent="doSubmit">Continue</md-button>
   </form>
 </template>
 
@@ -29,7 +24,7 @@ export default {
     return {
       locals: {
         name: '',
-        date: '',
+        date: null,
         user: {},
       },
     };
@@ -39,7 +34,7 @@ export default {
   },
   props: {
     name: String,
-    date: String,
+    date: Date,
     onSubmit: Function,
   },
   methods: {
@@ -52,7 +47,10 @@ export default {
     },
   },
   created() {
-    Object.assign(this.locals, { name: this.name, date: this.date, user: this.user });
+    Object.assign(this.locals, {
+      name: this.name,
+      date: this.date,
+      user: this.user,
+    });
   },
-};
-</script>
+};</script>

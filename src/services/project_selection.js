@@ -1,4 +1,5 @@
-export function getAll() { // eslint-disable-line import/prefer-default-export
+export function getAll() {
+  // eslint-disable-line import/prefer-default-export
   return Promise.resolve([
     {
       id: 1,

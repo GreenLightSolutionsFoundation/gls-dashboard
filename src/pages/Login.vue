@@ -26,109 +26,117 @@
 </template>
 
 <script>
-  import { mapActions, mapState, mapGetters } from 'vuex';
-  import UserDetail from '../models/userDetail';
-  import LoginForm from '../components/LoginForm.vue';
-  import SignupForm from '../components/SignupForm.vue';
+import { mapActions, mapState, mapGetters } from 'vuex';
+import UserDetail from '../models/userDetail';
+import LoginForm from '../components/LoginForm.vue';
+import SignupForm from '../components/SignupForm.vue';
 
-  export default {
-    name: 'login-page',
-    components: {
-      LoginForm,
-      SignupForm,
+export default {
+  name: 'login-page',
+  components: {
+    LoginForm,
+    SignupForm,
+  },
+  data() {
+    return {
+      mode: 'login',
+      pending: false,
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      firstName: '',
+      lastName: '',
+    };
+  },
+  created() {
+    // pre-mounting lifecycle check for user authentication
+    const getRedirect = query => {
+      const { prev, redirect } = query;
+      if (redirect !== undefined) return { name: redirect };
+      if (prev !== undefined) return { path: prev };
+      return { name: 'dashboard' };
+    };
+
+    const sendTo = getRedirect(this.$route.query);
+
+    // if authenticated, set to correct spot in the app
+    if (this.isAuthenticated) return this.$router.replace(sendTo);
+
+    // if not authenticated, save redirect info for post-authentication redirect
+    this.sendTo = sendTo;
+    return null;
+  },
+  computed: {
+    ...mapState('authentication', ['errorMessage']),
+    ...mapGetters('authentication', ['isAuthenticated']),
+  },
+  methods: {
+    ...mapActions('authentication', ['login', 'logout', 'signup', 'setErrorMessage']),
+    setMode(mode) {
+      this.mode = mode;
     },
-    data() {
-      return {
-        mode: 'login',
-        pending: false,
-        email: '',
-        password: '',
-        passwordConfirm: '',
-        firstName: '',
-        lastName: '',
-      };
+    formMode(mode) {
+      return this.mode === mode;
     },
-    created() {
-      // pre-mounting lifecycle check for user authentication
-      const getRedirect = (query) => {
-        const { prev, redirect } = query;
-        if (redirect !== undefined) return { name: redirect };
-        if (prev !== undefined) return { path: prev };
-        return { name: 'dashboard' };
-      };
-
-      const sendTo = getRedirect(this.$route.query);
-
-      // if authenticated, set to correct spot in the app
-      if (this.isAuthenticated) return this.$router.replace(sendTo);
-
-      // if not authenticated, save redirect info for post-authentication redirect
-      this.sendTo = sendTo;
-      return null;
+    updateField(field, value) {
+      this[field] = value;
     },
-    computed: {
-      ...mapState('authentication', ['errorMessage']),
-      ...mapGetters('authentication', ['isAuthenticated']),
-    },
-    methods: {
-      ...mapActions('authentication', ['login', 'logout', 'signup', 'setErrorMessage']),
-      setMode(mode) {
-        this.mode = mode;
-      },
-      formMode(mode) {
-        return this.mode === mode;
-      },
-      updateField(field, value) {
-        this[field] = value;
-      },
-      doLogin(fields) {
-        this.pending = true;
+    doLogin(fields) {
+      this.pending = true;
 
-        this.login(fields).then((user) => {
+      this.login(fields)
+        .then(user => {
           if (this.errorMessage) {
             // error happend, message will be shown
             this.pending = false;
           } else {
             // create a member model instance form the user record
             UserDetail.fromUser(user)
-            .then((member) => {
-              // we're done with the async stuff, reset pending state
-              this.pending = false;
+              .then(member => {
+                // we're done with the async stuff, reset pending state
+                this.pending = false;
 
-              // member not found, show error message
-              if (!member) {
-                this.logout();
+                // member not found, show error message
+                if (!member) {
+                  this.logout();
+                  this.setErrorMessage('Login failed, member not found');
+                  return;
+                }
+
+                // check if the user is active, send to pending page if they are
+                if (!member.currentlyActive) this.$router.push({ name: 'approval-pending' });
+                else
+                  // otherwise, send them where they need to go
+                  this.$router.push(this.sendTo);
+              })
+              .catch(() => {
                 this.setErrorMessage('Login failed, member not found');
-                return;
-              }
-
-              // check if the user is active, send to pending page if they are
-              if (!member.currentlyActive) this.$router.push({ name: 'approval-pending' });
-
-              // otherwise, send them where they need to go
-              else this.$router.push(this.sendTo);
-            })
-            .catch(() => (this.setErrorMessage('Login failed, member not found')));
+              });
           }
         })
-        .catch(() => (this.pending = false));
-      },
-      doSignup(fields) {
-        this.pending = true;
-        this.signup(fields).then((user) => {
+        .catch(() => {
+          this.pending = false;
+        });
+    },
+    doSignup(fields) {
+      this.pending = true;
+      this.signup(fields)
+        .then(user => {
           this.pending = false;
           if (user == null) this.$router.push({ name: 'approval-pending' });
-        }).catch(() => (this.pending = false));
-      },
+        })
+        .catch(() => {
+          this.pending = false;
+        });
     },
-  };
-</script>
+  },
+};</script>
 
 <style>
-  .new-here-signup {
-    margin: 20px auto;
-    width: 80%;
-    max-width: 500px;
-    text-align: center;
-  }
+.new-here-signup {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
 </style>

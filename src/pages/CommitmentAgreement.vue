@@ -48,7 +48,7 @@ export default {
     FormError,
   },
   created() {
-    UserDetail.fromUser(this.user).then((detail) => {
+    UserDetail.fromUser(this.user).then(detail => {
       if (detail.commitmentAgreementSigned) this.$router.replace({ name: 'solutioneering-101' });
     });
   },
@@ -65,17 +65,16 @@ export default {
     ...mapActions('onboarding', ['signCommitmentAgreement']),
     doContinue(value) {
       this.signCommitmentAgreement(value)
-        .then((res) => {
+        .then(res => {
           if (res.signed) {
             this.$router.push({ name: 'solutioneering-101' });
             return;
           }
           this.errorMessage = 'Commitment agreement must be signed';
         })
-        .catch((err) => {
+        .catch(err => {
           this.errorMessage = err;
         });
     },
   },
-};
-</script>
+};</script>

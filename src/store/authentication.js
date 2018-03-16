@@ -20,8 +20,7 @@ export default {
   },
   actions: {
     initialize({ commit }) {
-      return getCurrent()
-      .then((user) => {
+      return getCurrent().then(user => {
         if (!user) commit('resetUser');
         else commit('setUser', user);
         return user;
@@ -35,63 +34,63 @@ export default {
       commit('setErrorMessage', '');
 
       return login(username, password)
-      .then((user) => {
-        commit('setUser', user);
-        return user;
-      })
-      .catch((err) => {
-        const defaultMsg = 'Login failed';
-        const { code, message } = err;
+        .then(user => {
+          commit('setUser', user);
+          return user;
+        })
+        .catch(err => {
+          const defaultMsg = 'Login failed';
+          const { code, message } = err;
 
-        // toggle pending state
-        if (!message) return commit('setErrorMessage', defaultMsg);
+          // toggle pending state
+          if (!message) return commit('setErrorMessage', defaultMsg);
 
-        // codes: http://docs.parseplatform.org/js/guide/#error-codes
-        switch (code) {
-          case 101:
-            return commit('setErrorMessage', 'Invalid credentials, login failed');
-          default:
-            return commit('setErrorMessage', defaultMsg);
-        }
-      });
+          // codes: http://docs.parseplatform.org/js/guide/#error-codes
+          switch (code) {
+            case 101:
+              return commit('setErrorMessage', 'Invalid credentials, login failed');
+            default:
+              return commit('setErrorMessage', defaultMsg);
+          }
+        });
     },
     signup({ commit }, userDetail) {
       // clear error and set pending state
       commit('setErrorMessage', '');
 
       return create(userDetail)
-      .then(() => ({
-        username: userDetail.username,
-      }))
-      .catch((err) => {
-        const defaultMsg = 'Signup failed, please try again';
-        const { code, message } = err;
+        .then(() => ({
+          username: userDetail.username,
+        }))
+        .catch(err => {
+          const defaultMsg = 'Signup failed, please try again';
+          const { code, message } = err;
 
-        if (!message) return commit('setErrorMessage', defaultMsg);
+          if (!message) return commit('setErrorMessage', defaultMsg);
 
-        // codes: http://docs.parseplatform.org/js/guide/#error-codes
-        switch (code) {
-          default:
-            return commit('setErrorMessage', defaultMsg);
-        }
-      });
+          // codes: http://docs.parseplatform.org/js/guide/#error-codes
+          switch (code) {
+            default:
+              return commit('setErrorMessage', defaultMsg);
+          }
+        });
     },
     logout({ commit }) {
       commit('resetUser');
 
       return logout()
-      .then(() => commit('resetUser'))
-      .catch((err) => {
-        const { status } = err;
+        .then(() => commit('resetUser'))
+        .catch(err => {
+          const { status } = err;
 
-        // codes: http://docs.parseplatform.org/js/guide/#error-codes
-        switch (status) {
-          case 0:
-            return null;
-          default:
-            throw err;
-        }
-      });
+          // codes: http://docs.parseplatform.org/js/guide/#error-codes
+          switch (status) {
+            case 0:
+              return null;
+            default:
+              throw err;
+          }
+        });
     },
   },
   getters: {
