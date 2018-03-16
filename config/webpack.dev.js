@@ -19,6 +19,7 @@ module.exports = merge(baseConfig({ distPath }), {
       },
     ],
   },
+  mode: 'development',
   plugins: [
     // http://vue-loader.vuejs.org/en/workflow/production.html
     new webpack.DefinePlugin({

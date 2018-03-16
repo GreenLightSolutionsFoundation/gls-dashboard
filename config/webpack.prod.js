@@ -18,6 +18,7 @@ module.exports = merge(baseConfig({ distPath }), {
     publicPath: basepath,
     filename: path.join('js', '[name].[chunkhash:8].js'),
   },
+  mode: 'production',
   module: {
     rules: [
       {
