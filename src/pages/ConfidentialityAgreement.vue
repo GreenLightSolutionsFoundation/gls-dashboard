@@ -1,14 +1,9 @@
 <template>
-  <md-card class="max-width">
-    <md-card-header>
-      <md-card-header-text>
-        <div class="md-title">Confidentiality Policy</div>
-      </md-card-header-text>
-
-    </md-card-header>
-
-    <md-card-content>
-      <p>GreenLight Solutions Foundation (“Corporation”) recognizes that efficient operation requires the maintenance and management of extensive Confidential Information related to its programs as well as donor and prospect records. The purpose of this Confidentiality Policy (“Policy”) is to memorialize the Corporation’s position on confidentiality.</p>
+  <div class="md-layout">
+    <div class="md-layout-item md-size-15"></div>
+    <div class="md-layout-item">
+      <h1>Confidentiality Policy</h1>
+       <p>GreenLight Solutions Foundation (“Corporation”) recognizes that efficient operation requires the maintenance and management of extensive Confidential Information related to its programs as well as donor and prospect records. The purpose of this Confidentiality Policy (“Policy”) is to memorialize the Corporation’s position on confidentiality.</p>
       <p>The Corporation is working to create educational opportunities for university students, as well as community and business organizations, by engaging them in applied projects based upon leading sustainability research and practices to create strategic solutions (“Mission”). The Corporation considers certain information related to the Mission to be “Confidential Information”. Such Confidential Information includes, but is not limited to, the following:</p>
       <ul>
         <li>Fundraising Plans</li>
@@ -58,8 +53,9 @@
 
       <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
       <agreement-signature-form :name="confidentialityAgreement.name" :date="confidentialityAgreement.date" :user="confidentialityAgreement.user" :onSubmit="doContinue"></agreement-signature-form>
-    </md-card-content>
-  </md-card>
+    </div>
+    <div class="md-layout-item md-size-15"></div>
+  </div>
 </template>
 
 <script>

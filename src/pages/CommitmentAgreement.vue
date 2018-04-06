@@ -1,12 +1,8 @@
 <template>
-  <md-card class="max-width">
-    <md-card-header>
-      <md-card-header-text>
-        <div class="md-title">Commitment Agreement</div>
-      </md-card-header-text>
-    </md-card-header>
-
-    <md-card-content>
+  <div class="md-layout">
+    <div class="md-layout-item md-size-15"></div>
+    <div class="md-layout-item">
+      <h1 class="md-title">Commitment Agreement</h1>
       <p>Welcome to GreenLight Solutions!</p>
       <p>By following this Commitment Agreement, GreenLight hopes to create an experience that is beneficial, productive, and enjoyable for all involved that promotes the study and practice of cooperative sustainability research and application. In our collaboration, GreenLight Solutioneers shall strive to be involved, committed, honest, respectful, enthusiastic, adaptable, and supportive of each other and our ideas. Solutioneers shall be professional and respectful in communicating and promoting each other, ourselves, peers, mentors, stakeholders, and the field of sustainability science. Failure to meet the agreements below may be terms for removal from your GreenLight Solutions chapter as determined by your Leadership Team and Faculty Advisor.</p>
       <p>
@@ -31,8 +27,9 @@
       <form-error v-if="errorMessage">{{ errorMessage }}</form-error>
       <agreement-signature-form :name="commitmentAgreement.name" :date="commitmentAgreement.date" :user="commitmentAgreement.user" :onSubmit="doContinue">
       </agreement-signature-form>
-    </md-card-content>
-  </md-card>
+    </div>
+    <div class="md-layout-item md-size-15"></div>
+  </div>
 </template>
 
 <script>
