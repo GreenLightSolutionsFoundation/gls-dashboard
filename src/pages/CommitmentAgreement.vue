@@ -1,5 +1,6 @@
 <template>
   <div class="md-layout">
+    <div class="md-layout-item md-size-15"></div>
     <div class="md-layout-item">
       <h1 class="md-title">Commitment Agreement</h1>
       <p>Welcome to GreenLight Solutions!</p>
@@ -27,6 +28,7 @@
       <agreement-signature-form :name="commitmentAgreement.name" :date="commitmentAgreement.date" :user="commitmentAgreement.user" :onSubmit="doContinue">
       </agreement-signature-form>
     </div>
+    <div class="md-layout-item md-size-15"></div>
   </div>
 </template>
 
