@@ -9,7 +9,7 @@
         <!-- md-input has no blur event :() -->
         <div class="md-input-container md-theme-default md-has-value">
           <label>Email Address</label>
-          <input class="md-input" v-model="email" type="email" @blur="setUsername"></input>
+          <input class="md-input" v-model="email" type="email" @blur="setUsername"/>
         </div>
 
         <md-input-container>

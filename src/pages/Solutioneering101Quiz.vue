@@ -12,11 +12,11 @@
 
     <md-card-content>
       <form novalidate @submit.stop.prevent="submit">
-        <div v-for="(question, questionIndex) in solutioneering101Quiz.questions" class="question-container">
+        <div v-for="(question, questionIndex) in solutioneering101Quiz.questions" class="question-container" :key={questionIndex}>
           <p>
             <strong>{{ question.text }}</strong>
           </p>
-          <div v-for="(answer, answerIndex) in question.answers">
+          <div v-for="(answer, answerIndex) in question.answers" :key={answerIndex}>
             <md-radio class="md-primary" :id="`answer-${questionIndex}-${answerIndex}`" :name="`question-${questionIndex}`" v-model="userAnswers[questionIndex]" :value="answerIndex">
               {{ answer }}
               <div v-if="question.correctAnswerIndex === answerIndex && isSubmitted === true" class="correct-answer-label">
