@@ -12,5 +12,5 @@
   "currentlyActive": false,
   "chapter": "Parse Relationship: Pointer to the Chapter class",
   "user": "Parse Relationship: Pointer to the User class",
-  "selectedProjects": ["Parse Relationship: array of pointers to project"]  
+  "selectedProjects": ["Parse Relationship: array of pointers to project"]
 }

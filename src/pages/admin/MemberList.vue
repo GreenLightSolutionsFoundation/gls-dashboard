@@ -3,64 +3,26 @@
     <!-- add user dialog -->
     <add-user :is-open="showAddUser" @close="closeAddUser" @create="closeAddAndRefresh"></add-user>
     <edit-user :is-open="showEditUser" :user="selectedUser" @close="closeEditUser"></edit-user>
+    <md-table v-model="members">
+      <md-table-toolbar>
+        <h1 class="md-title">Members</h1>
+      </md-table-toolbar>
 
-    <!-- TODO: add sorting -->
-    <md-table :md-sort="filters.sortField" :md-sort-type="filters.sortOrder" @sort="onSort">
-      <md-table-header>
-        <md-table-row>
-        <!-- TODO: add sorting -->
-          <md-table-head md-sort-by="currentlyActive">Active</md-table-head>
-          <md-table-head md-sort-by="lastName">Contact</md-table-head>
-          <md-table-head>Onboarded</md-table-head>
-          <md-table-head md-sort-by="chapter">Chapter</md-table-head>
-          <md-table-head md-sort-by="position">Position</md-table-head>
-          <md-table-head md-sort-by="semesterJoined">Semester</md-table-head>
-        </md-table-row>
-      </md-table-header>
-
-      <md-table-body v-if="!totalMembers">
-        <md-table-row>
-          <td class="md-table-cell" colspan="7">No Members found</td>
-        </md-table-row>
-      </md-table-body>
-
-      <md-table-body v-if="totalMembers > 0">
-        <md-table-row v-for="member in pageMembers" :key="member.id">
-          <md-table-cell>
-            <!-- active -->
-            <md-icon v-if="member.currentlyActive" @click.native="deactivate(member)">check_box</md-icon>
-            <md-icon v-if="!member.currentlyActive" @click.native="activate(member)">check_box_outline_blank</md-icon>
-          </md-table-cell>
-          <md-table-cell>
-            <!-- contact info -->
-            <div>{{ member.fullName }}</div>
-            <div>{{ member.user.email }}</div>
-            <div>{{ member.user.username }}</div>
-          </md-table-cell>
-          <md-table-cell>
-            <!-- onboarded -->
-            <md-icon v-if="member.isOnboarded">star</md-icon>
-          </md-table-cell>
-          <md-table-cell v-if="member.chapter">{{ member.chapter.attributes.name }}</md-table-cell>
-          <md-table-cell v-else></md-table-cell>
-          <md-table-cell>{{ member.position }}</md-table-cell>
-          <md-table-cell>{{ member.semesterJoined }}</md-table-cell>
-          <md-table-cell>
-            <md-icon @click.native="openEditUser(member)">edit</md-icon>
-          </md-table-cell>
-        </md-table-row>
-      </md-table-body>
+      <md-table-row slot="md-table-row" slot-scope="{ item }">
+        <md-table-cell md-label="Active">
+          <md-icon v-if="item.currentlyActive" @click.native="deactivate(item)">check_box</md-icon>
+          <md-icon v-if="!item.currentlyActive" @click.native="activate(item)">check_box_outline_blank</md-icon>
+        </md-table-cell>
+        <md-table-cell md-label="Full Name" md-sort-by="fullname">{{ item.fullName }}</md-table-cell>
+        <md-table-cell md-label="Email" md-sort-by="email">{{ item.user.email }}</md-table-cell>
+        <md-table-cell md-label="Onboarded">
+          <md-icon v-if="item.isOnboarded">star</md-icon>
+        </md-table-cell>
+        <md-table-cell md-label="Chapter" md-sort-by="chapter">{{ item.chapter.attributes.name }}</md-table-cell>
+        <md-table-cell md-label="Position" md-sort-by="position">{{ item.position }}</md-table-cell>
+        <md-table-cell md-label="Semester Joined" md-sort-by="semesterJoined">{{ item.semesterJoined }}</md-table-cell>
+      </md-table-row>
     </md-table>
-
-    <div class="pagination">
-      <md-button class="md-icon-button md-raised" @click.native="prevPage" :disabled="filters.currentPage === 1">
-        <md-icon>arrow_back</md-icon>
-      </md-button>
-      <div>Page {{ filters.currentPage}} of {{ totalPages }} ({{ totalMembers }} members)</div>
-      <md-button class="md-icon-button md-raised" @click.native="nextPage" :disabled="filters.currentPage === totalPages">
-        <md-icon>arrow_forward</md-icon>
-      </md-button>
-    </div>
   </div>
 </template>
 
@@ -79,13 +41,6 @@ export default {
     showAddUser: false,
     showEditUser: false,
     selectedUser: null,
-
-    filters: {
-      perPage: 20,
-      currentPage: 1,
-      sortField: 'lastName',
-      sortOrder: 'asc',
-    },
   }),
   created() {
     // fetch member lost on creation
@@ -135,11 +90,6 @@ export default {
       this.filters.currentPage = page;
       this.refreshMembers();
     },
-    onSort({ name, type }) {
-      this.filters.sortField = name;
-      this.filters.sortOrder = type;
-      this.refreshMembers();
-    },
     openAddUser() {
       this.showAddUser = true;
     },
@@ -160,10 +110,3 @@ export default {
     },
   },
 };</script>
-
-<style scoped>
-.pagination {
-  display: flex;
-  padding: 6px;
-}
-</style>
