@@ -49,9 +49,9 @@ export default {
       this.activeTab = this.areas.find(area => area.routeName === value.name);
     },
   },
-};</script>
+};
+</script>
 
 <style lang="sass">
 
 </style>
-

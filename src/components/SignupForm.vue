@@ -60,4 +60,5 @@ export default {
       this.onSubmit({ username, email, password, passwordConfirm, firstName, lastName, onSubmit });
     },
   },
-};</script>
+};
+</script>

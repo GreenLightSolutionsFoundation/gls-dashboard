@@ -30,7 +30,8 @@ export default {
       this.$router.push({ name: 'solutioneering-101-quiz' });
     },
   },
-};</script>
+};
+</script>
 
 <style type="text/scss">
 #iframe_container {

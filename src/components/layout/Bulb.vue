@@ -14,4 +14,5 @@
 <script>
 export default {
   name: 'bulb',
-};</script>
+};
+</script>

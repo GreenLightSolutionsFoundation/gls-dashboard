@@ -118,7 +118,8 @@ export default {
   mounted() {
     if (this.isOpen) this.openDialog();
   },
-};</script>
+};
+</script>
 <style>
 .text-capitalize {
   text-transform: capitalize;

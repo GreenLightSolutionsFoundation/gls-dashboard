@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'luxon';
 import parse from '../lib/parse';
 import User from './user';
 import ParseObject from './parse_object';

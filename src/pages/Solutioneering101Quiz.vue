@@ -83,15 +83,14 @@ export default {
       }
 
       if (allQuestionsCorrect) {
-        this.setSolutioneering101QuizCompletedStatus({ completed: true, user: this.user }).then(
-          result => {
-            if (result) {
-              this.$router.push({
-                name: 'dashboard',
-                params: { showDialog: 'solutioneerCongrats' },
-              });
-            }
-          });
+        this.setSolutioneering101QuizCompletedStatus({ completed: true, user: this.user }).then(result => {
+          if (result) {
+            this.$router.push({
+              name: 'dashboard',
+              params: { showDialog: 'solutioneerCongrats' },
+            });
+          }
+        });
       } else {
         this.errorMessage = 'Please correct your answers and select Continue';
       }
@@ -101,7 +100,8 @@ export default {
     ...mapState('onboarding', ['solutioneering101Quiz']),
     ...mapState('authentication', ['user']),
   },
-};</script>
+};
+</script>
 
 <style  type="text/scss">
 .question-container {

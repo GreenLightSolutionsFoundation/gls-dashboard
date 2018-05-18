@@ -39,7 +39,7 @@ export default {
         return members;
       });
     },
-    setActive({ commit, state }, { member, active }) {
+    setActive({ commit }, { member, active }) {
       // optimistic update
       const data = { currentlyActive: Boolean(active) };
       commit('updateMember', { id: member.id, data });

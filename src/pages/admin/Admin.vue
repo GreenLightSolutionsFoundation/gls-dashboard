@@ -15,5 +15,5 @@ export default {
     AdminNavigation,
     PrimaryNavigation,
   },
-};</script>
-
+};
+</script>

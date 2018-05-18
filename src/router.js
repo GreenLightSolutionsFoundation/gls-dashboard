@@ -1,13 +1,12 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Router from 'vue-router';
 
 import routes from './routes';
 import store from './store';
 
-Vue.use(VueRouter);
+Vue.use(Router);
 
-const router = new VueRouter({
-  mode: 'hash',
+const router = new Router({
   routes,
 });
 

@@ -56,10 +56,7 @@ export default {
   mounted() {
     if (!this.user.isOnboarded) {
       this.isWelcomeOpen = true;
-    } else if (
-      this.$route.params.showDialog &&
-      this.$route.params.showDialog === 'solutioneerCongrats'
-    ) {
+    } else if (this.$route.params.showDialog && this.$route.params.showDialog === 'solutioneerCongrats') {
       this.$refs.congratsDialog.open();
     }
   },
@@ -104,8 +101,7 @@ export default {
         totalPositions: 10,
         startDate: '8/15/2017',
         endDate: '12/14/2017',
-        resourcesUrl:
-          'https://drive.google.com/drive/folders/0B1FoB345Ur60ckxIa0dlYW1asdflE?usp=sharing', // not in project model
+        resourcesUrl: 'https://drive.google.com/drive/folders/0B1FoB345Ur60ckxIa0dlYW1asdflE?usp=sharing', // not in project model
       },
     ],
   }),
@@ -124,7 +120,8 @@ export default {
       this.$router.push({ name: 'project-ranking-form' });
     },
   },
-};</script>
+};
+</script>
 
 <style lang="scss">
 #project-selections {

@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from 'luxon';
 
 export default {
   name: 'project-card',
@@ -107,7 +107,8 @@ export default {
   filters: {
     formatDate: value => moment(value).format('M/D/YYYY'),
   },
-};</script>
+};
+</script>
 
 <style lang="scss">
 .project-card {

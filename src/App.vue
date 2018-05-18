@@ -17,7 +17,8 @@ export default {
   components: {
     primaryNav,
   },
-};</script>
+};
+</script>
 
 <style lang="scss">
 @import './styles/main.scss';
