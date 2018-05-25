@@ -1,6 +1,5 @@
 <template>
   <div>
-    <PrimaryNavigation></PrimaryNavigation>
     <AdminNavigation></AdminNavigation>
     <router-view></router-view>
   </div>
