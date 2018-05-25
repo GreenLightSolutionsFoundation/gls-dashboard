@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
-  'extends': [
+  extends: [
     'airbnb-base',
     'plugin:vue/essential',
     '@vue/prettier'
   ],
-  'rules': {
+  rules: {
     'prettier/prettier': ['error']
   }
 }
