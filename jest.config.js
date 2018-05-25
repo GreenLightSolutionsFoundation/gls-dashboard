@@ -10,4 +10,5 @@ module.exports = {
   },
   snapshotSerializers: ['jest-serializer-vue'],
   testMatch: ['<rootDir>/(tests/unit/**/*.spec.(ts|tsx|js)|**/tests/*.(ts|tsx|js))'],
+  transformIgnorePatterns: ['/node_modules/(?!test-component).+\\.js$'],
 };
