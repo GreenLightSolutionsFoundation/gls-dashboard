@@ -7,5 +7,10 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': ['error']
+  },
+  env: {
+    "test": {
+      "presets": ["es2015", "stage-0"]
+    }
   }
 }
