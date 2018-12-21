@@ -1,10 +1,13 @@
 import 'vue-material/dist/vue-material.min.css';
 import Vue from 'vue';
 import VueMaterial from 'vue-material';
+import App from './App.vue';
+
 import router from './router';
 import store from './store';
 import parse from './lib/parse';
 
+Vue.config.productionTip = false;
 window.parse = parse;
 
 Vue.use(VueMaterial);
@@ -16,10 +19,10 @@ store
     const app = new Vue({
       router,
       store,
-      render: h => h('router-view'),
+      render: h => h(App),
     });
 
-    app.$mount('#root');
+    app.$mount('#app');
   })
   .catch(err => {
     // TODO: render error page, or othewise handle intiailization failure

@@ -99,7 +99,8 @@ export default {
         // this.projects = null;
       });
   },
-};</script>
+};
+</script>
 
 <style scoped lang="scss">
 .project-cards {

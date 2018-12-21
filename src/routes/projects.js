@@ -1,4 +1,4 @@
-import ProjectsList from '../pages/admin/ProjectList.vue';
+import ProjectsList from '../views/admin/ProjectList.vue';
 
 export default {
   name: 'admin-projects',

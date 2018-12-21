@@ -72,4 +72,5 @@
 <script>
 export default {
   name: 'logo-brand',
-};</script>
+};
+</script>

@@ -53,4 +53,5 @@ export default {
       user: this.user,
     });
   },
-};</script>
+};
+</script>

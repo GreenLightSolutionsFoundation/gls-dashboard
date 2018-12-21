@@ -54,17 +54,6 @@ export default {
     totalMembers() {
       return this.members.length;
     },
-    pageMembers() {
-      // make sure we never go beyond the last page
-      if (this.totalPages && this.filters.currentPage > this.totalPages) {
-        this.filters.currentPage = this.totalPages;
-      }
-
-      const start = (this.filters.currentPage - 1) * this.filters.perPage;
-      const end = start + this.filters.perPage;
-
-      return this.members.slice(start, end);
-    },
   },
   methods: {
     ...mapActions('admin/members', ['setActive', 'getMembers']),
@@ -109,4 +98,5 @@ export default {
       this.refreshMembers();
     },
   },
-};</script>
+};
+</script>

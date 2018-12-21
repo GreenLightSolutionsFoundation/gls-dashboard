@@ -105,9 +105,8 @@ export default {
 
                 // check if the user is active, send to pending page if they are
                 if (!member.currentlyActive) this.$router.push({ name: 'approval-pending' });
-                else
-                  // otherwise, send them where they need to go
-                  this.$router.push(this.sendTo);
+                // otherwise, send them where they need to go
+                else this.$router.push(this.sendTo);
               })
               .catch(() => {
                 this.setErrorMessage('Login failed, member not found');
@@ -130,7 +129,8 @@ export default {
         });
     },
   },
-};</script>
+};
+</script>
 
 <style>
 .new-here-signup {

@@ -1,4 +1,4 @@
-import ConfidentialityAgreement from '../pages/ConfidentialityAgreement.vue';
+import ConfidentialityAgreement from '../views/ConfidentialityAgreement.vue';
 
 export default {
   name: 'confidentiality-agreement',

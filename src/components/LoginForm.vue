@@ -92,7 +92,8 @@ export default {
       this.onSubmit({ username, password });
     },
   },
-};</script>
+};
+</script>
 
 
 <style lang="scss">

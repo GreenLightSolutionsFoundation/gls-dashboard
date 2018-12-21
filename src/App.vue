@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import 'vue-material/dist/vue-material.css';
 import primaryNav from './components/layout/Navigation-Primary.vue';
 
 export default {
@@ -17,7 +16,8 @@ export default {
   components: {
     primaryNav,
   },
-};</script>
+};
+</script>
 
 <style lang="scss">
 @import './styles/main.scss';

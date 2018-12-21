@@ -8,4 +8,5 @@
 <script>
 export default {
   name: 'form-error',
-};</script>
+};
+</script>

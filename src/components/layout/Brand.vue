@@ -65,4 +65,5 @@
 <script>
 export default {
   name: 'brand',
-};</script>
+};
+</script>

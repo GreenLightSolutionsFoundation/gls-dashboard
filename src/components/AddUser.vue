@@ -153,4 +153,5 @@ export default {
       this.chapters = results;
     });
   },
-};</script>
+};
+</script>

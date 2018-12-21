@@ -15,7 +15,7 @@ export default {
     },
   },
   actions: {
-    getProjects({ commit, state }, filters = {}) {
+    getProjects({ commit }, filters = {}) {
       return getAll(filters).then(projects => {
         commit('setProjects', projects);
         return projects;

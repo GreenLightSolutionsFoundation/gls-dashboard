@@ -22,7 +22,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
-import moment from 'moment';
+import moment from 'luxon';
 
 export default {
   data: () => ({
@@ -57,7 +57,7 @@ export default {
       return moment(value).format('MM/DD/YYYY');
     },
   },
-};</script>
+};
+</script>
 <style lang="scss">
-
 </style>

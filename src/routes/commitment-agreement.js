@@ -1,4 +1,4 @@
-import CommitmentAgreement from '../pages/CommitmentAgreement.vue';
+import CommitmentAgreement from '../views/CommitmentAgreement.vue';
 
 export default {
   name: 'commitment-agreement',

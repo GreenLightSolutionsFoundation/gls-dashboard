@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'luxon';
 import { getUserDetail } from '../services/user';
 
 function isSignedName(nameToCheck, userDetails) {
@@ -115,12 +115,7 @@ export default {
           correctAnswerIndex: 1,
           correctAnswerReason:
             'GreenLight Solutions is a professional organization, and we expect our students to be professional with their communication; responding within a 48-hour window is generally accepted in the business world.',
-          answers: [
-            'A. Immediately',
-            'B. Within 48 hours',
-            'C. Within a week',
-            'D. Whenever they get around to it',
-          ],
+          answers: ['A. Immediately', 'B. Within 48 hours', 'C. Within a week', 'D. Whenever they get around to it'],
           isCorrect: undefined,
         },
       ],

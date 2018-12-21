@@ -39,7 +39,8 @@
 <script>
 export default {
   name: 'cohort',
-};</script>
+};
+</script>
 
 <style>
 .contacts {
