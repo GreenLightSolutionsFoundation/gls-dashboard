@@ -1,4 +1,4 @@
-import Solutioneering101 from '../pages/Solutioneering101.vue';
+import Solutioneering101 from '../views/Solutioneering101.vue';
 
 export default {
   name: 'solutioneering-101',

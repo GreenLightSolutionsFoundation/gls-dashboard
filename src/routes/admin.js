@@ -1,4 +1,4 @@
-import Admin from '../pages/admin/Admin.vue';
+import Admin from '../views/admin/Admin.vue';
 
 export default {
   name: 'admin',

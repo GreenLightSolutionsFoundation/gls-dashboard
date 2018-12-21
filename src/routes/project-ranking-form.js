@@ -1,4 +1,4 @@
-import ProjectRankingForm from '../pages/ProjectRankingForm.vue';
+import ProjectRankingForm from '../views/ProjectRankingForm.vue';
 
 export default {
   name: 'project-ranking-form',

@@ -15,9 +15,7 @@ import projects from './projects';
 
 const routes = [
   createRoute('/login', login),
-
   createRoute('/pending', approvalPending),
-
   createRoute('/admin', admin, {
     meta: {
       requiresAuthentication: true,
@@ -29,7 +27,6 @@ const routes = [
       createRoute('members', members),
     ],
   }),
-
   createRoute('/', app, {
     meta: {
       requiresAuthentication: true,
@@ -47,5 +44,4 @@ const routes = [
   // all other non-matching routes get redirected here
   { path: '*', redirect: { name: 'dashboard' } },
 ];
-
 export default routes;
